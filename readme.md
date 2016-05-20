@@ -7,3 +7,5 @@
 # Gómez Ezequiel
 
 comenzamos los preparativos
+
+agregue ssh
