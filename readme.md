@@ -5,3 +5,5 @@
 # Elian Curccio
 # Gerardo Sosa
 # Gómez Ezequiel
+
+comenzamos los preparativos
