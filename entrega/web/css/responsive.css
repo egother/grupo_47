@@ -1,0 +1,68 @@
+﻿ul.egmenu {  
+	background: #96ac3c;
+    height: 30px;
+	position: relative; 
+    width: width:800px;
+}
+
+ul.egmenu > li { 
+    float: left;
+    position: relative;
+    display: block;
+
+}
+
+ul.egmenu ul {
+    background: #96ac3c; 
+    display: none; 
+    position: absolute;
+    top: 100%;
+	
+}
+
+ul.egmenu a {
+	text-decoration: none;
+    font-family: Arial;
+	font-size:12px;
+	cursor: pointer; 
+    display: block;
+    color: white; 
+    line-height: 30px;
+    padding: 0 10px; 
+}
+
+ul.egmenu li { list-style: none; }
+
+ul.egmenu li:hover { background: #6d6d6d; display:  block;  }
+ul.egmenu li:hover ul { display:  block; min-width: 151px; }
+
+
+
+
+@media all and (min-width: 481px) {
+    ul.egmenu li:hover { background: #6d6d6d;  }
+    ul.egmenu li:hover ul { display: block;  }
+}
+
+/* Pantalla moviles */
+
+@media all and (max-width: 480px) {
+    ul.egmenu {  height: auto; }
+    ul.egmenu > li { float: none; width: 100%; }
+    ul.egmenu a { line-height: 32px; }
+    ul.egmenu ul { position: relative; }
+}
+
+@media all and (max-width: 480px) {
+    ul.egmenu {  height: auto; }
+    ul.egmenu > li {  float: none; width: 100%; }
+    ul.egmenu a { line-height: 32px; }
+    ul.egmenu ul { position: relative; }
+
+    ul.egmenu li.tap { background: #2175bc;  }
+    ul.egmenu li.tap ul { display: block;  }
+	
+	
+	
+	
+}

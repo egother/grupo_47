@@ -1,0 +1,66 @@
+{% extends "layoutFront.twig.html" %}
+
+{% block contenido %}
+
+<script>
+   function validarPass(){
+
+    if(document.getElementById("p1").value!=document.getElementById("p2").value)
+	{   alert("Las contraseñas no coinciden");
+		
+		}
+	
+		
+}
+    
+ </script>
+
+
+<form class="formulario" method="post" name="formulario" action="./index.php?accion=registrarUsuario">
+    <h3>Registro de usuario</h3>
+    <div>
+        <label>Usuario</label>
+        <input type="text" name="usuario" value="" required/>
+    </div>
+    <div>
+        <label>Nombre y Apellido</label>
+        <input type="text" name="nombre" value="" required/>
+    </div>
+    <div>
+        <label>Teléfono:</label>
+        <input type="text" id="telefono" name="telefono" value="{{ params['telefono_contacto'] }}"/>
+    </div>
+	<div>
+		<label>Email:</label>
+		<input type="email" id="mail" name="mail" value="{{ params['mail_contacto'] }}" />
+		<span class="form_hint">Ejemplo "direccion@dominio.com"</span>
+	</div>
+    <div>
+         <input type="text" id="fecha" name="fecha" required/>
+         <label>Fecha nacimiento</label>
+		<span class="form_hint">Formato "aaaa-mm-dd"</span>
+    </div>
+	<div>
+        <label>Contraseña:</label>
+        <input type="password" id="p1" name="p1" required/>
+    </div>
+    
+    <div>
+        <label>Repetir Contraseña:</label>
+        <input type="password" id="p2" name="p2" onblur="validarPass()" required/>
+    </div>
+
+	
+
+	<br>
+	
+    <button type="submit">Registrarse</button>
+	<button type="button" onclick="window.location.href='./index.php?accion=inicio'">Cancelar</button>
+
+
+	<div class="obligatorios">*Campos obligatorios</div>
+
+
+</form>
+
+{% endblock %}

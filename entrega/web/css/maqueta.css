@@ -1,0 +1,60 @@
+/*
+#message_box{
+position: absolute;
+top: 0;
+left: 0;
+z-index: 1000;
+background: #ffc;
+padding: 5px;
+border: 1px solid #CCCCCC;
+text-align: center;
+width: 99%;
+font-weight: bold;
+
+}*/
+
+body {
+ background-color: #EBEBEB;
+
+}
+#global {
+ width:1024px; 
+ min-height:720px;
+ margin: 0 auto 0 auto;
+ background-color: #FFFFFF;
+}
+#cabecera {
+ width:720px;
+ margin: 0 auto 0 auto;
+ 
+}
+
+#navegacion {
+    height: 30px;
+	position: relative; 
+    width: 100%; 
+/*	position: fixed; top: 0px;  */
+ 
+}
+
+#principal {
+ font: 13px/21px "Lucida Sans", "Lucida Grande", "Lucida Sans Unicode", sans-serif;
+ width:740px;
+ margin: 0 auto 0 auto;
+ 
+}
+
+/* Pie del documento*/
+footer{
+ text-align: center;
+ font: 11px "Lucida Sans", "Lucida Grande", "Lucida Sans Unicode", sans-serif;
+ width:1024px;
+ margin: 0 auto 0 auto;
+ background-color: #FFFFFF;
+ 
+}
+
+
+
+
+

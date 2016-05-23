@@ -1,0 +1,23 @@
+{% extends "layoutBack.twig.html" %}
+
+{% block botonera %}
+
+		{% if (usuario.rol=="administrador") %}
+				<li><a href="./backend.php">Home</a></li>
+				
+				<li><a class="has-sub">Mas</a>
+					<ul>
+					<li><a href="./backend.php?accion=modificarConfiguracion">Configuración</a></li>
+					<li><a href="./backend.php?accion=users">Usuarios</a></li>
+					<li><a href="../app/logout.php">Logout</a></li>
+					</ul>
+				</li>
+
+		{% elseif (usuario.rol=="visitante") %}
+				<li><a href="./backend.php">Home</a></li>
+				<li><a href="../app/logout.php">Logout</a></li>
+	
+		{% else %}
+			<li>no se cargó nada.. {{ usuario.rol }}{{ usuario.user}}</li>
+		{% endif %}
+{% endblock %}

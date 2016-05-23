@@ -1,0 +1,20 @@
+table { text-align:left;
+		border:2px solid black;
+		width: 100%;
+		font-size: 12px;
+		
+		}
+tr.danger {background:  #FF6666;}
+tr.warning {background: #FFFF99;}
+
+tr.encabezado {background: #DDDDDD}		
+		
+td { border-top: 1px solid silver}
+
+
+@media screen and (max-width: 481px) {
+	table {
+		overflow-x: auto;
+		display: block;
+	}
+}

@@ -1,0 +1,59 @@
+{% extends "layoutBackUser.twig.html" %}
+
+{% block contenido %}
+
+<script>
+   function validarPass(){
+
+    if(document.getElementById("p1").value!=document.getElementById("p2").value)
+	{   alert("Las contraseñas no coinciden");}
+    }
+ </script>
+
+<!-- &amp;id={{params.id}} -->
+<form class="formulario" method="post" name="formulario" action="./backend.php?accion=modificarUsuario&amp;id={{users.0.id}}">
+    <h3>Modificación de usuario</h3>
+	
+
+    <div>
+        <label>*Nombre de usuario</label>
+        <input type="text" name="nombre" value="{{users.0.nombre}}" required/>
+    </div>
+    <div
+         class="formRow">
+					<label>Rol</label>
+					<select id="rolSelect" name="rol">
+						<option value="1"  {% if users.0.nombreRol == "administrador" %} selected="selected" {% endif %}> 
+							Administrador</option>
+						<option value="2"  {% if users.0.nombreRol == "gestion" %} selected="selected" {% endif %}> 
+							Gestión</option>
+						<option value="3"  {% if users.0.nombreRol == "consulta" %} selected="selected" {% endif %}> 
+							Consulta</option>
+					</select>	
+		
+    </div>
+    <div>
+        <label>*Contraseña:</label>
+        <input type="password" id="p1" name="p1" value="{{users.0.pass}}" required/>
+    </div>
+    
+    <div>
+        <label>*Repetir Contraseña:</label>
+        <input type="password" id="p2" name="p2" value="{{users.0.pass}}" onblur="validarPass()" required/>
+    </div>
+
+	
+
+	<br>
+	
+    <button type="submit" name="botones">Modificar</button>
+    
+	<button onclick="window.location.href='./backend.php?accion=users'">Cancelar</button>
+
+
+<div class="obligatorios">*Campos obligatorios</div>
+
+
+</form>
+
+{% endblock %}
