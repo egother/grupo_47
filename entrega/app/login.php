@@ -25,14 +25,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 		$_SESSION['USUARIO']['rol'] = Controller::xss($intentoLogin[0]['nombreRol']);
 		$_SESSION['USUARIO']['id'] = Controller::xss($intentoLogin[0]['id']);
 		
-		//almacena las coordenadas del banco de alimentos
-		$coordenadas= ModelLogin::obtenerCoordenadas();
-		
-		$lat= $coordenadas[0]['valor'];
-		$lon= $coordenadas[1]['valor'];
-		
-		$_SESSION['USUARIO']['lat']= $lat;
-		$_SESSION['USUARIO']['lon']= $lon;
 
 		header('Location: ../web/backend.php');
 	
