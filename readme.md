@@ -11,3 +11,5 @@ comenzamos los preparativos
 agregue ssh
 
 prueba final de ssh
+
+prueba con nueva clave ssh
