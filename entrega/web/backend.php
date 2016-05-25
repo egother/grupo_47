@@ -100,7 +100,6 @@ if(!$errors){
 
  if (method_exists($controlador['controller'],$controlador['accion'])) {
     call_user_func(array(new $controlador['controller'], $controlador['accion']), $id);
-	$this->borrarMensaje();
  } else {
 		Controller::exepciones('','ERROR 404: No existe el controlador ', $controlador['accion']);
 			 

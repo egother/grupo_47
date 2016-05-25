@@ -66,12 +66,6 @@ require_once __DIR__ . '/ControllerLogin.php';
 		setcookie('mensaje', $m);
 	}
 	
-	protected function borrarMensaje()
-	{
-		unset($_COOKIE['mensaje']);
-	}
-
-	
 	private static function configTwig(){
 		require_once __DIR__ . '/../twig/lib/Twig/Autoloader.php';
 		Twig_Autoloader::register();
