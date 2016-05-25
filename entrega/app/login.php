@@ -20,12 +20,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
     }
 	else{
 		//login correcto. Se asignan variables de sesiones.
-	
-		$_SESSION['USUARIO']['userName']= Controller::xss($_POST["usuario"]);
-		$_SESSION['USUARIO']['rol'] = Controller::xss($intentoLogin[0]['nombreRol']);
+		$_SESSION['USUARIO']['usuario'] = Controller::xss($_POST["usuario"]);
+		$_SESSION['USUARIO']['nombre'] = Controller::xss($intentoLogin[0]['nombre']);
+		$_SESSION['USUARIO']['nombreRol'] = Controller::xss($intentoLogin[0]['nombreRol']);
 		$_SESSION['USUARIO']['id'] = Controller::xss($intentoLogin[0]['id']);
 		
-
 		header('Location: ../web/backend.php');
 	
 	}

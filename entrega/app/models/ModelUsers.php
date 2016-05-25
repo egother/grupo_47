@@ -13,7 +13,7 @@
      public function listar()
      {
        
-        $sql = $this->conexion->prepare("SELECT shadow.id, shadow.nombre, rol.nombreRol FROM shadow INNER JOIN rol on (shadow.id_rol = rol.id ) ORDER BY shadow.nombre");
+        $sql = $this->conexion->prepare("SELECT shadow.id, shadow.usuario, rol.nombreRol FROM shadow INNER JOIN rol on (shadow.id_rol = rol.id ) ORDER BY shadow.nombre");
         
 		$sql->execute();
 		
@@ -24,7 +24,7 @@
      
      public function usuarioConId($id)
      {
-        $sql = $this->conexion->prepare("SELECT nombre FROM `shadow` WHERE id= :id");
+        $sql = $this->conexion->prepare("SELECT usuario FROM `shadow` WHERE id= :id");
 		$sql->bindParam(':id', $id, PDO::PARAM_INT);
 		$sql->execute();
 		
@@ -66,7 +66,7 @@
      
       public function listarUsuarios(){
 		 
-		 $sql = $this->conexion->prepare("SELECT nombre FROM shadow");
+		 $sql = $this->conexion->prepare("SELECT usuario FROM shadow");
 
 		 $sql->execute();
 		 
@@ -93,7 +93,7 @@
 	 
 	 public function listarUsuario($id){
 		 
-		$sql = $this->conexion->prepare("SELECT nombre FROM shadow WHERE id = :id");
+		$sql = $this->conexion->prepare("SELECT usuario FROM shadow WHERE id = :id");
 		$sql->bindParam(':id', $id, PDO::PARAM_INT);
 		$sql->execute();
 		
@@ -107,7 +107,7 @@
 	 
 	 public function listarPorId($id){
 	 
-		$sql = $this->conexion->prepare("SELECT shadow.id, shadow.nombre, rol.nombreRol, shadow.pass FROM shadow INNER JOIN rol on (shadow.id_rol = rol.id ) WHERE shadow.id = :id");
+		$sql = $this->conexion->prepare("SELECT shadow.id, shadow.usuario, rol.nombreRol, shadow.pass FROM shadow INNER JOIN rol on (shadow.id_rol = rol.id ) WHERE shadow.id = :id");
 		$sql->bindParam(':id', $id, PDO::PARAM_INT);
 		$sql->execute();
 		
@@ -123,7 +123,7 @@
 	//Retorna si el usuario ya existe.
 	public function existeUsuario($nombreUsuario, $mailUsuario){
 		
-		 $sql = $this->conexion->prepare("SELECT nombre FROM shadow WHERE (nombre = :nombreUsuario) OR (correo = :mailUsuario)");
+		 $sql = $this->conexion->prepare("SELECT usuario FROM shadow WHERE (usuario = :nombreUsuario) OR (correo = :mailUsuario)");
 		 $sql->bindParam(':nombreUsuario', $nombreUsuario, PDO::PARAM_STR);
 		 $sql->bindParam(':mailUsuario', $mailUsuario, PDO::PARAM_STR);
 		 $sql->execute();

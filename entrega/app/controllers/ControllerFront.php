@@ -10,7 +10,7 @@
 	}
  
 	private function haySesion(){
-	 	return ((isset($_SESSION['USUARIO']) && (isset($_SESSION['USUARIO']['rol'])) && (isset($_SESSION['USUARIO']['id']))));
+	 	return ((isset($_SESSION['USUARIO']) && (isset($_SESSION['USUARIO']['nombreRol'])) && (isset($_SESSION['USUARIO']['id']))));
 	}
  
 	public function inicio()
@@ -21,7 +21,7 @@
 			echo $this->twig->render('index.twig.html', array('log' => '1'));
 			}
 		else{
-			echo $this->twig->render('index.twig.html', array());}
+			echo $this->twig->render('index.twig.html', array('mensaje' => $this->msj));}
 		
      }
 	 
@@ -50,41 +50,58 @@
 	 public function registrarse()
 	 {
 		$this->revisarMensajes();
+		
 		if($this->haySesion()){
-			echo $this->twig->render('index.twig.html', array('log' => '1'));
-			}
-		else{
-			$this->setMensaje("dale, registrate, gil");
-			echo $this->twig->render('registro.twig.html', array());}
-	 }
-
-	// verifica si esta todo bien y da de alta el usuario cargado en el formulario
-	 public function registrarUsuario()
-	 {
-		$this->revisarMensajes();
-
-		if (($_SERVER['REQUEST_METHOD'] == 'POST') && (isset($_POST['p1'])) && (isset($_POST['p2']))) {
-			$p1 = $this->xss($_POST['p1']);
-			$p2 = $this->xss($_POST['p2']);
-			if ($p1==$p2) {
-				$usuario = $this->xss($_POST['usuario']);
-				$nombre = $this->xss($_POST['nombre']);
-				$mail = $this->xss($_POST['mail']);
-				$telefono = $this->xss($_POST['telefono']);
-				$fecha = $this->xss($_POST['fecha']);
-				// comprueba que el usuario no exista ya
-				if (!$this->us->existeUsuario($usuario, $mail)){
-					 $this->us->agregar($usuario, $nombre, $mail, $telefono, $p1, $fecha);
-					 $this->setMensaje("El usuario se ha agregado correctamente.");
-				}
-				else { // mostrar mensaje, lo hiciste mal, llenalo de nuevo
-					 $this->setMensaje("El usuario elegido ya existe");
-				}
-			} else $this->setMensaje("Las contraseñas dadas no son iguales");			
+			$this->setMensaje("Cierre la sesión actual para registrarse como nuevo usuario");
+			echo $this->twig->render('index.twig.html', array('log' => '1', 'mensaje' => $this->msj));
 		}
-		header('Location: ./index.php');
-	 }
-
+		elseif (($_SERVER['REQUEST_METHOD'] == 'POST') && (isset($_POST['p1'])) && (isset($_POST['p2'])))
+			{
+				$p1 = $this->xss($_POST['p1']);
+				$p2 = $this->xss($_POST['p2']);
+				if ($p1==$p2) {
+					$usuario = $this->xss($_POST['usuario']);
+					$nombre = $this->xss($_POST['nombre']);
+					$mail = $this->xss($_POST['mail']);
+					$telefono = $this->xss($_POST['telefono']);
+					$fecha = $this->xss($_POST['fecha']);
+					// comprueba que el usuario no exista ya
+					if (!$this->us->existeUsuario($usuario, $mail)){
+						$this->us->agregar($usuario, $nombre, $mail, $telefono, $p1, $fecha);
+						$this->setMensaje("El usuario se ha agregado correctamente.");
+						header('Location: ./index.php');
+					}
+					else {
+						$params = array(
+							'usuario' => $_POST['usuario'],
+							'nombre' => $_POST['nombre'],
+							'mail' => $_POST['mail'],
+							'telefono' => $_POST['telefono'],
+							'fecha' => $_POST['fecha'],
+							);
+						// mostrar mensaje, lo hiciste mal, llenalo de nuevo
+						$this->setMensaje("El usuario y/o correo elegidos ya han sido registrados");
+					}
+				} else {
+					$params = array(
+						'usuario' => $_POST['usuario'],
+						'nombre' => $_POST['nombre'],
+						'mail' => $_POST['mail'],
+						'telefono' => $_POST['telefono'],
+						'fecha' => $_POST['fecha'],
+						);
+					$this->setMensaje("Las contraseñas ingresadas no coinciden");
+				}
+			} else $params = array(
+						'usuario' => '',
+						'nombre' => '',
+						'mail' => '',
+						'telefono' => '',
+						'fecha' => ''
+					);
+		echo $this->twig->render('registro.twig.html', array('params' => $params,
+															 'mensaje' => $this->msj));
+	}
  }
  
 ?>

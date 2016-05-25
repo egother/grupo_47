@@ -81,7 +81,7 @@
 		<!-- Contenido dinámico a mostrar -->
 		
 		<div>
-				<p>Bienvenido {{usuario.user}}. Aqui encontrará las opciones disponibles.</p>
+				<p>Bienvenido {{usuario.nombre}}. Aqui encontrará las opciones disponibles.</p>
 				<hr>
 			
 		</div>
@@ -92,37 +92,13 @@
 			</div>
 		{% if (inicio == 1) %}
 			<div>
-			{% if params|length>0 %} <!-- aca irian las ultimas publicaciones pasadas como params -->
+			{% if params|length>0 %}
 						<h3>
 							Últimas publicaciones:
 						</h3>
-						
-						<table>
-							<tbody>
-								<tr class="encabezado">
-									<th>Nº</th>
-									<th>Razón Social</th>
-									<th>Estado del Pedido</th>
-									<th>Fecha de Entrega</th>
-									<th>Envío</th>
-									
-								</tr>
-							{% for pedido in params %}
-								{% if date(pedido.hora) < date() %}
-									<tr class="danger">
-								{% else %}
-									<tr class="warning">
-								{% endif %}
-										<td style="font-weight:bold"><a href="./backend.php?accion=actualizarPedido&amp;nro={{pedido.numero}}">{{ pedido.numero }}</a></td>
-										<td>{{ pedido.razon_social }}</td>
-										<td>{{ pedido.descripcion }}</td>
-										<td>{{ pedido.fecha|date('d-m-Y') }} {{ pedido.hora|date('H:i') }}</td>
-										<td>{% if pedido.con_envio %}<a href="./backend.php?accion=mostrarEnvio&pedido={{pedido.numero}}">Sí</a>{% else %} No {% endif %}</td>
-									</tr>
-							{% endfor %}
-							</tbody>
-						</table>
-						
+						 
+						 <!-- aca irian las ultimas publicaciones pasadas como params -->
+												
 			{% else %}
 						<h3>
 							No hay publicaciones para mostrar.

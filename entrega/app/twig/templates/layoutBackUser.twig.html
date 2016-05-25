@@ -2,7 +2,7 @@
 
 {% block botonera %}
 
-		{% if (usuario.rol=="administrador") %}
+		{% if (usuario.nombreRol=="administrador") %}
 				<li><a href="./backend.php">Home</a></li>
 				
 				<li><a class="has-sub">Mas</a>
@@ -13,11 +13,11 @@
 					</ul>
 				</li>
 
-		{% elseif (usuario.rol=="visitante") %}
+		{% elseif (usuario.nombreRol=="visitante") %}
 				<li><a href="./backend.php">Home</a></li>
 				<li><a href="../app/logout.php">Logout</a></li>
 	
 		{% else %}
-			<li>no se cargó nada.. {{ usuario.rol }}{{ usuario.user}}</li>
+			<li>no se cargó nada.. {{ usuario.nombreRol }}{{ usuario.usuario}}</li>
 		{% endif %}
 {% endblock %}

@@ -14,7 +14,7 @@ function estoyLogueado () {
 
     if (!isset($_SESSION['USUARIO'])) return false; //no existe la variable $_SESSION['USUARIO']. No logeado.
     if (!is_array($_SESSION['USUARIO'])) return false; //la variable no es un array $_SESSION['USUARIO']. No logeado.
-    if (empty($_SESSION['USUARIO']['userName'])) return false; //no tiene almacenado el usuario en $_SESSION['USUARIO']. No logeado.
+    if (empty($_SESSION['USUARIO']['usuario'])) return false; //no tiene almacenado el usuario en $_SESSION['USUARIO']. No logeado.
 
     //cumple las condiciones anteriores, entonces es un usuario validado
     return true;
@@ -25,10 +25,10 @@ function estoyLogueado () {
   */
 function dameUsuario(){
 
-if (estoyLogueado()){
-	
-	return($_SESSION['USUARIO']['userName']);
-}
+	if (estoyLogueado()){
+		
+		return($_SESSION['USUARIO']['usuario']);
+	}
 
 }
 
@@ -36,21 +36,23 @@ function dameRol(){
 	
 	if (estoyLogueado()){
 
-	return($_SESSION['USUARIO']['rol']);
+	return($_SESSION['USUARIO']['nombreRol']);
 	}
 
 }
 
 function dameUsuarioYRol(){
 	if (estoyLogueado()){
-	$usr = array('user' => $_SESSION['USUARIO']['userName'], 'rol' => $_SESSION['USUARIO']['rol']);
-	return $usr;
+	$usr = array('usuario' => $_SESSION['USUARIO']['usuario'],
+				 'nombre' => $_SESSION['USUARIO']['nombre'],
+				 'nombreRol' => $_SESSION['USUARIO']['nombreRol']);
+	 return $usr;
 	}
 }
 
 function soyAdmin(){
 	if (estoyLogueado()){
-		if ($_SESSION['USUARIO']['rol'] == 'administrador'){
+		if ($_SESSION['USUARIO']['nombreRol'] == 'administrador'){
 			return true;
 			}
 			else{ return false;}
