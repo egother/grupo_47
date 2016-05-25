@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 23-05-2016 a las 22:11:56
+-- Tiempo de generación: 25-05-2016 a las 18:27:24
 -- Versión del servidor: 5.7.9
 -- Versión de PHP: 5.6.16
 
@@ -184,7 +184,7 @@ CREATE TABLE IF NOT EXISTS `rol` (
   `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'id del rol',
   `nombreRol` varchar(20) NOT NULL COMMENT 'nombre del rol',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `rol`
@@ -211,15 +211,16 @@ CREATE TABLE IF NOT EXISTS `shadow` (
   `f_nacimiento` date NOT NULL,
   `telefono` varchar(20) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='usuarios del sistema';
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='usuarios del sistema';
 
 --
 -- Volcado de datos para la tabla `shadow`
 --
 
 INSERT INTO `shadow` (`id`, `usuario`, `nombre`, `id_rol`, `pass`, `correo`, `f_nacimiento`, `telefono`) VALUES
-(1, '', 'admin', 1, 'admin', '', '0000-00-00', ''),
-(2, '', 'visitante', 2, 'visitante', '', '0000-00-00', '');
+(1, 'admin', 'Administrador', 1, 'admin', 'admin@couchinn.com', '1980-01-01', '0221 444-2222'),
+(2, 'visitante', 'Visitante Publicador', 2, 'visitante', 'visitante@couchinn.com', '1990-01-01', '0221 555-1111'),
+(3, 'egother', 'Ezequiel Gomez', 2, '123456', 'ezequiel@hotmail.com', '2008-05-08', '221 3145758');
 
 -- --------------------------------------------------------
 
