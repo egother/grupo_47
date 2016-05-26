@@ -19,8 +19,11 @@ require_once __DIR__ . '/Controller.php';
 	public function inicio()
      {
 		$this->revisarMensajes();
+		$publicaciones = array(); //aca va el arreglo con la consulta sql de las ultimas publicaciones
 		echo $this->twig->render('layoutBackUser.twig.html', array('usuario' => dameUsuarioYRol(),
 																   'mensaje' => $this->msj,
+																   'publicaciones'=> $publicaciones,
+																   
 																   'inicio' => '1')); // habilita la visualizacion de las ultimas publicaciones
      }
 	 
