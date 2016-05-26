@@ -19,7 +19,8 @@
     <h3>Registro de usuario</h3>
     <div>
         <label>Usuario</label>
-        <input type="text" name="usuario" value="{{ params['usuario'] }}" pattern="(?=.*[a-z])(?=.*[A-Z]).{6,}"required/>
+        <input type="text" name="usuario" value="{{ params['usuario'] }}" pattern="(?=.*\d)(?=.*[a-z]).{6,}"required/>
+        <br><span class="form_hint">Debe contener minusculas y numeros, minimo 6 caracteres</span>
     </div>
     <div>
         <label>Nombre y Apellido</label>
