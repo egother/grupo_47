@@ -84,7 +84,7 @@
 						'mail' => $_POST['mail'],
 						'telefono' => $_POST['telefono'],
 						'fecha' => $_POST['fecha'],
-						);
+						);//prueba
 					$msj=("Las contraseñas ingresadas no coinciden");
 				}
 			} else $params = array(
