@@ -41,12 +41,14 @@
     </div>
 	<div>
         <label>Contraseña:</label>
-        <input type="password" id="p1" name="p1" required/>
+        <input type="password" id="p1" name="p1" pattern=".{6,}" required/>
+		<span class="form_hint">Minimo 8 caracteres</span>
+
     </div>
     
     <div>
         <label>Repetir Contraseña:</label>
-        <input type="password" id="p2" name="p2" onblur="validarPass()" required/>
+        <input type="password" id="p2" name="p2" pattern=".{6,}" onblur="validarPass()" required/>
     </div>
 
 	
