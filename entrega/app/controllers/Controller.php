@@ -51,8 +51,13 @@ require_once __DIR__ . '/ControllerLogin.php';
 							 Config::$mvc_bd_clave, Config::$mvc_bd_hostname);
 			} 
 			else {
-				$msj = "Usted no posee permisos para realizar dicha operación";
-				echo $this->twig->render('index.twig.html', array('mensaje' => $msj));
+				$this->setMensaje("Usted no posee permisos para realizar dicha operación");
+				if ($this->haySesion()){
+					header('Location: ./backend.php');
+				} else {
+					header('Location: ./index.php');
+				}
+
 			}
 		}
 	}

@@ -5,8 +5,7 @@ require_once __DIR__ . '/Controller.php';
 
  class ControllerBack extends Controller
  {
-	var $info;
-	
+
 	public function __construct()
 	{		
 		if (isset($_GET['accion'])) {
@@ -20,14 +19,9 @@ require_once __DIR__ . '/Controller.php';
 	public function inicio()
      {
 		$this->revisarMensajes();
-		
-		if($this->haySesion()){
-			echo $this->twig->render('layoutBackUser.twig.html', array('usuario' => dameUsuarioYRol(),
-																	   'mensaje' => $this->msj,
-																	   'inicio' => '1')); // habilita la visualizacion de las ultimas publicaciones
-			}
-		else
-			header('Location: ./index.php');
+		echo $this->twig->render('layoutBackUser.twig.html', array('usuario' => dameUsuarioYRol(),
+																   'mensaje' => $this->msj,
+																   'inicio' => '1')); // habilita la visualizacion de las ultimas publicaciones
      }
 	 
 	public function tipos()
@@ -54,6 +48,10 @@ require_once __DIR__ . '/Controller.php';
 																		  'func' => $func,
 																		  'tipos' => $params,
 																		  'mensaje' => $msj));
+	}
+	
+	public function modificarUsuario(){
+		
 	}
 	
 }

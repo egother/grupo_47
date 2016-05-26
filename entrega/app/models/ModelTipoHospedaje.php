@@ -25,7 +25,7 @@
  	 public function verificar($nombre) 
      {
          $sql = $this->conexion->prepare("SELECT tipo FROM tipo_hospedaje
-										  WHERE tipo= :nombre");
+										  WHERE tipo= UPPER(:nombre)");
 		 $sql->bindParam(':nombre', $nombre, PDO::PARAM_STR);
          $sql->execute();
          $resultado = $sql->fetchAll(PDO::FETCH_ASSOC);
@@ -37,7 +37,7 @@
 	 public function agregar($nombre) 
      {
          $sql = $this->conexion->prepare("INSERT INTO tipo_hospedaje (tipo)
-												  VALUES (:nombre)");
+												  VALUES (UPPER(:nombre))");
 		 $sql->bindParam(':nombre', $nombre, PDO::PARAM_STR);
          $sql->execute();
      

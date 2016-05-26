@@ -14,7 +14,7 @@
 class Permisos {
 
     private static $accesos = array(
-		'administrador' => array('inicio'=>'0'
+		'administrador' => array('inicio'=>'0', 'tipos'=>'0'
 								 ),
 		'visitante' => array('inicio'=>'0'
 							)
@@ -22,17 +22,15 @@ class Permisos {
 	 
 
 	public static function tengoPermiso($accionAEjecutar){
-		return true; // al finalizar, quitar esta linea
 		
-/*		if (!(isset($_SESSION['USUARIO']))) {
+		if (!(isset($_SESSION['USUARIO']))) {
 			return false;
 		}
-		 elseif (isset(self::$accesos[$_SESSION['USUARIO']['rol']][$accionAEjecutar])) {
+		 elseif (isset(self::$accesos[$_SESSION['USUARIO']['nombreRol']][$accionAEjecutar])) {
 			return true;	
 		}
 		return false;
 			
-*/
 	}
 }
 ?>

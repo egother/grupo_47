@@ -14,7 +14,7 @@
 		$this->revisarMensajes();
 
 		if($this->haySesion()){
-			echo $this->twig->render('index.twig.html', array('log' => '1'));
+			echo $this->twig->render('index.twig.html', array('log' => '1', 'mensaje' => $this->msj));
 			}
 		else{
 			echo $this->twig->render('index.twig.html', array('mensaje' => $this->msj));}
