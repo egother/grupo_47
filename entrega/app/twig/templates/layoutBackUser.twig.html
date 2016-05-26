@@ -3,19 +3,22 @@
 {% block botonera %}
 
 		{% if (usuario.nombreRol=="administrador") %}
-				<li><a href="./backend.php">Home</a></li>
-				
+				<li><a href="./backend.php">Inicio</a></li>
 				<li><a class="has-sub">Mas</a>
 					<ul>
-					<li><a href="./backend.php?accion=modificarConfiguracion">Configuración</a></li>
-					<li><a href="./backend.php?accion=users">Usuarios</a></li>
+					<li><a href="./backend.php?accion=tipos">Tipos de Hospedaje</a></li>
 					<li><a href="../app/logout.php">Logout</a></li>
 					</ul>
 				</li>
 
 		{% elseif (usuario.nombreRol=="visitante") %}
-				<li><a href="./backend.php">Home</a></li>
-				<li><a href="../app/logout.php">Logout</a></li>
+				<li><a href="./backend.php">Inicio</a></li>
+				<li><a class="has-sub">Mas</a>
+					<ul>
+					<li><a href="./backend.php?accion=modificarUsuario">Modificar Usuario</a></li>
+					<li><a href="../app/logout.php">Logout</a></li>
+					</ul>
+				</li>
 	
 		{% else %}
 			<li>no se cargó nada.. {{ usuario.nombreRol }}{{ usuario.usuario}}</li>

@@ -1,4 +1,5 @@
 <?php
+@session_start(); 
 
 require_once __DIR__ . '/ControllerLogin.php';
 
@@ -13,6 +14,7 @@ require_once __DIR__ . '/ControllerLogin.php';
 	protected $mCalifHue;// variable para la conexion del modelo calificacion huesped
 	protected $mCalifHos;// variable para la conexion del modelo calificacion hospedado
 	protected $mComent;	 // variable para la conexion del modelo comentarios
+	protected $mTipos;	 // variable para la conexion del modelo tipos de hospedaje
 	protected $msj;
 	
 	//configura los parámetros de Twig para el controllerBack
@@ -45,6 +47,8 @@ require_once __DIR__ . '/ControllerLogin.php';
 							 Config::$mvc_bd_clave, Config::$mvc_bd_hostname);
 				$this->mComent = new ModelComentario(Config::$mvc_bd_nombre, Config::$mvc_bd_usuario,
 							 Config::$mvc_bd_clave, Config::$mvc_bd_hostname);
+				$this->mTipos = new ModelTipoHospedaje(Config::$mvc_bd_nombre, Config::$mvc_bd_usuario,
+							 Config::$mvc_bd_clave, Config::$mvc_bd_hostname);
 			} 
 			else {
 				$msj = "Usted no posee permisos para realizar dicha operación";
@@ -52,6 +56,11 @@ require_once __DIR__ . '/ControllerLogin.php';
 			}
 		}
 	}
+
+	protected function haySesion(){
+	 	return ((isset($_SESSION['USUARIO']) && (isset($_SESSION['USUARIO']['nombreRol'])) && (isset($_SESSION['USUARIO']['id']))));
+	}
+ 
 
 	protected function revisarMensajes()
 	{
@@ -116,19 +125,5 @@ require_once __DIR__ . '/ControllerLogin.php';
 				return false;
 	} 
 
-	public function check_date_nacimiento($str){ // verifica si una fecha del tipo yyyy-mm-dd es correcta
-                trim($str);
-				$trozos = explode ("-", $str);
-				if (count($trozos)==3){
-					$año=$trozos[0];
-					$mes=$trozos[1];
-					$dia=$trozos[2];
-					if(checkdate ($mes,$dia,$año)){
-						return true;
-					}
-				}
-				return false;
-	} 
-	
  }
 ?>

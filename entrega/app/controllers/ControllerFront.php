@@ -9,10 +9,6 @@
 		parent::__construct('publico');
 	}
  
-	private function haySesion(){
-	 	return ((isset($_SESSION['USUARIO']) && (isset($_SESSION['USUARIO']['nombreRol'])) && (isset($_SESSION['USUARIO']['id']))));
-	}
- 
 	public function inicio()
      {
 		$this->revisarMensajes();
@@ -49,11 +45,10 @@
 	 // presenta la página con el formulario de registro
 	 public function registrarse()
 	 {
-		$this->revisarMensajes();
-		
+		$msj="";
 		if($this->haySesion()){
-			$this->setMensaje("Cierre la sesión actual para registrarse como nuevo usuario");
-			echo $this->twig->render('index.twig.html', array('log' => '1', 'mensaje' => $this->msj));
+			$msj=("Cierre la sesión actual para registrarse como nuevo usuario");
+			echo $this->twig->render('index.twig.html', array('log' => '1', 'mensaje' => $msj));
 		}
 		elseif (($_SERVER['REQUEST_METHOD'] == 'POST') && (isset($_POST['p1'])) && (isset($_POST['p2'])))
 			{
@@ -80,7 +75,7 @@
 							'fecha' => $_POST['fecha'],
 							);
 						// mostrar mensaje, lo hiciste mal, llenalo de nuevo
-						$this->setMensaje("El usuario y/o correo elegidos ya han sido registrados");
+						$msj=("El usuario y/o correo elegidos ya han sido registrados");
 					}
 				} else {
 					$params = array(
@@ -90,7 +85,7 @@
 						'telefono' => $_POST['telefono'],
 						'fecha' => $_POST['fecha'],
 						);
-					$this->setMensaje("Las contraseñas ingresadas no coinciden");
+					$msj=("Las contraseñas ingresadas no coinciden");
 				}
 			} else $params = array(
 						'usuario' => '',
@@ -100,7 +95,7 @@
 						'fecha' => ''
 					);
 		echo $this->twig->render('registro.twig.html', array('params' => $params,
-															 'mensaje' => $this->msj));
+															 'mensaje' => $msj));
 	}
  }
  

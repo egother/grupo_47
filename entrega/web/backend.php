@@ -15,6 +15,7 @@ require_once  '../app/twig/lib/Twig/Autoloader.php';
  require_once '../app/models/ModelCalificacionHuesped.php';
  require_once '../app/models/ModelCalificacionHospedado.php';
  require_once '../app/models/ModelComentario.php';
+ require_once '../app/models/ModelTipoHospedaje.php';
 
  
  // carga de los controladores
@@ -27,49 +28,19 @@ require_once  '../app/twig/lib/Twig/Autoloader.php';
 $map = array(
      'inicio' => array('controller' =>'ControllerBack', 'accion' =>'inicio'),
 	 
-	 'listarAlimentosSoloStock' => array('controller' =>'ControllerBack', 'accion' =>'listarAlimentosSoloStock'),
-     'listarDonantes' => array('controller' =>'ControllerBack', 'accion' =>'listarDonantes'),
-     'altaDonante' => array('controller' =>'ControllerBack', 'accion' =>'altaDonante'),
-     'modificarDonante' => array('controller' =>'ControllerBack', 'accion' =>'modificarDonante'),
-     'bajaDonante' => array('controller' =>'ControllerBack', 'accion' =>'bajaDonante'),
-
-     'listarEntidades' => array('controller' =>'ControllerBack', 'accion' =>'listarEntidades'),
-     'altaEntidad' => array('controller' =>'ControllerBack', 'accion' =>'altaEntidad'),
-     'modificarEntidad' => array('controller' =>'ControllerBack', 'accion' =>'modificarEntidad'),
-     'bajaEntidad' => array('controller' =>'ControllerBack', 'accion' =>'bajaEntidad'),
-
-     'listarAlimentos' => array('controller' =>'ControllerBack', 'accion' =>'listarAlimentos'),
-     'altaAlimento' => array('controller' =>'ControllerBack', 'accion' =>'altaAlimento'),
-     'modificarAlimento' => array('controller' =>'ControllerBack', 'accion' =>'modificarAlimento'),
-     'altaDonacion' => array('controller' =>'ControllerBack', 'accion' =>'altaDonacion'),
-     'bajaAlimento' => array('controller' =>'ControllerBack', 'accion' =>'bajaAlimento'),
-
      'quienesSomos' => array('controller' =>'ControllerBack', 'accion' =>'quienesSomos'),
-     'contacto' => array('controller' =>'ControllerBack', 'accion' =>'contacto'),
+     'comoFunciona' => array('controller' =>'ControllerBack', 'accion' =>'comoFunciona'),
      
      'users' => array('controller' =>'ControllerBack', 'accion' =>'users'),
      'modificarUsuario' => array('controller' =>'ControllerBack', 'accion' =>'modificarUsuario'),
-     'altaUsuario' => array('controller' =>'ControllerBack', 'accion' =>'altaUsuario'),
-     'insertarUsuario' => array('controller' =>'ControllerBack', 'accion' =>'insertarUsuario'),
      'borrarUsuario' => array('controller' =>'ControllerBack', 'accion' =>'borrarUsuario'),
      'mostrarConfiguracion' => array('controller' => 'ControllerBack', 'accion' => 'mostrarConfiguracion'),
      'modificarConfiguracion' => array('controller' => 'ControllerBack', 'accion' => 'modificarConfiguracion'),
 	 
-	 'generarPedido' => array('controller' => 'ControllerBack', 'accion' => 'generarPedido'),
-	 'actualizarPedido' => array('controller' => 'ControllerBack', 'accion' => 'actualizarPedido'),
-	 'mostrarPedidos' => array('controller' => 'ControllerBack', 'accion' => 'mostrarPedidos'),
-	 'generarEntrega' => array('controller' => 'ControllerBack', 'accion' => 'generarEntrega'),
-	 'verEntregasRealizadas' => array('controller' => 'ControllerBack', 'accion' => 'verEntregasRealizadas'),
-	 'mostrarAgenda' => array('controller' => 'ControllerBack', 'accion' => 'mostrarAgenda'),
-	 'pedidosConEnvio' => array('controller' => 'ControllerBack', 'accion' => 'pedidosConEnvio'),
-	 'entregaDirecta' => array('controller' => 'ControllerBack', 'accion' => 'entregaDirecta'),
-	 'borrarDetallePedido' => array('controller' => 'ControllerBack', 'accion' => 'borrarDetallePedido'),
-	 
-	 'informePorER' => array('controller' => 'ControllerBack', 'accion' => 'informePorER'),
-	 'entreFechas' => array('controller' => 'ControllerBack', 'accion' => 'entreFechas'),
-	 'alimentosVencidos' => array('controller' => 'ControllerBack', 'accion' => 'alimentosVencidos'),
-	 'mostrarEnvio' => array('controller' => 'ControllerBack', 'accion' => 'mostrarEnvio'),
-	 	 
+	 'tipos' => array('controller' => 'ControllerBack', 'accion' => 'tipos'),
+	 'agregarTipo' => array('controller' => 'ControllerBack', 'accion' => 'agregarTipo'),
+	 'modificarTipo' => array('controller' => 'ControllerBack', 'accion' => 'modificarTipo'),
+	 'borrarTipo' => array('controller' => 'ControllerBack', 'accion' => 'eliminarTipo')
 );
 
 @session_start();

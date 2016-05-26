@@ -1,0 +1,54 @@
+{% extends "layoutBackUser.twig.html" %}
+
+
+
+{% block contenido %}
+<br>
+<div class="table-responsive">
+<table class="table table-striped" style="width:400px">
+		<tbody>
+			<tr class="encabezado">
+				<th>Tipo de Hospedaje</th>
+				<th></th>
+				<th style="width:32px"><a href="./backend.php?accion=tipos&amp;func=agregar">
+							<img src="./img/mas.png" alt="Agregar Tipo de Hospedaje" title="Agregar Tipo de Hospedaje"></a>
+			</tr>
+		{% for tipo_hospedaje in tipos %}
+			<tr>
+			       	<td>{{ tipo_hospedaje.tipo }}</td>
+		        	<td style="width:32px"> <a href="./backend.php?accion=modificarTipo&amp;id={{tipo_hospedaje.id_tipo}}">
+							<img src="./img/lapiz.jpg" alt="modificar tipo hospedaje" title="Modificar Tipo Hospedaje"></a></td>
+		        	<td style="width:32px"><a href="javascript: if (confirm('Confirmar la eliminación?'))
+							{ window.location.href='./backend.php?accion=borrarTipo&amp;id={{tipo_hospedaje.id_tipo}}' } else { void('') };"> 
+						</a><img src="./img/cruz.png" alt="Borrar Tipo Hospedaje" title="Borrar Tipo Hospedaje"></td>
+<!--						<img src="./img/cruz.png" alt="Borrar Tipo Hospedaje" title="Borrar Tipo Hospedaje"></a></td>
+-->
+			</tr>
+		{% endfor %}
+		</tbody>
+</table>
+</div>
+<br>
+<hr>
+
+<!-- Aca aparecerá el formulario de Agregar Tipo de Hospedaje en caso de que la opción Agregar haya sido elegida-->
+{% if (func=="agregar")%}
+<form class="formulario" method="POST" name="formulario" action="./backend.php?accion=tipos">
+    <h3>Agregar tipo de hospedaje</h3>
+    <div>
+        <label>Nombre</label>
+        <input type="text" name="nombre" value="" required/>
+    </div>
+
+	<br>
+	
+    <button type="submit">Agregar</button>
+	<button type="button" onclick="window.location.href='./backend.php?accion=tipos'">Cancelar</button>
+
+
+</form>
+	
+{% endif %}
+
+
+{% endblock %}
