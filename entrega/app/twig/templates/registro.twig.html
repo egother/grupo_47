@@ -19,7 +19,7 @@
     <h3>Registro de usuario</h3>
     <div>
         <label>Usuario</label>
-        <input type="text" name="usuario" value="{{ params['usuario'] }}" pattern="(?=.*\d)(?=.*[a-z]).{6,}"required/>
+        <input type="text" name="usuario" value="{{ params['usuario'] }}" pattern="[A-Za-z0-9]{6,20}"required autofocus/>
         <br><span class="form_hint">Debe contener minusculas y numeros, minimo 6 caracteres</span>
     </div>
     <div>
@@ -42,14 +42,14 @@
     </div>
 	<div>
         <label>Contraseña:</label>
-        <input type="password" id="p1" name="p1" pattern=".{6,}" required/>
+        <input type="password" id="p1" name="p1" pattern=".{8,}" required/>
 		<span class="form_hint">Minimo 8 caracteres</span>
 
     </div>
     
     <div>
         <label>Repetir Contraseña:</label>
-        <input type="password" id="p2" name="p2" pattern=".{6,}" onblur="validarPass()" required/>
+        <input type="password" id="p2" name="p2" pattern=".{8,}" onblur="validarPass()" required/>
     </div>
 
 	
