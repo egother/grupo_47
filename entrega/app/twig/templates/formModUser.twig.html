@@ -17,21 +17,20 @@
 
     <div>
         <label>*Nombre de usuario</label>
+        <input type="text" name="nombre" value="{{users.0.nombre}}" disabled required/>
+    </div>
+
+	<div>
+        <label>*Nombre y apellido</label>
         <input type="text" name="nombre" value="{{users.0.nombre}}" required/>
     </div>
-    <div
-         class="formRow">
-					<label>Rol</label>
-					<select id="rolSelect" name="rol">
-						<option value="1"  {% if users.0.nombreRol == "administrador" %} selected="selected" {% endif %}> 
-							Administrador</option>
-						<option value="2"  {% if users.0.nombreRol == "gestion" %} selected="selected" {% endif %}> 
-							Gestión</option>
-						<option value="3"  {% if users.0.nombreRol == "consulta" %} selected="selected" {% endif %}> 
-							Consulta</option>
-					</select>	
-		
+
+	<div>
+        <label>*Nombre de usuario</label>
+        <input type="text" name="nombre" value="{{users.0.nombre}}" disabled required/>
     </div>
+
+	
     <div>
         <label>*Contraseña:</label>
         <input type="password" id="p1" name="p1" value="{{users.0.pass}}" required/>
@@ -48,7 +47,7 @@
 	
     <button type="submit" name="botones">Modificar</button>
     
-	<button onclick="window.location.href='./backend.php?accion=users'">Cancelar</button>
+	<button onclick="window.location.href='./backend.php?'">Cancelar</button>
 
 
 <div class="obligatorios">*Campos obligatorios</div>

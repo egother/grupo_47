@@ -53,9 +53,37 @@ require_once __DIR__ . '/Controller.php';
 																		  'mensaje' => $msj));
 	}
 	
-	public function modificarUsuario(){
+	public function modificarUsuario()
+	{
+	print_r($_SESSION['USUARIO']);	
 		
+	/*	if (isset($_GET['id'])) {
+			$id = $this->xss($_GET['id']);
+			$params = array('users' => $this->us->listarPorId($id));
+			if ($params==-1){
+				$this->setMensaje("Error al eliminar el usuario.");
+				header('Location: ./backend.php?accion=users');
+			}
+		} else {
+			$this->setMensaje("Error al entrar a la opción de eliminación de usuario.");
+			header('Location: ./backend.php?accion=users');
+		} */
+		$params = array('users' => $this->us->listarPorId($_SESSION['USUARIO']['id']));
+		
+		print_r($params);
+		
+		
+		if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+			$nombre = $this->xss($_POST['nombre']);
+			//$rol = $this->xss($_POST['rol']);
+			$p1 = $this->xss($_POST['p1']);
+			$this->us->modificar($_SESSION['USUARIO']['id'], $nombre, $rol, $p1);
+			$this->setMensaje("Usuario modificado con éxito.");
+			//header('Location: ./backend.php?accion=users');
+		} else {
+			echo $this->twig->render('formModUser.twig.html', array('users' => $params['users'], 'usuario' => dameUsuarioYRol(), 'mensaje' => $this->msj));
+		}
 	}
-	
-}
+		
+ }
 ?>
