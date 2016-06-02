@@ -82,12 +82,12 @@ require_once __DIR__ . '/Controller.php';
 			
 			//$p1 = $this->xss($_POST['p1']);
 			
+			//printf("Antes consulta");
+			$this->us->modificar(($_SESSION['USUARIO']['usuario']), $nombre);
 			
-			$this->us->modificar(($_SESSION['USUARIO']['usuario']),  $nombre);
-			
-
 			$this->setMensaje("Usuario modificado con éxito.");
-			//header('Location: ./backend.php?accion=users');
+			
+			//header('Location: ./backend.php');
 		} else {
 			echo $this->twig->render('formModUser.twig.html', array('users' => $params['users'], 'usuario' => dameUsuarioYRol(), 'mensaje' => $this->msj));
 		}

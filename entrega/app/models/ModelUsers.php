@@ -176,18 +176,18 @@
 		
 		$res = $this->listarUsuario($usu);
 		$idaux = $res[0]['id'];
-		print_r($idaux);
+		//print_r($idaux);
 		if ($res!=-1){
 			
-			$sql = $this->conexion->prepare("UPDATE shadow SET nombre = :n WHERE id = :idaux");
-			 
+			$sql = $this->conexion->prepare("UPDATE shadow SET nombre = :n WHERE id = :idaux ");
 			$sql->bindParam(':n', $n, PDO::PARAM_STR);
-			 
-			 /*$sql->bindParam(':r', $r, PDO::PARAM_INT);
-			 $sql->bindParam(':p', $p, PDO::PARAM_STR);*/
-			 $sql->bindParam(':id', $idaux, PDO::PARAM_INT);
+			 //print_r($sql);
+			 //$sql->bindParam(':r', $r, PDO::PARAM_INT);
+			 //$sql->bindParam(':usu', $usu, PDO::PARAM_STR);
+			 //$sql->bindParam(':id', $idaux, PDO::PARAM_INT);
 			
-			 $sql->execute(); 
+			$sql->execute(); 
+
 			 
 			  
 		} else
