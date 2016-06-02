@@ -90,11 +90,11 @@
 		else
 			return -1;		
 	 }
-	 
-	 public function listarUsuario($id){
+	 //Lista por nombre de usuario y no por id, porque por id matcheba con id_rol
+	 public function listarUsuario($usuario){
 		 
-		$sql = $this->conexion->prepare("SELECT usuario FROM shadow WHERE id = :id");
-		$sql->bindParam(':id', $id, PDO::PARAM_INT);
+		$sql = $this->conexion->prepare("SELECT * FROM shadow WHERE usuario = :usuario");
+		$sql->bindParam(':usuario', $usuario, PDO::PARAM_INT);
 		$sql->execute();
 		
         $res = $sql->fetchAll(PDO::FETCH_ASSOC);
@@ -170,21 +170,26 @@
 			return -1;		
 	}
 	
-	 public function modificar($id, $n, $r, $p)
+	 public function modificar($usu, $n)
+	 
      {
-		$res = $this->listarUsuario($id);
 		
+		$res = $this->listarUsuario($usu);
+		$idaux = $res[0]['id'];
+		print_r($idaux);
 		if ($res!=-1){
-			$sql = $this->conexion->prepare("UPDATE shadow
-											 SET nombre = :n,
-											 id_rol = :r,
-											 pass = :p
-											 WHERE id = :id");
-			 $sql->bindParam(':n', $n, PDO::PARAM_STR);
-			 $sql->bindParam(':r', $r, PDO::PARAM_INT);
-			 $sql->bindParam(':p', $p, PDO::PARAM_STR);
-			 $sql->bindParam(':id', $id, PDO::PARAM_INT);
+			
+			$sql = $this->conexion->prepare("UPDATE shadow SET nombre = :n WHERE id = :idaux");
+			 
+			$sql->bindParam(':n', $n, PDO::PARAM_STR);
+			 
+			 /*$sql->bindParam(':r', $r, PDO::PARAM_INT);
+			 $sql->bindParam(':p', $p, PDO::PARAM_STR);*/
+			 $sql->bindParam(':id', $idaux, PDO::PARAM_INT);
+			
 			 $sql->execute(); 
+			 
+			  
 		} else
 			return -1;
 	}

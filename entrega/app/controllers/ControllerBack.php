@@ -55,7 +55,7 @@ require_once __DIR__ . '/Controller.php';
 	
 	public function modificarUsuario()
 	{
-	print_r($_SESSION['USUARIO']);	
+	
 		
 	/*	if (isset($_GET['id'])) {
 			$id = $this->xss($_GET['id']);
@@ -68,16 +68,24 @@ require_once __DIR__ . '/Controller.php';
 			$this->setMensaje("Error al entrar a la opción de eliminación de usuario.");
 			header('Location: ./backend.php?accion=users');
 		} */
-		$params = array('users' => $this->us->listarPorId($_SESSION['USUARIO']['id']));
 		
-		print_r($params);
+		
+		$params = array('users' => $this->us->listarUsuario($_SESSION['USUARIO']['usuario']));
+		
+		//print_r($params);
 		
 		
 		if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+			
 			$nombre = $this->xss($_POST['nombre']);
-			//$rol = $this->xss($_POST['rol']);
-			$p1 = $this->xss($_POST['p1']);
-			$this->us->modificar($_SESSION['USUARIO']['id'], $nombre, $rol, $p1);
+			
+			
+			//$p1 = $this->xss($_POST['p1']);
+			
+			
+			$this->us->modificar(($_SESSION['USUARIO']['usuario']),  $nombre);
+			
+
 			$this->setMensaje("Usuario modificado con éxito.");
 			//header('Location: ./backend.php?accion=users');
 		} else {

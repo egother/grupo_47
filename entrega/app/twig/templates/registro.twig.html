@@ -20,11 +20,11 @@
     <div>
         <label>Usuario</label>
         <input type="text" name="usuario" value="{{ params['usuario'] }}" pattern="[A-Za-z0-9]{6,20}"required autofocus/>
-        <br><span class="form_hint">Debe contener minusculas y numeros, minimo 6 caracteres</span>
+        <br><span class="form_hint">Solamente letras y numeros, minimo 6 caracteres</span>
     </div>
     <div>
         <label>Nombre y Apellido</label>
-        <input type="text" name="nombre" value="{{ params['nombre'] }}" required/>
+        <input type="text" name="nombre" value="{{ params['nombre'] }}" pattern="[A-Za-z]{3,20}[ ][A-Za-z ]{3,50}" required/>
     </div>
     <div>
         <label>Teléfono:</label>
