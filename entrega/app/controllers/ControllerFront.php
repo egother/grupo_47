@@ -88,6 +88,7 @@ class ControllerFront extends Controller
     if($this->haySesion()){
       $msj=("Cierre la sesión actual para registrarse como nuevo usuario");
       echo $this->twig->render('index.twig.html', array('log' => '1', 'mensaje' => $msj));
+	  return;
     }
     elseif (($_SERVER['REQUEST_METHOD'] == 'POST') && (isset($_POST['p1'])) && (isset($_POST['p2'])))
     {
@@ -135,6 +136,33 @@ class ControllerFront extends Controller
     );
     echo $this->twig->render('registro.twig.html', array('params' => $params,
     'mensaje' => $msj));
+  }
+  
+  public function recuperarPass(){
+	$msj="";
+    if($this->haySesion()){
+      $msj=("Existe una sesión abierta. No puede realizar la acción solicitada.");
+      echo $this->twig->render('index.twig.html', array('log' => '1', 'mensaje' => $msj));
+	  return;
+    }
+    elseif (($_SERVER['REQUEST_METHOD'] == 'POST') && (isset($_POST['mail'])))
+    {
+		$mail = $this->xss($_POST['mail']);
+		$res = $this->us->recuperarPass($mail);
+		if (count($res)==1) {
+			// aca supuestamente se le envia un correo al usuario $res devuelto con su misma contraseña
+			$params = array('mail' => $mail);
+			echo $this->twig->render('recuperarPassCorrecto.twig.html', array('params' => $params,
+																			  'mensaje' => $msj));
+			return;
+		} else {
+			$params = array('mail' => $mail);
+			$msj=("El correo ingresado no pertenece a una cuenta de usuario.");
+		}
+    }else
+		$params = array('mail' => '');
+    echo $this->twig->render('recuperarPass.twig.html', array('params' => $params,
+															  'mensaje' => $msj));
   }
 }
 

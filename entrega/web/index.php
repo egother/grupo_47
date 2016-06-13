@@ -21,7 +21,7 @@
        'comoFunciona' => array('controller' =>'ControllerFront', 'accion' =>'comoFunciona'),
        'inicioErr' => array('controller' =>'ControllerFront', 'accion' =>'inicioErr'),
        'registrarse' => array('controller' =>'ControllerFront', 'accion' =>'registrarse'),
-       'registrarUsuario' => array('controller' =>'ControllerFront', 'accion' =>'registrarUsuario')
+	   'recuperarPass' => array('controller' =>'ControllerFront', 'accion' =>'recuperarPass')
   	);
 $errors=false;
  // Parseo de la ruta
