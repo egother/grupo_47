@@ -1,0 +1,19 @@
+{% extends "layoutFront.twig.html" %}
+
+{% block contenido %}
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Publicaciones</title>
+    </head>
+    <body>
+        <?php
+            foreach ($listado as $pub) {
+                echo $pub["nombre"]."<br/>";
+            }
+        ?>
+    </body>
+</html>
+
+{% endblock %}

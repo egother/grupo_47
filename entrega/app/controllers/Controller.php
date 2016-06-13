@@ -1,12 +1,12 @@
 <?php
-@session_start(); 
+@session_start();
 
 require_once __DIR__ . '/ControllerLogin.php';
 
  class Controller
  {
 	protected $twig; 	 // variable para las plantillas twig
-	protected $mPubli; 	 // variable para la conexión del modelo publicaciones
+	public $mPubli; 	 // variable para la conexión del modelo publicaciones
 	protected $mSolic; 	 // variable para la conexión del modelo solicitudes
 	protected $mReser; 	 // variable para la conexión del modelo reservas
 	protected $us;		 // variable para la conexión del modelo usuarios
@@ -16,25 +16,34 @@ require_once __DIR__ . '/ControllerLogin.php';
 	protected $mComent;	 // variable para la conexion del modelo comentarios
 	protected $mTipos;	 // variable para la conexion del modelo tipos de hospedaje
 	protected $msj;
-	
+
 	//configura los parámetros de Twig para el controllerBack
-	
+
 	public function __construct($accion)
 	{
-		$this->twig = $this->configTwig();
-		
-		
+    $this->twig = $this->configTwig();
+    $this->twig->addGlobal('usuario', dameUsuarioYRol());
+		include_once(__DIR__.'/../models/ModelPublicacion.php');
+		$this->mPubli = new ModelPublicacion(Config::$mvc_bd_nombre, Config::$mvc_bd_usuario,
+							 Config::$mvc_bd_clave, Config::$mvc_bd_hostname);
+
+		include_once(__DIR__.'/../models/ModelTipoHospedaje.php');
+    $this->mTipos = new ModelTipoHospedaje(Config::$mvc_bd_nombre, Config::$mvc_bd_usuario,
+           Config::$mvc_bd_clave, Config::$mvc_bd_hostname);
+
+    include_once(__DIR__.'/../models/ModelLogin.php');
+    $this->us = new ModelLogin(Config::$mvc_bd_nombre, Config::$mvc_bd_usuario,
+            Config::$mvc_bd_clave, Config::$mvc_bd_hostname);
+
 		if (Model::testConect()){ //si la conexión resulta exitosa
-		
+
 			if ($accion == 'publico') {
 				$this->us = new ModelUsers(Config::$mvc_bd_nombre, Config::$mvc_bd_usuario,
 							 Config::$mvc_bd_clave, Config::$mvc_bd_hostname);
-			}	
+			}
 			elseif (postaTengoPermiso($accion)) {
-				$this->mPubli = new ModelPublicacion(Config::$mvc_bd_nombre, Config::$mvc_bd_usuario,
-							 Config::$mvc_bd_clave, Config::$mvc_bd_hostname);	
 				$this->mSolic = new ModelSolicitud(Config::$mvc_bd_nombre, Config::$mvc_bd_usuario,
-							 Config::$mvc_bd_clave, Config::$mvc_bd_hostname);	
+							 Config::$mvc_bd_clave, Config::$mvc_bd_hostname);
 				$this->mReser = new ModelReserva(Config::$mvc_bd_nombre, Config::$mvc_bd_usuario,
 							 Config::$mvc_bd_clave, Config::$mvc_bd_hostname);
 				$this->us = new ModelUsers(Config::$mvc_bd_nombre, Config::$mvc_bd_usuario,
@@ -47,9 +56,7 @@ require_once __DIR__ . '/ControllerLogin.php';
 							 Config::$mvc_bd_clave, Config::$mvc_bd_hostname);
 				$this->mComent = new ModelComentario(Config::$mvc_bd_nombre, Config::$mvc_bd_usuario,
 							 Config::$mvc_bd_clave, Config::$mvc_bd_hostname);
-				$this->mTipos = new ModelTipoHospedaje(Config::$mvc_bd_nombre, Config::$mvc_bd_usuario,
-							 Config::$mvc_bd_clave, Config::$mvc_bd_hostname);
-			} 
+			}
 			else {
 				$this->setMensaje("Usted no posee permisos para realizar dicha operación");
 				if ($this->haySesion()){
@@ -65,7 +72,7 @@ require_once __DIR__ . '/ControllerLogin.php';
 	protected function haySesion(){
 	 	return ((isset($_SESSION['USUARIO']) && (isset($_SESSION['USUARIO']['nombreRol'])) && (isset($_SESSION['USUARIO']['id']))));
 	}
- 
+
 
 	protected function revisarMensajes()
 	{
@@ -74,12 +81,12 @@ require_once __DIR__ . '/ControllerLogin.php';
 			setcookie('mensaje', 'content', 1);
 		}
 	}
-	
+
 	protected function setMensaje($m)
 	{
 		setcookie('mensaje', $m);
 	}
-	
+
 	private static function configTwig(){
 		require_once __DIR__ . '/../twig/lib/Twig/Autoloader.php';
 		Twig_Autoloader::register();
@@ -90,29 +97,33 @@ require_once __DIR__ . '/ControllerLogin.php';
 			'debug' => 'true'));
 		return $twig_temp;
 	}
-	
+
 		//la siguiente función se usa para el manejo de excepciones
 	public static function exepciones($e, $mensajes, $error){
 			require_once __DIR__ . '/../twig/lib/Twig/Autoloader.php';
 			Twig_Autoloader::register();
-		
+
 			$loader = new Twig_Loader_Filesystem('./../app/twig/templates');
 			$newTwig = new Twig_Environment($loader, array());
-			
-			
+
+
 			echo $newTwig->render('errorBlue.twig.html', array('mensaje' => $mensajes, 'error' => $error));
-			
-			
+
+
 	}
-	
+
+	public function publicacion(){
+			return $this->mPubli;
+	}
+
 	public static function xss($text)
-	{ 
+	{
 		// validar texto
 		$comment = trim($text);
-		 
+
 		// sanitizar texto
 		$comment = strip_tags($comment);
-		
+
 		return $comment;
 	}
 
@@ -128,7 +139,7 @@ require_once __DIR__ . '/ControllerLogin.php';
 					}
 				}
 				return false;
-	} 
+	}
 
  }
 ?>

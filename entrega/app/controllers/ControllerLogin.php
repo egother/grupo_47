@@ -6,7 +6,7 @@
 /**
  * Veridica si el usuario está logeado
  */
- 
+
 require_once __DIR__ . '/../models/Permisos.php';
 @session_start(); //inicia sesion (la @ evita los mensajes de error si la session ya está iniciada)
 
@@ -26,14 +26,29 @@ function estoyLogueado () {
 function dameUsuario(){
 
 	if (estoyLogueado()){
-		
+
 		return($_SESSION['USUARIO']['usuario']);
 	}
+}
 
+function dameId(){
+  if (estoyLogueado()){
+    return($_SESSION['USUARIO']['id']);
+  }
+}
+function soyPremium(){
+  if(estoyLogueado()){
+    if ($_SESSION['USUARIO']['premium']==0) {
+      return folse;
+    }
+    else {
+      return true;
+    }
+  }
 }
 
 function dameRol(){
-	
+
 	if (estoyLogueado()){
 
 	return($_SESSION['USUARIO']['nombreRol']);
@@ -56,14 +71,14 @@ function soyAdmin(){
 			return true;
 			}
 			else{ return false;}
-				
+
 	}
 }
 
 function postaTengoPermiso($unaAccion){
-	
+
 	return (Permisos::tengoPermiso($unaAccion));
-	
+
 }
 
 ?>

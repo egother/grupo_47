@@ -1,0 +1,19 @@
+{% extends "layoutBackUser.twig.html" %}
+
+{% block contenido %}
+<form method="post" name="relalizarPago" action="./backend.php?accion=pagar">
+	{% if msj is defined %}
+		{{ msj }}
+	{% else %}
+		<p>Nombre del Titular: <input type="text" name="nombre" required/></p><span class="form_hint">Como aparece en la tarjeta</span>
+		<p>Numero de Tajeta: <input type="text" name="numero" pattern="[A-Za-z0-9]{16,16}" required/></p>
+		<br>
+		<p>Fecha de expiracion: <input type="text" name="nombre" required/><input type="text" name="nombre" required/></p><span class="form_hint">Mes    Año</span>
+		<p>Codigo de seguriad:<input type="text" name="nombre" required/></p><span class="form_hint">3 Digitos</span>
+		<br>
+		<P>El monto a pagar es $300</p>
+		<p><button type="submit">Realizar Pago</button></p>
+	{% endif %}
+</form>
+
+{% endblock %}

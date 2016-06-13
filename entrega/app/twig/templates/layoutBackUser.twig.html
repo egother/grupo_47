@@ -13,14 +13,16 @@
 
 		{% elseif (usuario.nombreRol=="visitante") %}
 				<li><a href="./backend.php">Inicio</a></li>
+				<li><a href="./backend.php?accion=usuarioPremium">Usuario Premium</a></li>
+				<li><a href="./backend.php?accion=publicar">Publicar</a></li>
 				<li><a class="has-sub">Mas</a>
 					<ul>
-					<li><a href="./backend.php?accion=modificarUsuario">Modificar Usuario</a></li>
+					<li><a href="./backend.php?accion=modificarUsuario">Modificar Perfil</a></li>
 					<li><a href="../app/logout.php">Logout</a></li>
 					</ul>
 				</li>
-	
+
 		{% else %}
-			<li>no se cargó nada.. {{ usuario.nombreRol }}{{ usuario.usuario}}</li>
+			<li><a href="./backend.php">Inicio</a> {{ usuario.nombreRol }}{{ usuario.usuario}}</li>
 		{% endif %}
 {% endblock %}

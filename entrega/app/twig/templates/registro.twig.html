@@ -6,12 +6,12 @@
    function validarPass(){
     if(document.getElementById("p1").value!=document.getElementById("p2").value)
 	{   alert("Las contraseñas no coinciden");
-		
+
 		}
-	
-		
+
+
 }
-    
+
  </script>
 
 
@@ -19,16 +19,22 @@
     <h3>Registro de usuario</h3>
     <div>
         <label>Usuario</label>
-        <input type="text" name="usuario" value="{{ params['usuario'] }}" pattern="(?=.*\d)(?=.*[a-z]).{6,}"required/>
-        <br><span class="form_hint">Debe contener minusculas y numeros, minimo 6 caracteres</span>
+        <input type="text" name="usuario" value="{{ params['usuario'] }}" pattern="[A-Za-z0-9]{6,20}"required autofocus/>
+<<<<<<< HEAD
+        <br><span class="form_hint">Debe contener minusculas, minimo 6 caracteres</span>
+=======
+        <br><span class="form_hint">Solamente letras y numeros, minimo 6 caracteres</span>
+>>>>>>> e81c2034cf78d6f5ea6bd7308580a415ace87c51
     </div>
     <div>
         <label>Nombre y Apellido</label>
-        <input type="text" name="nombre" value="{{ params['nombre'] }}" required/>
+        <input type="text" name="nombre" value="{{ params['nombre'] }}" pattern="[A-Za-z]{3,20}[ ][A-Za-z ]{3,50}" required/>
     </div>
     <div>
         <label>Teléfono:</label>
-        <input type="text" id="telefono" name="telefono" value="{{ params['telefono'] }}" required/>
+
+        <input type="text" id="telefono" name="telefono" value="{{ params['telefono'] }}" pattern="[0-9]{2}[ ][0-9]{2,3}[ ][0-9]{7,8}"  required/>
+		<span class="form_hint">Ejemplo "54 11 08105544"</span>
     </div>
 	<div>
 		<label>Email:</label>
@@ -42,24 +48,23 @@
     </div>
 	<div>
         <label>Contraseña:</label>
-        <input type="password" id="p1" name="p1" pattern=".{6,}" required/>
+        <input type="password" id="p1" name="p1" pattern=".{8,}" required/>
 		<span class="form_hint">Minimo 8 caracteres</span>
 
     </div>
-    
+
     <div>
         <label>Repetir Contraseña:</label>
-        <input type="password" id="p2" name="p2" pattern=".{6,}" onblur="validarPass()" required/>
+        <input type="password" id="p2" name="p2" pattern=".{8,}" onblur="validarPass()" required/>
     </div>
 
-	
+
 
 	<br>
-	
+
     <button type="submit">Registrarse</button>
 	<button type="button" onclick="window.location.href='./index.php?accion=inicio'">Cancelar</button>
 
-
 </form>
-
+</br>
 {% endblock %}

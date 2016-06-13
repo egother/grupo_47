@@ -1,0 +1,52 @@
+{% extends "layoutBackUser.twig.html" %}
+
+{% block contenido %}
+
+<center>
+
+	<form class="formulario" method="post" name="formularioP" action="./backend.php?accion=publicar" enctype="multipart/form-data">
+		<h3> Realizar publicacion </h3>
+		<div >
+			<label>Encabezado:</label>
+			<input type="text" name="encabezado" value="{{ params['encabezado'] }}" required/>
+		</div>
+		<div >
+			<label>Titulo de propiedad:</label>
+			<input type="text" name="tituloP" value="{{ params['tituloP'] }}" required/>
+		</div>
+		<div >
+			<label>Capacidad de Hospedaje :</label>
+			<input type="text" name="capacidad" value="{{ params['capacidad'] }}" required/>
+		</div>
+		<div >
+			<label>Descripcion:</label>
+			<textarea rows="4" cols="20" name="descripcion" required/></textarea>
+		</div>
+		<div >
+			<label>Direccion:</label>
+			<input type="text" name="direccion" value="{{ params['direccion'] }}" required/>
+		</div>
+		<div >
+			<label>Tipo de Hospedaje:</label>
+			<select name="tipoViv">
+				{% for tipo in tipos %}
+					<option value="{{ tipo.id }}">{{tipo.tipo}}</option>
+				{% endfor %}
+			</select>
+		</div>
+		<div >
+			<label>Provincia-Ciudad:</label>
+			<input type="text" name="lugar" value="{{ params['lugar'] }}" required/>
+		</div>
+		<div >
+			<label>Cargar Imagen:</label>
+			<input type="file" name="imagen" required/>
+		</div>
+
+		<br>
+		<button type="submit">Publicar</button>
+		<button type="button" onclick="window.location.href='./backend.php?accion=inicio'">Cancelar</button>
+	</form>
+</center>
+<br>
+{% endblock %}
