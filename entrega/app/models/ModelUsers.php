@@ -90,19 +90,12 @@
 		else
 			return -1;
 	 }
-<<<<<<< HEAD
-
-	 public function listarUsuario($id){
-
-		$sql = $this->conexion->prepare("SELECT usuario FROM shadow WHERE id = :id");
-		$sql->bindParam(':id', $id, PDO::PARAM_INT);
-=======
+	 
 	 //Lista por nombre de usuario y no por id, porque por id matcheba con id_rol
 	 public function listarUsuario($usuario){
 		 
 		$sql = $this->conexion->prepare("SELECT * FROM shadow WHERE usuario = :usuario");
 		$sql->bindParam(':usuario', $usuario, PDO::PARAM_INT);
->>>>>>> e81c2034cf78d6f5ea6bd7308580a415ace87c51
 		$sql->execute();
 
         $res = $sql->fetchAll(PDO::FETCH_ASSOC);
@@ -177,24 +170,6 @@
 		} else
 			return -1;
 	}
-<<<<<<< HEAD
-
-	 public function modificar($id, $n, $r, $p)
-     {
-		$res = $this->listarUsuario($id);
-
-		if ($res!=-1){
-			$sql = $this->conexion->prepare("UPDATE shadow
-											 SET nombre = :n,
-											 id_rol = :r,
-											 pass = :p
-											 WHERE id = :id");
-			 $sql->bindParam(':n', $n, PDO::PARAM_STR);
-			 $sql->bindParam(':r', $r, PDO::PARAM_INT);
-			 $sql->bindParam(':p', $p, PDO::PARAM_STR);
-			 $sql->bindParam(':id', $id, PDO::PARAM_INT);
-			 $sql->execute();
-=======
 	
 	 public function modificar($usu, $n)
 	 
@@ -214,9 +189,7 @@
 			
 			$sql->execute(); 
 
-			 
 			  
->>>>>>> e81c2034cf78d6f5ea6bd7308580a415ace87c51
 		} else
 			return -1;
 	}

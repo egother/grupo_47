@@ -53,14 +53,6 @@ require_once __DIR__ . '/Controller.php';
 																		  'tipos' => $params,
 																		  'mensaje' => $msj));
 	}
-<<<<<<< HEAD
-
-	public function modificarTipo(){
-
-	}
-
-}
-=======
 	
 	public function modificarUsuario()
 	{
@@ -101,7 +93,6 @@ require_once __DIR__ . '/Controller.php';
 			echo $this->twig->render('formModUser.twig.html', array('users' => $params['users'], 'usuario' => dameUsuarioYRol(), 'mensaje' => $this->msj));
 		}
 	}
-		
  }
->>>>>>> e81c2034cf78d6f5ea6bd7308580a415ace87c51
+ 
 ?>
