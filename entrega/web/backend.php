@@ -23,7 +23,6 @@ require_once  '../app/twig/lib/Twig/Autoloader.php';
  require_once '../app/controllers/ControllerFront.php';
  require_once '../app/controllers/ControllerBack.php';
  require_once '../app/controllers/ControllerLogin.php';
- require_once '../app/controllers/ControllerPublicacion.php';
 
 // enrutamiento
 $map = array(
