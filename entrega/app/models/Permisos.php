@@ -16,7 +16,8 @@ class Permisos {
     private static $accesos = array(
 		'administrador' => array('inicio'=>'0', 'tipos'=>'0'
 								 ),
-		'visitante' => array('inicio'=>'0', 'modificarUsuario'=>'0'
+		'visitante' => array('inicio'=>'0', 'modificarUsuario'=>'0', 'usuarioPremium'=>'0',
+							 'publicar'=>'0', 'pagar'=>'0'
 							)
 	 );
 	 

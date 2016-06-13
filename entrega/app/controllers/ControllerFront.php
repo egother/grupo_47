@@ -48,39 +48,6 @@ class ControllerFront extends Controller
     }
   }
 
-  public function usuarioPremium(){
-    if($this->haySesion()){
-      if (($_SERVER['REQUEST_METHOD'] == 'POST')){
-        if ($_SESSION['USUARIO']['id']<7){
-          $msj="Usted ya es Usuario Premium!!!";
-          echo $this->twig->render('layoutBackUser.twig.html', array('log' => '1', 'mensaje' => $msj));
-        }
-        else {
-          echo $this->twig->render('pagoTarjeta.twig.html', array('log' => '1'));
-
-        }
-      }
-      else{
-        echo $this->twig->render('usuarioPremium.twig.html', array('log' => '1'));
-      }
-    }
-  }
-
-  public function pagar(){
-    if(true){
-      if (($_SERVER['REQUEST_METHOD'] == 'POST')){
-        echo $this->twig->render('pagoTarjeta.twig.html', array('log' => '1', 'msj' => "El pago se realizo correctamente!"));
-      }
-      else{
-        echo $this->twig->render('pagoTarjeta.twig.html', array('log' => '1'));
-      }
-    }
-    else{
-      $msj="Debe iniciar sesion para realizar esta accion";
-      echo $this->twig->render('index.twig.html', array('log' => '1', 'mensaje' => $msj));
-    }
-  }
-
   // presenta la página con el formulario de registro
   public function registrarse()
   {

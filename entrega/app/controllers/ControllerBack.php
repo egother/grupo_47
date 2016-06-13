@@ -93,6 +93,68 @@ require_once __DIR__ . '/Controller.php';
 			echo $this->twig->render('formModUser.twig.html', array('users' => $params['users'], 'usuario' => dameUsuarioYRol(), 'mensaje' => $this->msj));
 		}
 	}
+	
+	public function usuarioPremium(){
+		if($this->haySesion()){
+		  if (($_SERVER['REQUEST_METHOD'] == 'POST')){
+			if ($_SESSION['USUARIO']['id']<7){
+			  $msj="Usted ya es Usuario Premium!!!";
+			  echo $this->twig->render('layoutBackUser.twig.html', array('log' => '1', 'mensaje' => $msj));
+			}
+			else {
+			  echo $this->twig->render('pagoTarjeta.twig.html', array('log' => '1'));
+
+			}
+		  }
+		  else{
+			echo $this->twig->render('usuarioPremium.twig.html', array('log' => '1'));
+		  }
+		}
+	  }
+
+	public function pagar(){
+		if(true){
+		  if (($_SERVER['REQUEST_METHOD'] == 'POST')){
+			echo $this->twig->render('pagoTarjeta.twig.html', array('log' => '1', 'msj' => "El pago se realizo correctamente!"));
+		  }
+		  else{
+			echo $this->twig->render('pagoTarjeta.twig.html', array('log' => '1'));
+		  }
+		}
+		else{
+		  $msj="Debe iniciar sesion para realizar esta accion";
+		  echo $this->twig->render('index.twig.html', array('log' => '1', 'mensaje' => $msj));
+		}
+	  }
+	  
+	  public function publicar()
+	  {
+		if($this->haySesion()){
+		  if (($_SERVER['REQUEST_METHOD'] == 'POST')){
+			$tituloProp = $this->xss($_POST['tituloP']);
+			$cantidad = $this->xss($_POST['capacidad']);
+			$descripcion = $this->xss($_POST['descripcion']);
+			$encabezado = $this->xss($_POST['encabezado']);
+			$direccion = $this->xss($_POST['direccion']);
+			$tipo = $this->xss($_POST['tipoViv']);
+			$lugar = $this->xss($_POST['lugar']);
+			$foto = $_FILES['imagen'];
+			$usuario = $_SESSION['USUARIO']['usuario'];
+			$this->mPubli->agregar($foto, $tituloProp, $cantidad, $descripcion, $encabezado, $direccion, $usuario, $tipo, $lugar);
+			$msj="La Publicacion Fue Realizada";
+			echo $this->twig->render('layoutBackUser.twig.html', array(
+					'mensaje' => $msj,
+			  'publicaciones' => $this->mPubli->listarPublicacion(),
+			  'inicio' => '1'));
+		  }else{
+			$tipos = $this->mTipos->listar();
+			echo $this->twig->render('publicacion.twig.html', array('log' => '1', 'tipos' => $tipos));
+		  }
+		}else{
+		  echo $this->twig->render('publicacion.twig.html', array());
+		}
+
+  }
  }
  
 ?>

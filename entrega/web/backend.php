@@ -31,9 +31,9 @@ $map = array(
 
      'quienesSomos' => array('controller' =>'ControllerBack', 'accion' =>'quienesSomos'),
      'comoFunciona' => array('controller' =>'ControllerBack', 'accion' =>'comoFunciona'),
-     'publicar' => array('controller' =>'ControllerPublicacion', 'accion' =>'publicar'),
-     'usuarioPremium' => array('controller' =>'ControllerFront', 'accion' =>'usuarioPremium'),
-     'pagar' => array('controller' =>'ControllerFront', 'accion' =>'pagar'),
+     'publicar' => array('controller' =>'ControllerBack', 'accion' =>'publicar'),
+     'usuarioPremium' => array('controller' =>'ControllerBack', 'accion' =>'usuarioPremium'),
+     'pagar' => array('controller' =>'ControllerBack', 'accion' =>'pagar'),
 
 
      'users' => array('controller' =>'ControllerBack', 'accion' =>'users'),

@@ -39,7 +39,7 @@ function dameId(){
 function soyPremium(){
   if(estoyLogueado()){
     if ($_SESSION['USUARIO']['premium']==0) {
-      return folse;
+      return false;
     }
     else {
       return true;
