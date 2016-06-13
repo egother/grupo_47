@@ -283,5 +283,21 @@
 		return $res;
 
 	}
+	
+	// verifica que exista ese usuario y correo, y devuelve la contraseña, en caso contrario devuelve -1
+	public function recuperarPass($u, $c)
+	{
+		$sql = $this->conexion->prepare("SELECT * FROM shadow WHERE (usuario = :usuario) AND (correo = :correo");
+		$sql->bindParam(':usuario', $u, PDO::PARAM_INT);
+		$sql->bindParam(':correo', $c, PDO::PARAM_INT);
+		$sql->execute();
+
+        $res = $sql->fetchAll(PDO::FETCH_ASSOC);
+
+		if (count($res)==1)
+			return $res;
+		else
+			return -1;		
+	}
 
  }
