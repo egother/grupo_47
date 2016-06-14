@@ -147,12 +147,18 @@ require_once __DIR__ . '/Controller.php';
 	
 	public function verPublicacion(){
 		$msj = $this->revisarMensajes();
+		$func="";
 		if (isset($_GET['id'])){
 			$id = $this->xss($_GET['id']);
 			$params = $this->mPubli->verPublicacion($id);
+			if (isset($_GET['func']))
+				$func = $_GET['func'];
 		} else
 			$this->setMensaje("No se seleccionó una publicacion para visualizar");
-		echo $this->twig->render('verPublicacion.twig.html', array('log'=>'1', 'params' => $params, 'mensaje' => $msj));
+		echo $this->twig->render('verPublicacion.twig.html', array('log'=>'1',
+																   'params' => $params,
+																   'mensaje' => $msj,
+																   'func' => $func));
 	}
  }
  

@@ -5,12 +5,68 @@
 <h2>{{params.encabezado}}</h2>
 <h4>{{params.descripcion}}</h4>
 <img alt="" src="data:image/png;base64,{{params.foto}}" style="width: 100%;"/>
-<h4>Dirección: {{params.direccion}}</h4>
-<h4>Fecha de Publicación: {{params.fecha_publi}}</h4>
+<h4>Dirección: {{params.direccion}}, {{params.lugar}}</h4>
 <h4>Tipo de alojamiento: {{params.tipo}}</h4>
-<h4>Ubicación: {{params.lugar}}</h4>
 <h4>Capacidad máxima: {{params.capacidad}}</h4>
+<h4>Fecha de Publicación: {{params.fecha_publi}}</h4>
 
+<div align="right">
+<a href="./backend.php?accion=verPublicacion&amp;id={{params.id_publicacion}}&amp;func=solicitar"><h2>Solicitar hospedaje</h2></a>
+</div>
+{% if (func=="solicitar")%}
+<br>
+<hr>
+<br>
+<form class="formulario" method="POST" name="formulario"
+	  action="./backend.php?accion=verPublicacion&amp;id={{params.id_publicacion}}">
+    <h3>Formulario para solicitad hospedaje</h3>
+    <div>
+        <label>Viajeros</label>
+			<select id="cant" name="cant" required>
+				<option value="1">1</option>
+				<option value="2">2</option>
+				<option value="3">3</option>
+				<option value="4">4</option>
+				<option value="5">5</option>
+				<option value="6">6</option>
+				<option value="7">7</option>
+				<option value="8">8</option>
+				<option value="9">9</option>
+				<option value="10">10</option>
+				<option value="11">11</option>
+				<option value="12">12</option>
+				<option value="13">13</option>
+				<option value="14">14</option>
+				<option value="15">15</option>
+				<option value="16">16</option>
+				<option value="17">17</option>
+				<option value="18">18</option>
+				<option value="19">19</option>
+				<option value="20">20</option>
+			</select>
+	</div>
+	<div>
+		<label>Desde</label>
+			<input id="desde" name="desde" type="date" required/>
+	</div>
+	<div>
+		<label>Hasta</label>
+			<input id="hasta" name="hasta" type="date" required/>
+	</div>
+	<div>
+		<label>Mi presentación</label>
+		<textarea rows="4" cols="20" id="texto" name="texto" required/></textarea>
+	</div>
+	
+	<br>
+
+    <button type="submit">Solicitar</button>
+	<button type="button" onclick="window.location.href='./backend.php'">Cancelar</button>
+
+</form>
+	<br>
+
+{% endif %}
 
 
 {% endblock %}

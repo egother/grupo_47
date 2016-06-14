@@ -16,6 +16,21 @@ font-weight: bold;
 body {
  background-color: #EBEBEB;
  }
+ 
+a:link   
+	{   
+	 text-decoration:none; 
+	 color:black;
+	}   
+a:visited {
+	 color:black;
+}
+a:active {
+	 color:black;
+}
+a:hover {
+	text-decoration:underline;
+}
 #global {
  width:1024px; 
  min-height:720px;
