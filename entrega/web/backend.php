@@ -33,6 +33,7 @@ $map = array(
      'publicar' => array('controller' =>'ControllerBack', 'accion' =>'publicar'),
      'usuarioPremium' => array('controller' =>'ControllerBack', 'accion' =>'usuarioPremium'),
      'pagar' => array('controller' =>'ControllerBack', 'accion' =>'pagar'),
+	 'verPublicacion'=> array('controller'=>'ControllerBack', 'accion'=>'verPublicacion'),
 
 
      'users' => array('controller' =>'ControllerBack', 'accion' =>'users'),

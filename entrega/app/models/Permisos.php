@@ -14,10 +14,11 @@
 class Permisos {
 
     private static $accesos = array(
-		'administrador' => array('inicio'=>'0', 'tipos'=>'0'
+		'administrador' => array('inicio'=>'0', 'tipos'=>'0', 'modificarUsuario'=>'0',
+								 'verPublicacion' => '0'
 								 ),
 		'visitante' => array('inicio'=>'0', 'modificarUsuario'=>'0', 'usuarioPremium'=>'0',
-							 'publicar'=>'0', 'pagar'=>'0'
+							 'publicar'=>'0', 'pagar'=>'0', 'verPublicacion' => '0'
 							)
 	 );
 	 

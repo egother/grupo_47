@@ -39,7 +39,7 @@
 
 </head>
 
-<body onload="setupMessageBox()">
+<body onload="setupMessageBox()" link="#000000" vlink="#000000" alink="#000000">
 
 		<div id="fb-root"></div>
 		<script>(function(d, s, id) {
@@ -98,13 +98,14 @@
 							Últimas publicaciones:
 						</h3>
             {% for publicacion in publicaciones %}
-        			<div>
+        			<div><a href="./backend.php?accion=verPublicacion&amp;id={{publicacion.id_publicacion}}">
         				<h4>{{publicacion.encabezado}}</h4>
         				<p>
         					{{publicacion.descripcion}}
         				</p>
-        				<img alt="" src="data:image/png;base64,{{publicacion.foto}}" style="width: 100%;"/>
+        				<img alt="" src="data:image/png;base64,{{publicacion.foto}}" style="width: 100%;"/></a>
         			</div>
+					<hr>
         		{% endfor %}
 			{% else %}
 						<h3>

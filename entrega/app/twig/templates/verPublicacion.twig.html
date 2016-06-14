@@ -1,0 +1,16 @@
+{% extends "layoutBackUser.twig.html" %}
+
+{% block contenido %}
+
+<h2>{{params.encabezado}}</h2>
+<h4>{{params.descripcion}}</h4>
+<img alt="" src="data:image/png;base64,{{params.foto}}" style="width: 100%;"/>
+<h4>Dirección: {{params.direccion}}</h4>
+<h4>Fecha de Publicación: {{params.fecha_publi}}</h4>
+<h4>Tipo de alojamiento: {{params.tipo}}</h4>
+<h4>Ubicación: {{params.lugar}}</h4>
+<h4>Capacidad máxima: {{params.capacidad}}</h4>
+
+
+
+{% endblock %}

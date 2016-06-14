@@ -70,6 +70,9 @@ require_once __DIR__ . '/Controller.php';
 			
 			$this->setMensaje("Usuario modificado con éxito.");
 			
+			$_SESSION['USUARIO']['nombre'] = Controller::xss($nombre);
+
+			
 			header('Location: ./backend.php');
 
 			
@@ -83,7 +86,7 @@ require_once __DIR__ . '/Controller.php';
 	public function usuarioPremium(){
 		if($this->haySesion()){
 		  if (($_SERVER['REQUEST_METHOD'] == 'POST')){
-			if ($_SESSION['USUARIO']['id']<7){
+			if ($_SESSION['USUARIO']['id']>7){
 			  $msj="Usted ya es Usuario Premium!!!";
 			  echo $this->twig->render('layoutBackUser.twig.html', array('log' => '1', 'mensaje' => $msj));
 			}
@@ -140,7 +143,17 @@ require_once __DIR__ . '/Controller.php';
 		  echo $this->twig->render('publicacion.twig.html', array());
 		}
 
-  }
+	}
+	
+	public function verPublicacion(){
+		$msj = $this->revisarMensajes();
+		if (isset($_GET['id'])){
+			$id = $this->xss($_GET['id']);
+			$params = $this->mPubli->verPublicacion($id);
+		} else
+			$this->setMensaje("No se seleccionó una publicacion para visualizar");
+		echo $this->twig->render('verPublicacion.twig.html', array('log'=>'1', 'params' => $params, 'mensaje' => $msj));
+	}
  }
  
 ?>
