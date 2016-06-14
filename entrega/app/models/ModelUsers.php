@@ -171,21 +171,19 @@
 			return -1;
 	}
 	
-	 public function modificar($usu, $n)
-	 
+	 public function modificar($id, $n, $t, $f, $e)
      {
-		
-		$res = $this->listarUsuario($usu);
-		$idaux = $res[0]['id'];
-		//print_r($idaux);
+		$idaux = $id;
 		if ($res!=-1){
 			
-			$sql = $this->conexion->prepare("UPDATE shadow SET nombre = :n WHERE id = :idaux ");
+			$sql = $this->conexion->prepare("UPDATE shadow
+											 SET nombre = :n, telefono = :t, f_nacimiento = :f, correo = :e
+											 WHERE id = :id ");
 			$sql->bindParam(':n', $n, PDO::PARAM_STR);
-			 //print_r($sql);
-			 //$sql->bindParam(':r', $r, PDO::PARAM_INT);
-			 //$sql->bindParam(':usu', $usu, PDO::PARAM_STR);
-			 //$sql->bindParam(':id', $idaux, PDO::PARAM_INT);
+			$sql->bindParam(':t', $t, PDO::PARAM_STR);
+			$sql->bindParam(':f', $f, PDO::PARAM_STR);
+			$sql->bindParam(':e', $e, PDO::PARAM_STR);
+			$sql->bindParam(':id', $idaux, PDO::PARAM_INT);
 			
 			$sql->execute(); 
 

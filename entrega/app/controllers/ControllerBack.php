@@ -56,42 +56,28 @@ require_once __DIR__ . '/Controller.php';
 	
 	public function modificarUsuario()
 	{
-	
-		
-	/*	if (isset($_GET['id'])) {
-			$id = $this->xss($_GET['id']);
-			$params = array('users' => $this->us->listarPorId($id));
-			if ($params==-1){
-				$this->setMensaje("Error al eliminar el usuario.");
-				header('Location: ./backend.php?accion=users');
-			}
-		} else {
-			$this->setMensaje("Error al entrar a la opción de eliminación de usuario.");
-			header('Location: ./backend.php?accion=users');
-		} */
-		
-		
 		$params = array('users' => $this->us->listarUsuario($_SESSION['USUARIO']['usuario']));
 		
-		//print_r($params);
-		
-		
 		if ($_SERVER['REQUEST_METHOD'] == 'POST'){
-			
+
+			$id = $params['users'][0]['id'];
 			$nombre = $this->xss($_POST['nombre']);
-			
-			
-			//$p1 = $this->xss($_POST['p1']);
-			
-			//printf("Antes consulta");
-			$this->us->modificar(($_SESSION['USUARIO']['usuario']), $nombre);
+			$tel = $this->xss($_POST['tel']);
+			$fecha = $this->xss($_POST['fecha']);
+			$mail = $this->xss($_POST['mail']);
+
+			$this->us->modificar($id, $nombre, $tel, $fecha, $mail);
 			
 			$this->setMensaje("Usuario modificado con éxito.");
 			
-			//header('Location: ./backend.php');
-		} else {
-			echo $this->twig->render('formModUser.twig.html', array('users' => $params['users'], 'usuario' => dameUsuarioYRol(), 'mensaje' => $this->msj));
-		}
+			header('Location: ./backend.php');
+
+			
+		} else 
+			echo $this->twig->render('formModUser.twig.html', array('users' => $params['users'],
+																	'usuario' => dameUsuarioYRol(),
+																	'mensaje' => $this->msj));
+		
 	}
 	
 	public function usuarioPremium(){
