@@ -52,6 +52,8 @@ class ControllerFront extends Controller
   public function registrarse()
   {
     $msj="";
+	$edad = date("Y-m-d", strtotime("-18 years")); // guarda la fecha de hace 18 años para comprobar la mayoría de edad
+
     if($this->haySesion()){
       $msj=("Cierre la sesión actual para registrarse como nuevo usuario");
       echo $this->twig->render('index.twig.html', array('log' => '1', 'mensaje' => $msj));
@@ -99,10 +101,11 @@ class ControllerFront extends Controller
       'nombre' => '',
       'mail' => '',
       'telefono' => '',
-      'fecha' => ''
+      'fecha' => '1990-01-01'
     );
     echo $this->twig->render('registro.twig.html', array('params' => $params,
-    'mensaje' => $msj));
+														 'mensaje' => $msj,
+														 'edad' => $edad));
   }
   
   public function recuperarPass(){
@@ -130,6 +133,10 @@ class ControllerFront extends Controller
 		$params = array('mail' => '');
     echo $this->twig->render('recuperarPass.twig.html', array('params' => $params,
 															  'mensaje' => $msj));
+  }
+  
+  public function terminosYcondiciones(){
+	  echo $this->twig->render('terminos.twig.html', array());
   }
 }
 

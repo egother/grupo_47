@@ -37,9 +37,8 @@
 		<span class="form_hint">Ejemplo "direccion@dominio.com"</span>
 	</div>
     <div>
-         <input type="date" id="fecha" name="fecha" value="{{ params['fecha'] }}" max="2000-01-01" required/>
+         <input type="date" id="fecha" name="fecha" value="{{ params['fecha'] }}" max="{{edad}}" required/>
          <label>Fecha nacimiento</label>
-		<span class="form_hint">Formato "aaaa-mm-dd"</span>
     </div>
 	<div>
         <label>Contraseña:</label>
@@ -53,10 +52,18 @@
         <input type="password" id="p2" name="p2" pattern=".{8,}" onblur="validarPass()" required/>
     </div>
 
-
-
-	<br>
-
+<table style="border-style:none">
+<tr>
+		<td style="width: 35px; border-style:none">
+			<input type="checkbox" id="acepto" name="acepto" style="width:25px" required/>
+			</td>
+		<td style="border-style:none">
+			<a href="./index.php?accion=terminosYcondiciones" target="_blank">
+				<h5 style="color:grey"> He leido y acepto los términos y condiciones de uso.</h5>
+			</a>
+		</td>
+</tr>
+</table>
     <button type="submit">Registrarse</button>
 	<button type="button" onclick="window.location.href='./index.php?accion=inicio'">Cancelar</button>
 

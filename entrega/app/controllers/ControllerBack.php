@@ -57,6 +57,7 @@ require_once __DIR__ . '/Controller.php';
 	public function modificarUsuario()
 	{
 		$params = array('users' => $this->us->listarUsuario($_SESSION['USUARIO']['usuario']));
+		$edad = date("Y-m-d", strtotime("-18 years")); // guarda la fecha de hace 18 años para comprobar la mayoría de edad
 		
 		if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 
@@ -79,7 +80,8 @@ require_once __DIR__ . '/Controller.php';
 		} else 
 			echo $this->twig->render('formModUser.twig.html', array('users' => $params['users'],
 																	'usuario' => dameUsuarioYRol(),
-																	'mensaje' => $this->msj));
+																	'mensaje' => $this->msj,
+																	'edad' => $edad));
 		
 	}
 	
@@ -151,13 +153,16 @@ require_once __DIR__ . '/Controller.php';
 		if (isset($_GET['id'])){
 			$id = $this->xss($_GET['id']);
 			$params = $this->mPubli->verPublicacion($id);
-			if (isset($_GET['func']))
+			$hoy = new DateTime('tomorrow');
+			$hoy = $hoy->format('Y-m-d');
+ 			if (isset($_GET['func']))
 				$func = $_GET['func'];
 		} else
 			$this->setMensaje("No se seleccionó una publicacion para visualizar");
 		echo $this->twig->render('verPublicacion.twig.html', array('log'=>'1',
 																   'params' => $params,
 																   'mensaje' => $msj,
+																   'hoy' => $hoy,
 																   'func' => $func));
 	}
  }

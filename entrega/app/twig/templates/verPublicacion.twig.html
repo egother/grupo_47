@@ -17,6 +17,11 @@
 <br>
 <hr>
 <br>
+
+<script>
+	var x = document.getElementById("desde");
+</script>
+
 <form class="formulario" method="POST" name="formulario"
 	  action="./backend.php?accion=verPublicacion&amp;id={{params.id_publicacion}}">
     <h3>Formulario para solicitad hospedaje</h3>
@@ -30,7 +35,7 @@
 	</div>
 	<div>
 		<label>Desde</label>
-			<input id="desde" name="desde" type="date" required/>
+			<input id="desde" name="desde" type="date" min="{{hoy}}" required/>
 	</div>
 	<div>
 		<label>Hasta</label>

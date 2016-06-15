@@ -32,8 +32,7 @@
 	
 	<div>
         <label>Fecha de nacimiento</label>
-        <input type="date" id="fecha" name="fecha" value="{{users.0.f_nacimiento}}"  required/>
-   		<span class="form_hint">Formato "aaaa-mm-dd"</span>
+        <input type="date" id="fecha" name="fecha" value="{{users.0.f_nacimiento}}" max="{{edad}}" required/>
 </div>
 
 	<div>
