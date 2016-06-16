@@ -87,7 +87,7 @@ require_once __DIR__ . '/Controller.php';
 	
 	public function usuarioPremium(){
 		if($this->haySesion()){
-		  if (($_SERVER['REQUEST_METHOD'] == 'POST')){
+		  if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 			if ($_SESSION['USUARIO']['id']>7){
 			  $msj="Usted ya es Usuario Premium!!!";
 			  echo $this->twig->render('layoutBackUser.twig.html', array('log' => '1', 'mensaje' => $msj));
@@ -105,7 +105,7 @@ require_once __DIR__ . '/Controller.php';
 
 	public function pagar(){
 		if(true){
-		  if (($_SERVER['REQUEST_METHOD'] == 'POST')){
+		  if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 			echo $this->twig->render('pagoTarjeta.twig.html', array('log' => '1', 'msj' => "El pago se realizo correctamente!"));
 		  }
 		  else{
@@ -121,7 +121,7 @@ require_once __DIR__ . '/Controller.php';
 	  public function publicar()
 	  {
 		if($this->haySesion()){
-		  if (($_SERVER['REQUEST_METHOD'] == 'POST')){
+		  if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 			$tituloProp = $this->xss($_POST['tituloP']);
 			$cantidad = $this->xss($_POST['capacidad']);
 			$descripcion = $this->xss($_POST['descripcion']);
@@ -153,10 +153,16 @@ require_once __DIR__ . '/Controller.php';
 		if (isset($_GET['id'])){
 			$id = $this->xss($_GET['id']);
 			$params = $this->mPubli->verPublicacion($id);
+
+			// $hoy se pasa por parametro para delimitar el campo de fecha "desde"
 			$hoy = new DateTime('tomorrow');
 			$hoy = $hoy->format('Y-m-d');
  			if (isset($_GET['func']))
 				$func = $_GET['func'];
+			elseif ($_SERVER['REQUEST_METHOD'] == 'POST'){
+				// se accedió a la publicacion a traves de un $id y por formulario de solicitud
+				
+			}
 		} else
 			$this->setMensaje("No se seleccionó una publicacion para visualizar");
 		echo $this->twig->render('verPublicacion.twig.html', array('log'=>'1',

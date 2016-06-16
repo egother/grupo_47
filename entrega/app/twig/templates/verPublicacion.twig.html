@@ -11,7 +11,7 @@
 <h4>Fecha de Publicación: {{params.fecha_publi}}</h4>
 
 <div align="right">
-<a href="./backend.php?accion=verPublicacion&amp;id={{params.id_publicacion}}&amp;func=solicitar"><h2>Solicitar hospedaje</h2></a>
+<a href="./backend.php?accion=verPublicacion&amp;id={{params.id_publicacion}}&amp;func=solicitar#abajo"><h2>Solicitar hospedaje</h2></a>
 </div>
 {% if (func=="solicitar")%}
 <br>
@@ -19,7 +19,12 @@
 <br>
 
 <script>
-	var x = document.getElementById("desde");
+	function setMinimo(){
+		var desde = document.getElementById("desde").value;
+		document.getElementById("hasta").disabled = false;
+		document.getElementById("hasta").min = desde;
+	}
+
 </script>
 
 <form class="formulario" method="POST" name="formulario"
@@ -35,11 +40,11 @@
 	</div>
 	<div>
 		<label>Desde</label>
-			<input id="desde" name="desde" type="date" min="{{hoy}}" required/>
+			<input id="desde" name="desde" type="date" min="{{hoy}}" onchange="setMinimo()" required/>
 	</div>
 	<div>
 		<label>Hasta</label>
-			<input id="hasta" name="hasta" type="date" required/>
+			<input id="hasta" name="hasta" type="date" min="{{hoy}}" disabled required/>
 	</div>
 	<div>
 		<label>Mi presentación</label>
@@ -53,6 +58,7 @@
 
 </form>
 	<br>
+	<a name="abajo"></a>
 
 {% endif %}
 
