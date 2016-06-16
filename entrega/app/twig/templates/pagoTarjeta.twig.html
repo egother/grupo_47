@@ -5,11 +5,11 @@
 	{% if msj is defined %}
 		{{ msj }}
 	{% else %}
-		<p>Nombre del Titular: <input type="text" name="nombre" required/></p><span class="form_hint">Como aparece en la tarjeta</span>
-		<p>Numero de Tajeta: <input type="text" name="numero" pattern="[A-Za-z0-9]{16,16}" required/></p>
+		<p>Nombre del Titular: <input type="text" name="nombre" pattern="[A-Za-z]{3,20}[ ][A-Za-z ]{3,50}" autofocus required/></p><span class="form_hint">Como aparece en la tarjeta</span>
+		<p>Numero de Tajeta: <input type="text" name="numero" pattern="[0-9]{16,16}" required/></p>
 		<br>
-		<p>Fecha de expiracion: <input type="text" name="nombre" required/><input type="text" name="nombre" required/></p><span class="form_hint">Mes    Año</span>
-		<p>Codigo de seguriad:<input type="text" name="nombre" required/></p><span class="form_hint">3 Digitos</span>
+		<p>Fecha de expiracion: <input type="date" name="nombre" pattern="[0-9]{1,2}" required/><input type="date" name="nombre" pattern="[0-9]{1,2}" required/></p><span class="form_hint">Mes/Año</span>
+		<p>Codigo de seguriad: <input type="text" name="nombre" pattern="[0-9]{3,3}" required/></p><span class="form_hint">3 Digitos</span>
 		<br>
 		<P>El monto a pagar es $300</p>
 		<p><button type="submit">Realizar Pago</button></p>
