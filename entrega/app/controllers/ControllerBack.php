@@ -165,6 +165,30 @@ require_once __DIR__ . '/Controller.php';
 																   'hoy' => $hoy,
 																   'func' => $func));
 	}
+	
+	public function misPublicaciones(){
+		echo "muestra las publicaciones que son de mi usuario";
+	}
+	
+	public function misSolicitudes(){
+		echo "muestra las solicitudes que me hicieron otros usuarios";
+	}
+	
+	public function solicitudesRealizadas(){
+		echo "muestra las solicitudes que realicé y que todavía tengo pendiente de aceptación";
+	}
+	
+	public function lugares(){
+		echo "muestra una lista de lugares disponibles para que los usuarios ubiquen sus publicaciones";
+	}
+	
+	public function misReservas(){
+		echo "muestra las solicitudes que me fueron aprobadas como reservas";
+	}
+	
+	public function misAlojamientos(){
+		echo "muestra las reservas que tienen mis publicaciones, a futuro y las pasadas tambien";
+	}
  }
  
 ?>

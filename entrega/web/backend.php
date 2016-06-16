@@ -31,6 +31,12 @@ $map = array(
      'quienesSomos' => array('controller' =>'ControllerBack', 'accion' =>'quienesSomos'),
      'comoFunciona' => array('controller' =>'ControllerBack', 'accion' =>'comoFunciona'),
      'publicar' => array('controller' =>'ControllerBack', 'accion' =>'publicar'),
+     'misPublicaciones' => array('controller' =>'ControllerBack', 'accion' =>'misPublicaciones'),
+     'misReservas' => array('controller' =>'ControllerBack', 'accion' =>'misReservas'),
+     'misSolicitudes' => array('controller' =>'ControllerBack', 'accion' =>'misSolicitudes'),
+     'solicitudesRealizadas' => array('controller' =>'ControllerBack', 'accion' =>'solicitudesRealizadas'),
+	 'misAlojamientos' => array('controller' => 'ControllerBack', 'accion' => 'misAlojamientos'),
+	 
      'usuarioPremium' => array('controller' =>'ControllerBack', 'accion' =>'usuarioPremium'),
      'pagar' => array('controller' =>'ControllerBack', 'accion' =>'pagar'),
 	 'verPublicacion'=> array('controller'=>'ControllerBack', 'accion'=>'verPublicacion'),
@@ -46,7 +52,13 @@ $map = array(
 	 'tipos' => array('controller' => 'ControllerBack', 'accion' => 'tipos'),
 	 'agregarTipo' => array('controller' => 'ControllerBack', 'accion' => 'agregarTipo'),
 	 'modificarTipo' => array('controller' => 'ControllerBack', 'accion' => 'modificarTipo'),
-	 'borrarTipo' => array('controller' => 'ControllerBack', 'accion' => 'eliminarTipo')
+	 'borrarTipo' => array('controller' => 'ControllerBack', 'accion' => 'eliminarTipo'),
+	 
+	 'lugares' => array('controller' => 'ControllerBack', 'accion' => 'lugares'),
+	 'agregarLugar' => array('controller' => 'ControllerBack', 'accion' => 'agregarLugar'),
+	 'modificarLugar' => array('controller' => 'ControllerBack', 'accion' => 'modificarLugar'),
+	 'borrarLugar' => array('controller' => 'ControllerBack', 'accion' => 'borrarLugar')
+
 );
 
 @session_start();
