@@ -54,6 +54,12 @@ require_once __DIR__ . '/Controller.php';
 																		  'mensaje' => $msj));
 	}
 	
+	public function modificarTipo()
+	{
+		
+	}
+	
+	
 	public function modificarUsuario()
 	{
 		$params = array('users' => $this->us->listarUsuario($_SESSION['USUARIO']['usuario']));
