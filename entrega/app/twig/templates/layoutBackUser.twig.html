@@ -33,7 +33,7 @@
 
 		{% elseif (usuario.nombreRol=="visitante") %}
 				<li><a href="./backend.php">Inicio</a></li>
-				<li><a href="./backend.php?accion=usuarioPremium">Usuario Premium</a></li>
+				
 				<li><a class="has-sub">Publicaciones</a>
 					<ul>
 						<li><a href="./backend.php?accion=publicar">Publicar</a></li>
@@ -48,6 +48,7 @@
 				</li>
 				<li><a class="has-sub">Mi Cuenta</a>
 					<ul>
+					<li><a href="./backend.php?accion=usuarioPremium">Usuario Premium</a></li>
 					<li><a href="./backend.php?accion=solicitudesRealizadas">Solicitudes Realizadas</a></li>
 					<li><a href="./backend.php?accion=misAlojamientos">Mis Alojamientos</a></li>
 					<li><a href="./backend.php?accion=modificarUsuario">Modificar Perfil</a></li>
