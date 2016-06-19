@@ -177,12 +177,21 @@ require_once __DIR__ . '/Controller.php';
 				$func = $_GET['func'];
 			elseif ($_SERVER['REQUEST_METHOD'] == 'POST'){
 				// se accedió a la publicacion a traves de un $id y por formulario de solicitud
-				$cant = $_POST("cant");
-				$desde = $_POST("desde");
-				$hasta = $_POST("hasta");
-				$texto = $_POST("texto");
-				if (($cant>0) && ($cant<=$params['capacidad']) && (check_dates($desde, $hasta))){
-					$x = 1;
+				$cant = $_POST["cant"];
+				$desde = $_POST["desde"];
+				$hasta = $_POST["hasta"];
+				$texto = $_POST["texto"];
+				if (($cant>0) && ($cant<=$params['capacidad']) && ($this->check_dates($desde, $hasta))){
+					$this->mSolic->agregarSolicitud($id, $_SESSION['USUARIO']['id'], $cant, $desde, $hasta, $texto);
+					$params = $this->mSolic->verSolicitudesPorMi($_SESSION['USUARIO']['id']);
+					$msj = "La solicitud fue ingresada correctamente.";
+					// se agrego bien, ahora mostramos el listado de las solicitudes que hice yo
+					echo $this->twig->render("listadoMisSolicitudes.twig.html",
+											  array('log'=>'1',
+											  		'params' => $params,
+											  		'mensaje'=>$msj));
+				} else {
+					$msj = "Los datos ingresados no son correctos.";
 				}
 			}
 		} else

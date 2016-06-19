@@ -130,11 +130,10 @@ require_once __DIR__ . '/ControllerLogin.php';
 	public function check_dates($d, $h){ 
                 $d = new DateTime($d);
                 $h = new DateTime($h);
-                if ($d >= $h){
-                	echo "verdadero";
-                	exit;
+                if ($d < $h){
+                	return true;
                 }
-                echo "falso";
+                return false;
 	}
 
  }
