@@ -56,7 +56,17 @@ require_once __DIR__ . '/Controller.php';
 	
 	public function modificarTipo()
 	{
-		
+		$this->revisarMensajes();
+		$msj=$this->msj;
+		if (isset($_GET['func'])) {
+			$func = $_GET['func'];
+		} else {
+			$func = 'nada';
+		}
+		if ($_SERVER['REQUEST_METHOD'] == 'POST')
+		{
+			
+		}
 	}
 	
 	
