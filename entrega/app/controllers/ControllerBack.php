@@ -167,7 +167,13 @@ require_once __DIR__ . '/Controller.php';
 				$func = $_GET['func'];
 			elseif ($_SERVER['REQUEST_METHOD'] == 'POST'){
 				// se accedió a la publicacion a traves de un $id y por formulario de solicitud
-				
+				$cant = $_POST("cant");
+				$desde = $_POST("desde");
+				$hasta = $_POST("hasta");
+				$texto = $_POST("texto");
+				if (($cant>0) && ($cant<=$params['capacidad']) && (check_dates($desde, $hasta))){
+					$x = 1;
+				}
 			}
 		} else
 			$this->setMensaje("No se seleccionó una publicacion para visualizar");

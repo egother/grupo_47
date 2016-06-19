@@ -127,18 +127,14 @@ require_once __DIR__ . '/ControllerLogin.php';
 		return $comment;
 	}
 
-	public function check_date($str){ // verifica si una fecha del tipo yyyy-mm-dd es correcta
-                trim($str);
-				$trozos = explode ("-", $str);
-				if (count($trozos)==3){
-					$año=$trozos[0];
-					$mes=$trozos[1];
-					$dia=$trozos[2];
-					if(checkdate ($mes,$dia,$año)){
-						return true;
-					}
-				}
-				return false;
+	public function check_dates($d, $h){ 
+                $d = new DateTime($d);
+                $h = new DateTime($h);
+                if ($d >= $h){
+                	echo "verdadero";
+                	exit;
+                }
+                echo "falso";
 	}
 
  }
