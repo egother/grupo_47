@@ -46,9 +46,10 @@
 		$sql->bindParam(':id', $id, PDO::PARAM_INT);
 		$sql->execute();
 		$publi = $sql->fetchAll(PDO::FETCH_ASSOC);
-//		var_dump($publi); exit;
-		$publi['0']['foto']=base64_encode($publi['0']['foto']);
-		return $publi['0'];
+		if (count($publi)==1){
+			$publi['0']['foto']=base64_encode($publi['0']['foto']);
+			return $publi['0'];
+		} else return null;
 	   
    }
    

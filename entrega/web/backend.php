@@ -33,7 +33,7 @@ $map = array(
      'publicar' => array('controller' =>'ControllerBack', 'accion' =>'publicar'),
      'misPublicaciones' => array('controller' =>'ControllerBack', 'accion' =>'misPublicaciones'),
      'misReservas' => array('controller' =>'ControllerBack', 'accion' =>'misReservas'),
-     'misSolicitudes' => array('controller' =>'ControllerBack', 'accion' =>'misSolicitudes'),
+     'solicitudesPendientes' => array('controller' =>'ControllerBack', 'accion' =>'solicitudesPendientes'),
      'solicitudesRealizadas' => array('controller' =>'ControllerBack', 'accion' =>'solicitudesRealizadas'),
 	 'misAlojamientos' => array('controller' => 'ControllerBack', 'accion' => 'misAlojamientos'),
 	 

@@ -120,6 +120,7 @@ require_once __DIR__ . '/Controller.php';
 	  }
 
 	public function pagar(){
+		$msj = $this->revisarMensajes();
 		if(true){
 		  if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 			echo $this->twig->render('pagoTarjeta.twig.html', array('log' => '1', 'msj' => "El pago se realizo correctamente!"));
@@ -134,9 +135,11 @@ require_once __DIR__ . '/Controller.php';
 		}
 	  }
 
-	  public function publicar()
+	public function publicar()
 	  {
-		if($this->haySesion()){
+	  $msj = $this->revisarMensajes();
+
+	  if($this->haySesion()){
 		  if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 			$tituloProp = $this->xss($_POST['tituloP']);
 			$cantidad = $this->xss($_POST['capacidad']);
@@ -170,36 +173,36 @@ require_once __DIR__ . '/Controller.php';
 		if (isset($_GET['id'])){
 			$id = $this->xss($_GET['id']);
 			$params = $this->mPubli->verPublicacion($id);
-
-			// $hoy se pasa por parametro para delimitar el campo de fecha "desde"
-			$hoy = new DateTime('tomorrow');
-			$hoy = $hoy->format('Y-m-d');
- 			if (isset($_GET['func']))
-				$func = $_GET['func'];
-			elseif ($_SERVER['REQUEST_METHOD'] == 'POST'){
-				// se accedió a la publicacion a traves de un $id y por formulario de solicitud
-				$cant = $_POST["cant"];
-				$desde = $_POST["desde"];
-				$hasta = $_POST["hasta"];
-				$texto = $_POST["texto"];
-				if (($cant>0) && ($cant<=$params['capacidad']) && ($this->check_dates($desde, $hasta))){
-					$this->mSolic->agregarSolicitud($id, $_SESSION['USUARIO']['id'], $cant, $desde, $hasta, $texto);
-					$params = $this->mSolic->verSolicitudesPorMi($_SESSION['USUARIO']['id']);
-					$msj = "La solicitud fue ingresada correctamente.";
-					// se agrego bien, ahora mostramos el listado de las solicitudes que hice yo
-					echo $this->twig->render("listadoMisSolicitudes.twig.html",
-											  array('log'=>'1',
-											  		'params' => $params,
-											  		'mensaje'=>$msj));
-				} else {
-					$msj = "Los datos ingresados no son correctos.";
+			if (!($params)==null){
+				// $hoy se pasa por parametro para delimitar el campo de fecha "desde"
+				$hoy = new DateTime('tomorrow');
+				$hoy = $hoy->format('Y-m-d');
+				if (isset($_GET['func']))
+					$func = $_GET['func'];
+				elseif ($_SERVER['REQUEST_METHOD'] == 'POST'){
+					// se accedió a la publicacion a traves de un $id y por formulario de solicitud
+					$cant = $_POST["cant"];
+					$desde = $_POST["desde"];
+					$hasta = $_POST["hasta"];
+					$texto = $_POST["texto"];
+					if (($cant>0) && ($cant<=$params['capacidad']) && ($this->check_dates($desde, $hasta))){
+						$this->mSolic->agregarSolicitud($id, $_SESSION['USUARIO']['id'], $cant, $desde, $hasta, $texto);
+						$this->setMensaje("La solicitud fue ingresada correctamente.");
+						// se agrego bien, ahora mostramos el listado de las solicitudes que hice yo
+						header('Location: ./backend.php?accion=solicitudesRealizadas');
+					} else {
+						$msj = "Los datos ingresados no son correctos.";
+					}
 				}
+			} else {
+				$this->setMensaje("No existe la publicación buscada.");
+				header('Location: ./backend.php');
 			}
 		} else
 			$this->setMensaje("No se seleccionó una publicacion para visualizar");
 		echo $this->twig->render('verPublicacion.twig.html', array('log'=>'1',
 																   'params' => $params,
-																   'mensaje' => $msj,
+																   'mensaje' => $this->revisarMensajes(),
 																   'hoy' => $hoy,
 																   'func' => $func));
 	}
@@ -208,12 +211,21 @@ require_once __DIR__ . '/Controller.php';
 		echo "muestra las publicaciones que son de mi usuario";
 	}
 
-	public function misSolicitudes(){
-		echo "muestra las solicitudes que me hicieron otros usuarios";
+	public function solicitudesPendientes(){
+		echo $this->twig->render('listadoSolicitudesPendientes.twig.html', array());
 	}
 
 	public function solicitudesRealizadas(){
-		echo "muestra las solicitudes que realicé y que todavía tengo pendiente de aceptación";
+		$msj = $this->revisarMensajes();
+		if($this->haySesion()){
+			$params = $this->mSolic->verSolicitudesRealizadas($_SESSION['USUARIO']['id']);
+			echo $this->twig->render('listadoSolicitudesRealizadas.twig.html', array('log' => '1',
+																					 'params' => $params,
+																					 'mensaje' => $msj));
+		} else {
+			$this->setMensaje("Usted no ha iniciado sesión.");
+			header('Location: ./index.php');
+		}
 	}
 
 	public function lugares(){

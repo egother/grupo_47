@@ -16,13 +16,13 @@ class Permisos {
     private static $accesos = array(
 		'administrador' => array('inicio'=>'0', 'tipos'=>'0', 'modificarUsuario'=>'0',
 								 'verPublicacion' => '0', 'publicar' => '0',
-								 'misPublicaciones' => '0', 'misSolicitudes' => '0',
+								 'misPublicaciones' => '0', 'solicitudesPendientes' => '0',
 								 'misReservas' => '0', 'solicitudesRealizadas' => '0',
 								 'misAlojamientos' => '0', 'modificarTipo'=>'0', 'provincias' => '0'
 								 ),
 		'visitante' => array('inicio'=>'0', 'modificarUsuario'=>'0', 'usuarioPremium'=>'0',
 							 'publicar'=>'0', 'pagar'=>'0', 'verPublicacion' => '0',
-							 'misPublicaciones' => '0', 'misSolicitudes' => '0',
+							 'misPublicaciones' => '0', 'solicitudesPendientes' => '0',
 							 'misReservas' => '0', 'solicitudesRealizadas' => '0',
 							 'misAlojamientos' => '0', 'provincias' => '0'
 							)
