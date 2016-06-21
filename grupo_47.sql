@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 16-06-2016 a las 15:42:09
+-- Tiempo de generación: 21-06-2016 a las 15:31:18
 -- Versión del servidor: 5.7.9
 -- Versión de PHP: 5.6.16
 
@@ -6355,9 +6355,19 @@ CREATE TABLE IF NOT EXISTS `solicitud` (
   `texto` text NOT NULL,
   `fec_solicitud` date NOT NULL,
   `id_publicacion` int(11) NOT NULL,
+  `id_usuario` int(11) NOT NULL,
   PRIMARY KEY (`id_solicitud`),
-  KEY `id_publicacion` (`id_publicacion`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  KEY `id_publicacion` (`id_publicacion`),
+  KEY `id_usuario` (`id_usuario`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `solicitud`
+--
+
+INSERT INTO `solicitud` (`id_solicitud`, `ocupantes`, `fec_inicio`, `fec_fin`, `texto`, `fec_solicitud`, `id_publicacion`, `id_usuario`) VALUES
+(1, 1, '2016-07-01', '2016-07-05', 'asd', '2016-06-21', 2, 2),
+(2, 1, '2016-07-21', '2016-07-24', 'mostrame', '2016-06-21', 2, 2);
 
 -- --------------------------------------------------------
 
