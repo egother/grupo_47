@@ -67,6 +67,10 @@
          }
          return $publicaciones;
    }
+   
+   public function verificar($id_publi, $id_user){
+   		return true;
+   }
 
 
  }

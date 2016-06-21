@@ -183,6 +183,12 @@ require_once __DIR__ . '/Controller.php';
 				}
 				if (isset($_GET['func']))
 					$func = $_GET['func'];
+					if ($func=="solicitar"){
+						$res = $this->mPubli->verificar($id, $_SESSION['USUARIO']['id']);
+						if (!$res){
+							$msj = "Usted no puede auto-solicitarse hospedaje";
+						}
+					}
 				elseif ($_SERVER['REQUEST_METHOD'] == 'POST'){
 					// se accedió a la publicacion a traves de un $id y por formulario de solicitud
 					$cant = $_POST["cant"];
