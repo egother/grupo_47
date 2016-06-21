@@ -17,7 +17,10 @@
 		$cn= New ModelLogin(Config::$mvc_bd_nombre, Config::$mvc_bd_usuario, Config::$mvc_bd_clave, Config::$mvc_bd_hostname);
 		
 		
-		$sql = $cn->conexion->prepare("SELECT * FROM shadow INNER JOIN rol on (shadow.id_rol = rol.id )
+		$sql = $cn->conexion->prepare("SELECT shadow.id, shadow.usuario, shadow.nombre, shadow.id_rol,
+											shadow.correo, shadow.f_nacimiento, shadow.telefono,
+											shadow.premium, rol.nombreRol
+									   FROM shadow INNER JOIN rol on (shadow.id_rol = rol.id )
 									   WHERE (usuario = :user) and (pass = :pass)");
 		$sql->bindParam(':user', $user, PDO::PARAM_STR);
 		$sql->bindParam(':pass', $pass, PDO::PARAM_STR);

@@ -208,7 +208,16 @@ require_once __DIR__ . '/Controller.php';
 	}
 
 	public function misPublicaciones(){
-		echo "muestra las publicaciones que son de mi usuario";
+		$msj = $this->revisarMensajes();
+		if($this->haySesion()){
+			$params = $this->mPubli->verMisPublicaciones($_SESSION['USUARIO']['id']);
+			echo $this->twig->render('misPublicaciones.twig.html', array('log' => '1',
+																		 'params' => $params,
+																		 'mensaje' => $msj));
+		} else {
+			$this->setMensaje("Usted no ha iniciado sesión.");
+			header('Location: ./index.php');
+		}
 	}
 
 	public function solicitudesPendientes(){

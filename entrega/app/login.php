@@ -24,7 +24,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 		$_SESSION['USUARIO']['nombre'] = Controller::xss($intentoLogin[0]['nombre']);
 		$_SESSION['USUARIO']['nombreRol'] = Controller::xss($intentoLogin[0]['nombreRol']);
 		$_SESSION['USUARIO']['id'] = Controller::xss($intentoLogin[0]['id']);
-		
+		var_dump($intentoLogin); exit;
 		header('Location: ../web/backend.php');
 	
 	}

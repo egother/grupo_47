@@ -53,5 +53,20 @@
 	   
    }
    
+      public function verMisPublicaciones($id){
+    	 $sql = $this->conexion->prepare("SELECT * FROM publicacion
+    	 								  WHERE usuario = :id
+    	 								  ORDER BY fecha_publi DESC");
+    	 $sql->bindParam(':id', $id, PDO::PARAM_INT);
+    	 $sql->execute();
+         $listado = $sql->fetchAll(PDO::FETCH_ASSOC);
+         $publicaciones=array();
+         foreach ($listado as $key => $publicacion) {
+           $publicaciones[$key]=$publicacion;
+           $publicaciones[$key]['foto']=base64_encode($publicacion['foto']);
+         }
+         return $publicaciones;
+   }
+
 
  }
