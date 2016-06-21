@@ -170,6 +170,7 @@ require_once __DIR__ . '/Controller.php';
 	public function verPublicacion(){
 		$msj = $this->revisarMensajes();
 		$func="";
+		$source = 0;
 		if (isset($_GET['id'])){
 			$id = $this->xss($_GET['id']);
 			$params = $this->mPubli->verPublicacion($id);
@@ -177,6 +178,9 @@ require_once __DIR__ . '/Controller.php';
 				// $hoy se pasa por parametro para delimitar el campo de fecha "desde"
 				$hoy = new DateTime('tomorrow');
 				$hoy = $hoy->format('Y-m-d');
+				if (isset($_GET['source'])){
+					$source = ($_GET['source']);
+				}
 				if (isset($_GET['func']))
 					$func = $_GET['func'];
 				elseif ($_SERVER['REQUEST_METHOD'] == 'POST'){
@@ -204,7 +208,8 @@ require_once __DIR__ . '/Controller.php';
 																   'params' => $params,
 																   'mensaje' => $this->revisarMensajes(),
 																   'hoy' => $hoy,
-																   'func' => $func));
+																   'func' => $func,
+																   'source' => $source));
 	}
 
 	public function misPublicaciones(){
@@ -247,6 +252,10 @@ require_once __DIR__ . '/Controller.php';
 
 	public function misAlojamientos(){
 		echo "muestra las reservas que tienen mis publicaciones, a futuro y las pasadas tambien";
+	}
+	
+	public function modificarPublicacion($id){
+		echo "aca vamos a mostrar el formulario de modificar publicacion";
 	}
  }
 
