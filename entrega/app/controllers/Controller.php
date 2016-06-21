@@ -11,6 +11,7 @@ require_once __DIR__ . '/ControllerLogin.php';
 	protected $mReser; 	 // variable para la conexión del modelo reservas
 	protected $us;		 // variable para la conexión del modelo usuarios
 	protected $mPagos; 	 // variable para la conexion del modelo pagos
+  protected $mLugares; // variable para la conexion del modelo lugares
 	protected $mCalifHue;// variable para la conexion del modelo calificacion huesped
 	protected $mCalifHos;// variable para la conexion del modelo calificacion hospedado
 	protected $mComent;	 // variable para la conexion del modelo comentarios
@@ -35,6 +36,10 @@ require_once __DIR__ . '/ControllerLogin.php';
     $this->us = new ModelLogin(Config::$mvc_bd_nombre, Config::$mvc_bd_usuario,
             Config::$mvc_bd_clave, Config::$mvc_bd_hostname);
 
+    include_once(__DIR__.'/../models/ModelLugar.php');
+    $this->mLugares = new ModelLugar(Config::$mvc_bd_nombre, Config::$mvc_bd_usuario,
+            Config::$mvc_bd_clave, Config::$mvc_bd_hostname);
+
 		if (Model::testConect()){ //si la conexión resulta exitosa
 
 			if ($accion == 'publico') {
@@ -56,6 +61,8 @@ require_once __DIR__ . '/ControllerLogin.php';
 							 Config::$mvc_bd_clave, Config::$mvc_bd_hostname);
 				$this->mComent = new ModelComentario(Config::$mvc_bd_nombre, Config::$mvc_bd_usuario,
 							 Config::$mvc_bd_clave, Config::$mvc_bd_hostname);
+        $this->mLugares = new ModelLugar(Config::$mvc_bd_nombre, Config::$mvc_bd_usuario,
+       					Config::$mvc_bd_clave, Config::$mvc_bd_hostname);
 			}
 			else {
 				$this->setMensaje("Usted no posee permisos para realizar dicha operación");
@@ -127,7 +134,7 @@ require_once __DIR__ . '/ControllerLogin.php';
 		return $comment;
 	}
 
-	public function check_dates($d, $h){ 
+	public function check_dates($d, $h){
                 $d = new DateTime($d);
                 $h = new DateTime($h);
                 if ($d < $h){

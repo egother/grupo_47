@@ -53,7 +53,7 @@ require_once __DIR__ . '/Controller.php';
 																		  'tipos' => $params,
 																		  'mensaje' => $msj));
 	}
-	
+
 	public function modificarTipo()
 	{
 		$this->revisarMensajes();
@@ -65,16 +65,16 @@ require_once __DIR__ . '/Controller.php';
 		}
 		if ($_SERVER['REQUEST_METHOD'] == 'POST')
 		{
-			
+
 		}
 	}
-	
-	
+
+
 	public function modificarUsuario()
 	{
 		$params = array('users' => $this->us->listarUsuario($_SESSION['USUARIO']['usuario']));
 		$edad = date("Y-m-d", strtotime("-18 years")); // guarda la fecha de hace 18 años para comprobar la mayoría de edad
-		
+
 		if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 			$id = $params['users'][0]['id'];
@@ -84,23 +84,23 @@ require_once __DIR__ . '/Controller.php';
 			$mail = $this->xss($_POST['mail']);
 
 			$this->us->modificar($id, $nombre, $tel, $fecha, $mail);
-			
+
 			$this->setMensaje("Usuario modificado con éxito.");
-			
+
 			$_SESSION['USUARIO']['nombre'] = Controller::xss($nombre);
 
-			
+
 			header('Location: ./backend.php');
 
-			
-		} else 
+
+		} else
 			echo $this->twig->render('formModUser.twig.html', array('users' => $params['users'],
 																	'usuario' => dameUsuarioYRol(),
 																	'mensaje' => $this->msj,
 																	'edad' => $edad));
-		
+
 	}
-	
+
 	public function usuarioPremium(){
 		if($this->haySesion()){
 		  if ($_SERVER['REQUEST_METHOD'] == 'POST'){
@@ -133,7 +133,7 @@ require_once __DIR__ . '/Controller.php';
 		  echo $this->twig->render('index.twig.html', array('log' => '1', 'mensaje' => $msj));
 		}
 	  }
-	  
+
 	  public function publicar()
 	  {
 		if($this->haySesion()){
@@ -155,14 +155,15 @@ require_once __DIR__ . '/Controller.php';
 			  'inicio' => '1'));
 		  }else{
 			$tipos = $this->mTipos->listar();
-			echo $this->twig->render('publicacion.twig.html', array('log' => '1', 'tipos' => $tipos));
+      $provincias = $this->mLugares->listarProvincias();
+			echo $this->twig->render('publicacion.twig.html', array('log' => '1', 'tipos' => $tipos, 'provincias' => $provincias));
 		  }
 		}else{
 		  echo $this->twig->render('publicacion.twig.html', array());
 		}
 
 	}
-	
+
 	public function verPublicacion(){
 		$msj = $this->revisarMensajes();
 		$func="";
@@ -202,30 +203,30 @@ require_once __DIR__ . '/Controller.php';
 																   'hoy' => $hoy,
 																   'func' => $func));
 	}
-	
+
 	public function misPublicaciones(){
 		echo "muestra las publicaciones que son de mi usuario";
 	}
-	
+
 	public function misSolicitudes(){
 		echo "muestra las solicitudes que me hicieron otros usuarios";
 	}
-	
+
 	public function solicitudesRealizadas(){
 		echo "muestra las solicitudes que realicé y que todavía tengo pendiente de aceptación";
 	}
-	
+
 	public function lugares(){
 		echo "muestra una lista de lugares disponibles para que los usuarios ubiquen sus publicaciones";
 	}
-	
+
 	public function misReservas(){
 		echo "muestra las solicitudes que me fueron aprobadas como reservas";
 	}
-	
+
 	public function misAlojamientos(){
 		echo "muestra las reservas que tienen mis publicaciones, a futuro y las pasadas tambien";
 	}
  }
- 
+
 ?>

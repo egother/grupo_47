@@ -17,7 +17,7 @@
 		<div >
 			<label>Capacidad Hospedaje :</label>
 			<input type="text" name="capacidad" value="{{ params['capacidad'] }}" required/>
-			
+
 		</div>
 		<div >
 			<label>Descripcion:</label>
@@ -37,7 +37,11 @@
 		</div>
 		<div >
 			<label>Provincia-Ciudad:</label>
-			<input type="text" name="lugar" value="{{ params['lugar'] }}" required/>
+			<select name="Provincia">
+				{% for provincia in provincias %}
+					<option value="{{ provincia.id }}">{{provincia.nombre}}</option>
+				{% endfor %}
+			</select>
 		</div>
 		<div >
 			<label>Cargar Imagen:</label>
