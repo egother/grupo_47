@@ -46,29 +46,25 @@ require_once __DIR__ . '/Controller.php';
 		}
 		
 		if ($_SERVER['REQUEST_METHOD'] == 'POST')
-		{	if ($func =='agregar'){
-				
-				$nombre = $_POST['nombre'];
+		{	$nombre = $_POST['nombre'];
+			if ($func == 'agregar'){
 				if ($this->mTipos->verificar($nombre)){ // verifica que ya no se haya agregado el mismo nombre
 					$this->mTipos->agregar($nombre);
 					$msj=("El tipo de hospedaje se ha agregado exitosamente");
 				} else {
 					$msj=("El tipo de hospedaje ya se encuentra registrado");
 				}
-		}else {if($func=='modificar'){
-			$nombre = $_POST['nombre'];
-			if ($this->mTipos->verificar($nombre)){
-				
-				$this->mTipos->modificarTipo($idTipo,$nombre);
-				$this->setMensaje("El tipo de hospedaje se ha modificado exitosamente");	
-				header("Location: ./backend.php?accion=tipos");
-			}
-			else {
-					$this->setMensaje("El tipo de hospedaje ya se encuentra registrado");
-					header("Location: ./backend.php?accion=tipos");
+			} elseif ($func == 'modificar'){
+				if ($this->mTipos->verificar($nombre)){
+					$this->mTipos->modificarTipo($idTipo,$nombre);
+					$this->setMensaje("El tipo de hospedaje se ha modificado exitosamente");
+					header('Location: ./backend.php?accion=tipos');
 				}
-		}
-		}
+				else {
+					$this->setMensaje=("El tipo de hospedaje ya se encuentra registrado");
+					header('Location: ./backend.php?accion=tipos');
+				}
+			}
 		}
 		$params = $this->mTipos->listar();
 		echo $this->twig->render('listadoTiposHospedaje.twig.html', array('usuario' => dameUsuarioYRol(),

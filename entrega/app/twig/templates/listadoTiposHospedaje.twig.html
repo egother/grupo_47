@@ -35,7 +35,7 @@
 
 <!-- Aca aparecerá el formulario de Agregar Tipo de Hospedaje en caso de que la opción Agregar haya sido elegida-->
 {% if (func=="agregar")%}
-<form class="formulario" method="POST" name="formulario" action="./backend.php?accion=tipos">
+<form class="formulario" method="POST" name="formulario" action="./backend.php?accion=tipos&amp;func=agregar">
     <h3>Agregar tipo de hospedaje</h3>
     <div>
         <label>Nombre</label>
