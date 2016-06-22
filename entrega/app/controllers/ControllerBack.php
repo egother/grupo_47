@@ -188,14 +188,15 @@ require_once __DIR__ . '/Controller.php';
 				if (isset($_GET['source'])){
 					$source = ($_GET['source']);
 				}
-				if (isset($_GET['func']))
+				if (isset($_GET['func'])){
 					$func = $_GET['func'];
-					if ($func=="solicitar"){
-						$res = $this->mPubli->verificar($id, $_SESSION['USUARIO']['id']);
-						if (!$res){
-							$msj = "Usted no puede auto-solicitarse hospedaje";
+					if ($func == "solicitar"){
+						if ($params['usuario']==$_SESSION['USUARIO']['id']){
+							$this->setMensaje("Usted no puede auto-solicitarse hospedaje");
+							header('Location: ./backend.php');
 						}
 					}
+				}
 				elseif ($_SERVER['REQUEST_METHOD'] == 'POST'){
 					// se accedió a la publicacion a traves de un $id y por formulario de solicitud
 					$cant = $_POST["cant"];
@@ -239,7 +240,16 @@ require_once __DIR__ . '/Controller.php';
 	}
 
 	public function solicitudesPendientes(){
-		echo $this->twig->render('listadoSolicitudesPendientes.twig.html', array());
+		$msj = $this->revisarMensajes();
+		if($this->haySesion()){
+			$params = $this->mSolic->verSolicitudesPendientes($_SESSION['USUARIO']['id']);
+			echo $this->twig->render('listadoSolicitudesPendientes.twig.html', array('log' => '1',
+																					 'params' => $params,
+																					 'mensaje' => $msj));
+		} else {
+			$this->setMensaje("Usted no ha iniciado sesión.");
+			header('Location: ./index.php');
+		}
 	}
 
 	public function solicitudesRealizadas(){
@@ -263,10 +273,14 @@ require_once __DIR__ . '/Controller.php';
 		echo "muestra las solicitudes que me fueron aprobadas como reservas";
 	}
 
-	public function misAlojamientos(){
-		echo "muestra las reservas que tienen mis publicaciones, a futuro y las pasadas tambien";
+	public function reservasAceptadas(){
+		echo "muestra las reservas que me aceptaron, ya puedo viajar";
 	}
-	
+
+	public function reservasOtorgadas(){
+		echo "muestra las reservas que otorgué, voy a tener huéspedes";
+	}
+
 	public function modificarPublicacion($id){
 		echo "aca vamos a mostrar el formulario de modificar publicacion";
 	}

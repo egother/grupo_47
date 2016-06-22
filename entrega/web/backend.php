@@ -32,10 +32,10 @@ $map = array(
      'comoFunciona' => array('controller' =>'ControllerBack', 'accion' =>'comoFunciona'),
      'publicar' => array('controller' =>'ControllerBack', 'accion' =>'publicar'),
      'misPublicaciones' => array('controller' =>'ControllerBack', 'accion' =>'misPublicaciones'),
-     'misReservas' => array('controller' =>'ControllerBack', 'accion' =>'misReservas'),
+     'reservasAceptadas' => array('controller' =>'ControllerBack', 'accion' =>'reservasAceptadas'),
+     'reservasOtorgadas' => array('controller' =>'ControllerBack', 'accion' =>'reservasOtorgadas'),
      'solicitudesPendientes' => array('controller' =>'ControllerBack', 'accion' =>'solicitudesPendientes'),
      'solicitudesRealizadas' => array('controller' =>'ControllerBack', 'accion' =>'solicitudesRealizadas'),
-	 'misAlojamientos' => array('controller' => 'ControllerBack', 'accion' => 'misAlojamientos'),
 	 'modificarPublicacion' => array('controller' => 'ControllerBack', 'accion' => 'modificarPublicacion'),
 	 
      'usuarioPremium' => array('controller' =>'ControllerBack', 'accion' =>'usuarioPremium'),

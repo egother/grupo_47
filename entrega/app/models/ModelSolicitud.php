@@ -33,6 +33,19 @@
 		$res = $sql->fetchAll(PDO::FETCH_ASSOC);
 		return $res;
      }
+	 
+	 public function verSolicitudesPendientes($id){
+		$sql = $this->conexion->prepare("
+					SELECT p.id_publicacion, p.encabezado, s.id_solicitud, s.ocupantes, s.fec_inicio, s.fec_fin,
+							s.texto, s.fec_solicitud
+					FROM solicitud AS s INNER JOIN publicacion AS p ON (s.id_publicacion = p.id_publicacion)
+					WHERE  (p.usuario = :id)
+					ORDER BY s.fec_solicitud");
+		$sql->bindParam(':id', $id, PDO::PARAM_INT);
+		$sql->execute();
+		$res = $sql->fetchAll(PDO::FETCH_ASSOC);
+		return $res;
+	 }
  }
 
 ?>
