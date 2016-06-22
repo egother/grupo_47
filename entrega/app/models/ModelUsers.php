@@ -171,6 +171,23 @@
 			return -1;
 	}
 	
+	 
+	 public function modificarPass($id, $p)
+     {
+		
+
+		$sql = $this->conexion->prepare("UPDATE shadow
+										 SET pass = '$p'
+										 WHERE id = '$id'");
+		//$sql->bindParam(':p', $p, PDO::PARAM_STR);
+		
+		//$sql->bindParam(':id', $idaux, PDO::PARAM_INT);
+		
+		$sql->execute(); 
+
+	}
+	 
+	 
 	 public function modificar($id, $n, $t, $f, $e)
      {
 		$idaux = $id;

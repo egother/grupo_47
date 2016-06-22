@@ -107,6 +107,26 @@ require_once __DIR__ . '/Controller.php';
 																	'edad' => $edad));
 
 	}
+	
+	public function modificarPass(){
+		
+		$params = array('users' => $this->us->listarUsuario($_SESSION['USUARIO']['usuario']));
+		
+		if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+			
+			$id = $params['users'][0]['id'];
+			$p1 = $this->xss($_POST['p1']);
+			
+			$this->us->modificarPass($id, $p1);
+			$this->setMensaje("Contraseña modificada con éxito.");
+			header('Location: ./backend.php');
+			
+			
+		}else	
+			echo $this->twig->render('formModPass.twig.html', array('users' => $params['users']));
+		
+		
+	}
 
 	public function usuarioPremium(){
 		if($this->haySesion()){

@@ -45,6 +45,7 @@ $map = array(
 
      'users' => array('controller' =>'ControllerBack', 'accion' =>'users'),
      'modificarUsuario' => array('controller' =>'ControllerBack', 'accion' =>'modificarUsuario'),
+	 'modificarPass' => array('controller' =>'ControllerBack', 'accion' =>'modificarPass'),
      'borrarUsuario' => array('controller' =>'ControllerBack', 'accion' =>'borrarUsuario'),
      'mostrarConfiguracion' => array('controller' => 'ControllerBack', 'accion' => 'mostrarConfiguracion'),
      'modificarConfiguracion' => array('controller' => 'ControllerBack', 'accion' => 'modificarConfiguracion'),
