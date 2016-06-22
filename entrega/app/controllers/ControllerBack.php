@@ -32,44 +32,55 @@ require_once __DIR__ . '/Controller.php';
 	{
 		$this->revisarMensajes();
 		$msj=$this->msj;
+		$nom = ''; $idTipo='0';
+		if (isset($_GET['id'])){
+			$idTipo = $_GET['id'];}
 		if (isset($_GET['func'])) {
 			$func = $_GET['func'];
+			if($func=='modificar'){
+				$nom = $this->mTipos->obtenerTipo($idTipo);	
+				$nom = $nom['tipo'];
+			}		
 		} else {
 			$func = 'nada';
 		}
+		
 		if ($_SERVER['REQUEST_METHOD'] == 'POST')
-		{
+		{	if ($func =='agregar'){
+				
+				$nombre = $_POST['nombre'];
+				if ($this->mTipos->verificar($nombre)){ // verifica que ya no se haya agregado el mismo nombre
+					$this->mTipos->agregar($nombre);
+					$msj=("El tipo de hospedaje se ha agregado exitosamente");
+				} else {
+					$msj=("El tipo de hospedaje ya se encuentra registrado");
+				}
+		}else {if($func=='modificar'){
 			$nombre = $_POST['nombre'];
-			if ($this->mTipos->verificar($nombre)){ // verifica que ya no se haya agregado el mismo nombre
-				$this->mTipos->agregar($nombre);
-				$msj=("El tipo de hospedaje se ha agregado exitosamente");
-			} else {
-				$msj=("El tipo de hospedaje ya se encuentra registrado");
+			if ($this->mTipos->verificar($nombre)){
+				
+				$this->mTipos->modificarTipo($idTipo,$nombre);
+				$this->setMensaje("El tipo de hospedaje se ha modificado exitosamente");	
+				header("Location: ./backend.php?accion=tipos");
 			}
+			else {
+					$this->setMensaje("El tipo de hospedaje ya se encuentra registrado");
+					header("Location: ./backend.php?accion=tipos");
+				}
+		}
+		}
 		}
 		$params = $this->mTipos->listar();
 		echo $this->twig->render('listadoTiposHospedaje.twig.html', array('usuario' => dameUsuarioYRol(),
 																		  'func' => $func,
 																		  'tipos' => $params,
-																		  'mensaje' => $msj));
+																		  'mensaje' => $msj,
+																		  'nom' => $nom,
+																		  'id_tipo' => $idTipo
+																		  ));
 	}
 
-	public function modificarTipo()
-	{
-		$this->revisarMensajes();
-		$msj=$this->msj;
-		if (isset($_GET['func'])) {
-			$func = $_GET['func'];
-		} else {
-			$func = 'nada';
-		}
-		if ($_SERVER['REQUEST_METHOD'] == 'POST')
-		{
-
-		}
-	}
-
-
+	
 	public function modificarUsuario()
 	{
 		$params = array('users' => $this->us->listarUsuario($_SESSION['USUARIO']['usuario']));
