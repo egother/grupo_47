@@ -144,7 +144,7 @@ require_once __DIR__ . '/Controller.php';
 			$encabezado = $this->xss($_POST['encabezado']);
 			$direccion = $this->xss($_POST['direccion']);
 			$tipo = $this->xss($_POST['tipoViv']);
-			$lugar = $this->xss($_POST['lugar']);
+			$lugar = $this->xss($_POST['provincia'].$_POST['ciudad']);
 			$foto = $_FILES['imagen'];
 			$usuario = $_SESSION['USUARIO']['usuario'];
 			$this->mPubli->agregar($foto, $tituloProp, $cantidad, $descripcion, $encabezado, $direccion, $usuario, $tipo, $lugar);
@@ -163,6 +163,11 @@ require_once __DIR__ . '/Controller.php';
 		}
 
 	}
+  public function listarLocalidadesDeProvincia(){
+    $listado = $this->mLugares->listarLocalidadesDeProvincia($_POST['id']);
+    header('Content-type: application/json');
+    echo json_encode($listado);
+  }
 
 	public function verPublicacion(){
 		$msj = $this->revisarMensajes();

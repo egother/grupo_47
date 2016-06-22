@@ -24,7 +24,8 @@ class Permisos {
 							 'publicar'=>'0', 'pagar'=>'0', 'verPublicacion' => '0',
 							 'misPublicaciones' => '0', 'misSolicitudes' => '0',
 							 'misReservas' => '0', 'solicitudesRealizadas' => '0',
-							 'misAlojamientos' => '0', 'provincias' => '0'
+							 'misAlojamientos' => '0', 'provincias' => '0',
+							 'departamentos' => '0', 'ciudades' => '0'
 							)
 	 );
 
