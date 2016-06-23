@@ -49,8 +49,27 @@
 //		var_dump($publi); exit;
 		$publi['0']['foto']=base64_encode($publi['0']['foto']);
 		return $publi['0'];
-	   
+
    }
-   
+   public function modificar(($foto, $tp, $c, $des, $e, $dir, $t, $l){
+     $fecha= (new DateTime())->format("Y-m-d");
+     $fotoBlob = fopen($foto['tmp_name'], 'rb');
+     $sql = $this->conexion->prepare("UPDATE shadow
+ 										 SET tipo = :tipo, descripcion = :descripcion, encabezado = :encabezado, fecha_publi = :fecha, direccion = :direccion,titulo_prop = :titulo, capacidad = :capacidad, lugar = :lugar, fototype = :fototype, foto = :foto
+ 										 WHERE id_publicacion = :id ");
+     $sql->bindParam(':tipo', $tp, PDO::PARAM_STR);
+     $sql->bindParam(':descripcion', $des, PDO::PARAM_STR);
+     $sql->bindParam(':encabezado', $e, PDO::PARAM_STR);
+     $sql->bindParam(':direccion', $dir, PDO::PARAM_STR);
+     $sql->bindParam(':fecha', $fecha, PDO::PARAM_STR);
+     $sql->bindParam(':titulo', $t, PDO::PARAM_STR);
+     $sql->bindParam(':capacidad', $c, PDO::PARAM_STR);
+     $sql->bindParam(':lugar', $l, PDO::PARAM_STR);
+     $sql->bindParam(':fototype', $foto['type'], PDO::PARAM_STR);
+     $sql->bindParam(':foto', $fotoBlob, PDO::PARAM_LOB);
+     return $sql->execute();
+
+   }
+
 
  }
