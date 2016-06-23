@@ -1,0 +1,44 @@
+{% extends "layoutBackUser.twig.html" %}
+
+{% block contenido %}
+<style>
+	td {width:150px;}
+</style>
+
+
+<br>
+<h2>Mis Solicitudes</h2>
+<br>
+{% if params | length>0 %}
+		<table class="table table-striped" >
+		<tbody>
+			<tr class="encabezado">
+				<td>Publicación</td>
+				<td>Fecha de Solicitud</td>
+				<td>Desde</td>
+				<td>Hasta</td>
+				<td>Ocupantes</td>
+			</tr>
+	{% for sol in params %}
+			<tr> 
+				
+				<td>
+					<a href="./backend.php?accion=verPublicacion&amp;id={{sol.id_publicacion}}">#{{sol.id_publicacion}}</a>
+				</td>
+				<td>{{sol.fec_solicitud}}</td>
+				<td>{{sol.fec_inicio}}</td>
+				<td>{{sol.fec_fin}}</td>
+				<td>{{sol.ocupantes}}</td>
+			</tr>
+	{% endfor %}
+		</tbody>
+		</table>
+{% else %}
+						<h3>
+							No hay solicitudes que hayas realizado.
+						</h3>
+{% endif %}
+
+{% endblock %}
+
+

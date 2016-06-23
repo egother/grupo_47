@@ -10,9 +10,16 @@
 <h4>Capacidad máxima: {{params.capacidad}}</h4>
 <h4>Fecha de Publicación: {{params.fecha_publi}}</h4>
 
-<div align="right">
-<a href="./backend.php?accion=verPublicacion&amp;id={{params.id_publicacion}}&amp;func=solicitar#abajo"><h2>Solicitar hospedaje</h2></a>
-</div>
+{% if (source == 0) %}
+	<div align="right">
+	<a href="./backend.php?accion=verPublicacion&amp;id={{params.id_publicacion}}&amp;func=solicitar#abajo"><h2>Solicitar hospedaje</h2></a>
+	</div>
+{% elseif (source == 1) %}
+	<div align="right">
+	<a href="./backend.php?accion=modificarPublicacion&amp;id={{params.id_publicacion}}&amp;func=modificar"><h2>Modificar</h2></a>
+	</div>
+{% endif %}
+
 {% if (func=="solicitar")%}
 <br>
 <hr>
@@ -61,6 +68,9 @@
 	<a name="abajo"></a>
 
 {% endif %}
+
+
+
 
 
 {% endblock %}

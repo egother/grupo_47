@@ -20,7 +20,31 @@
 			
          return $listado; 
 		
-	 }
+	  }
+	  
+	  public function obtenerTipo($idTipo)
+     {
+         $sql = $this->conexion->prepare("SELECT tipo FROM tipo_hospedaje
+										  WHERE id_tipo = :idTipo");
+		 $sql->bindParam(':idTipo', $idTipo, PDO::PARAM_STR);
+         $sql->execute();
+         $resultado = $sql->fetchAll(PDO::FETCH_ASSOC);
+		 return $resultado[0];
+	
+	 }	
+	 
+	 public function modificarTipo($idTipo, $nombre)
+	 {
+		
+		$sql = $this->conexion->prepare("UPDATE tipo_hospedaje
+											 SET tipo = UPPER('$nombre')
+											 WHERE id_tipo = '$idTipo'");
+			 $sql->execute(); 
+		
+			
+	}
+		 
+	
      
  	 public function verificar($nombre) 
      {

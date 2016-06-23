@@ -33,12 +33,18 @@ $map = array(
      'publicar' => array('controller' =>'ControllerBack', 'accion' =>'publicar'),
      'modificarPublicacion' => array('controller' =>'ControllerBack', 'accion' =>'modificarPublicacion'),
      'misPublicaciones' => array('controller' =>'ControllerBack', 'accion' =>'misPublicaciones'),
-     'misReservas' => array('controller' =>'ControllerBack', 'accion' =>'misReservas'),
-     'misSolicitudes' => array('controller' =>'ControllerBack', 'accion' =>'misSolicitudes'),
+     'reservasAceptadas' => array('controller' =>'ControllerBack', 'accion' =>'reservasAceptadas'),
+     'reservasOtorgadas' => array('controller' =>'ControllerBack', 'accion' =>'reservasOtorgadas'),
+     'solicitudesPendientes' => array('controller' =>'ControllerBack', 'accion' =>'solicitudesPendientes'),
      'solicitudesRealizadas' => array('controller' =>'ControllerBack', 'accion' =>'solicitudesRealizadas'),
+<<<<<<< HEAD
 	 'misAlojamientos' => array('controller' => 'ControllerBack', 'accion' => 'misAlojamientos'),
       'departamentos' => array('controller' => 'ControllerBack', 'accion' => 'listarLocalidadesDeProvincia' ),
 
+=======
+	 'modificarPublicacion' => array('controller' => 'ControllerBack', 'accion' => 'modificarPublicacion'),
+	 
+>>>>>>> 21987d39d243dcd77a6187174942d554075b43ec
      'usuarioPremium' => array('controller' =>'ControllerBack', 'accion' =>'usuarioPremium'),
      'pagar' => array('controller' =>'ControllerBack', 'accion' =>'pagar'),
 	 'verPublicacion'=> array('controller'=>'ControllerBack', 'accion'=>'verPublicacion'),
@@ -46,6 +52,7 @@ $map = array(
 
      'users' => array('controller' =>'ControllerBack', 'accion' =>'users'),
      'modificarUsuario' => array('controller' =>'ControllerBack', 'accion' =>'modificarUsuario'),
+	 'modificarPass' => array('controller' =>'ControllerBack', 'accion' =>'modificarPass'),
      'borrarUsuario' => array('controller' =>'ControllerBack', 'accion' =>'borrarUsuario'),
      'mostrarConfiguracion' => array('controller' => 'ControllerBack', 'accion' => 'mostrarConfiguracion'),
      'modificarConfiguracion' => array('controller' => 'ControllerBack', 'accion' => 'modificarConfiguracion'),

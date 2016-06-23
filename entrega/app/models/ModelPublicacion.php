@@ -46,6 +46,7 @@
 		$sql->bindParam(':id', $id, PDO::PARAM_INT);
 		$sql->execute();
 		$publi = $sql->fetchAll(PDO::FETCH_ASSOC);
+<<<<<<< HEAD
 //		var_dump($publi); exit;
 		$publi['0']['foto']=base64_encode($publi['0']['foto']);
 		return $publi['0'];
@@ -70,6 +71,33 @@
      return $sql->execute();
 
    }
+=======
+		if (count($publi)==1){
+			$publi['0']['foto']=base64_encode($publi['0']['foto']);
+			return $publi['0'];
+		} else return null;
+	   
+   }
+   
+      public function verMisPublicaciones($id){
+    	 $sql = $this->conexion->prepare("SELECT * FROM publicacion
+    	 								  WHERE usuario = :id
+    	 								  ORDER BY fecha_publi DESC");
+    	 $sql->bindParam(':id', $id, PDO::PARAM_INT);
+    	 $sql->execute();
+         $listado = $sql->fetchAll(PDO::FETCH_ASSOC);
+         $publicaciones=array();
+         foreach ($listado as $key => $publicacion) {
+           $publicaciones[$key]=$publicacion;
+           $publicaciones[$key]['foto']=base64_encode($publicacion['foto']);
+         }
+         return $publicaciones;
+   }
+   
+   public function verificar($id_publi, $id_user){
+   		return true;
+   }
+>>>>>>> 21987d39d243dcd77a6187174942d554075b43ec
 
 
  }

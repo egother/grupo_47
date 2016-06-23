@@ -32,44 +32,51 @@ require_once __DIR__ . '/Controller.php';
 	{
 		$this->revisarMensajes();
 		$msj=$this->msj;
+		$nom = ''; $idTipo='0';
+		if (isset($_GET['id'])){
+			$idTipo = $_GET['id'];}
 		if (isset($_GET['func'])) {
 			$func = $_GET['func'];
+			if($func=='modificar'){
+				$nom = $this->mTipos->obtenerTipo($idTipo);	
+				$nom = $nom['tipo'];
+			}		
 		} else {
 			$func = 'nada';
 		}
+		
 		if ($_SERVER['REQUEST_METHOD'] == 'POST')
-		{
-			$nombre = $_POST['nombre'];
-			if ($this->mTipos->verificar($nombre)){ // verifica que ya no se haya agregado el mismo nombre
-				$this->mTipos->agregar($nombre);
-				$msj=("El tipo de hospedaje se ha agregado exitosamente");
-			} else {
-				$msj=("El tipo de hospedaje ya se encuentra registrado");
+		{	$nombre = $_POST['nombre'];
+			if ($func == 'agregar'){
+				if ($this->mTipos->verificar($nombre)){ // verifica que ya no se haya agregado el mismo nombre
+					$this->mTipos->agregar($nombre);
+					$msj=("El tipo de hospedaje se ha agregado exitosamente");
+				} else {
+					$msj=("El tipo de hospedaje ya se encuentra registrado");
+				}
+			} elseif ($func == 'modificar'){
+				if ($this->mTipos->verificar($nombre)){
+					$this->mTipos->modificarTipo($idTipo,$nombre);
+					$this->setMensaje("El tipo de hospedaje se ha modificado exitosamente");
+					header('Location: ./backend.php?accion=tipos');
+				}
+				else {
+					$this->setMensaje=("El tipo de hospedaje ya se encuentra registrado");
+					header('Location: ./backend.php?accion=tipos');
+				}
 			}
 		}
 		$params = $this->mTipos->listar();
 		echo $this->twig->render('listadoTiposHospedaje.twig.html', array('usuario' => dameUsuarioYRol(),
 																		  'func' => $func,
 																		  'tipos' => $params,
-																		  'mensaje' => $msj));
+																		  'mensaje' => $msj,
+																		  'nom' => $nom,
+																		  'id_tipo' => $idTipo
+																		  ));
 	}
 
-	public function modificarTipo()
-	{
-		$this->revisarMensajes();
-		$msj=$this->msj;
-		if (isset($_GET['func'])) {
-			$func = $_GET['func'];
-		} else {
-			$func = 'nada';
-		}
-		if ($_SERVER['REQUEST_METHOD'] == 'POST')
-		{
-
-		}
-	}
-
-
+	
 	public function modificarUsuario()
 	{
 		$params = array('users' => $this->us->listarUsuario($_SESSION['USUARIO']['usuario']));
@@ -100,6 +107,26 @@ require_once __DIR__ . '/Controller.php';
 																	'edad' => $edad));
 
 	}
+	
+	public function modificarPass(){
+		
+		$params = array('users' => $this->us->listarUsuario($_SESSION['USUARIO']['usuario']));
+		
+		if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+			
+			$id = $params['users'][0]['id'];
+			$p1 = $this->xss($_POST['p1']);
+			
+			$this->us->modificarPass($id, $p1);
+			$this->setMensaje("Contraseña modificada con éxito.");
+			header('Location: ./backend.php');
+			
+			
+		}else	
+			echo $this->twig->render('formModPass.twig.html', array('users' => $params['users']));
+		
+		
+	}
 
 	public function usuarioPremium(){
 		if($this->haySesion()){
@@ -120,6 +147,7 @@ require_once __DIR__ . '/Controller.php';
 	  }
 
 	public function pagar(){
+		$msj = $this->revisarMensajes();
 		if(true){
 		  if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 			echo $this->twig->render('pagoTarjeta.twig.html', array('log' => '1', 'msj' => "El pago se realizo correctamente!"));
@@ -134,9 +162,11 @@ require_once __DIR__ . '/Controller.php';
 		}
 	  }
 
-	  public function publicar()
+	public function publicar()
 	  {
-		if($this->haySesion()){
+	  $msj = $this->revisarMensajes();
+
+	  if($this->haySesion()){
 		  if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 			$tituloProp = $this->xss($_POST['tituloP']);
 			$cantidad = $this->xss($_POST['capacidad']);
@@ -172,53 +202,92 @@ require_once __DIR__ . '/Controller.php';
 	public function verPublicacion(){
 		$msj = $this->revisarMensajes();
 		$func="";
+		$source = 0;
 		if (isset($_GET['id'])){
 			$id = $this->xss($_GET['id']);
 			$params = $this->mPubli->verPublicacion($id);
-
-			// $hoy se pasa por parametro para delimitar el campo de fecha "desde"
-			$hoy = new DateTime('tomorrow');
-			$hoy = $hoy->format('Y-m-d');
- 			if (isset($_GET['func']))
-				$func = $_GET['func'];
-			elseif ($_SERVER['REQUEST_METHOD'] == 'POST'){
-				// se accedió a la publicacion a traves de un $id y por formulario de solicitud
-				$cant = $_POST["cant"];
-				$desde = $_POST["desde"];
-				$hasta = $_POST["hasta"];
-				$texto = $_POST["texto"];
-				if (($cant>0) && ($cant<=$params['capacidad']) && ($this->check_dates($desde, $hasta))){
-					$this->mSolic->agregarSolicitud($id, $_SESSION['USUARIO']['id'], $cant, $desde, $hasta, $texto);
-					$params = $this->mSolic->verSolicitudesPorMi($_SESSION['USUARIO']['id']);
-					$msj = "La solicitud fue ingresada correctamente.";
-					// se agrego bien, ahora mostramos el listado de las solicitudes que hice yo
-					echo $this->twig->render("listadoMisSolicitudes.twig.html",
-											  array('log'=>'1',
-											  		'params' => $params,
-											  		'mensaje'=>$msj));
-				} else {
-					$msj = "Los datos ingresados no son correctos.";
+			if (!($params)==null){
+				// $hoy se pasa por parametro para delimitar el campo de fecha "desde"
+				$hoy = new DateTime('tomorrow');
+				$hoy = $hoy->format('Y-m-d');
+				if (isset($_GET['source'])){
+					$source = ($_GET['source']);
 				}
+				if (isset($_GET['func'])){
+					$func = $_GET['func'];
+					if ($func == "solicitar"){
+						if ($params['usuario']==$_SESSION['USUARIO']['id']){
+							$this->setMensaje("Usted no puede auto-solicitarse hospedaje");
+							header('Location: ./backend.php');
+						}
+					}
+				}
+				elseif ($_SERVER['REQUEST_METHOD'] == 'POST'){
+					// se accedió a la publicacion a traves de un $id y por formulario de solicitud
+					$cant = $_POST["cant"];
+					$desde = $_POST["desde"];
+					$hasta = $_POST["hasta"];
+					$texto = $_POST["texto"];
+					if (($cant>0) && ($cant<=$params['capacidad']) && ($this->check_dates($desde, $hasta))){
+						$this->mSolic->agregarSolicitud($id, $_SESSION['USUARIO']['id'], $cant, $desde, $hasta, $texto);
+						$this->setMensaje("La solicitud fue ingresada correctamente.");
+						// se agrego bien, ahora mostramos el listado de las solicitudes que hice yo
+						header('Location: ./backend.php?accion=solicitudesRealizadas');
+					} else {
+						$msj = "Los datos ingresados no son correctos.";
+					}
+				}
+			} else {
+				$this->setMensaje("No existe la publicación buscada.");
+				header('Location: ./backend.php');
 			}
 		} else
 			$this->setMensaje("No se seleccionó una publicacion para visualizar");
 		echo $this->twig->render('verPublicacion.twig.html', array('log'=>'1',
 																   'params' => $params,
-																   'mensaje' => $msj,
+																   'mensaje' => $this->revisarMensajes(),
 																   'hoy' => $hoy,
-																   'func' => $func));
+																   'func' => $func,
+																   'source' => $source));
 	}
 
 	public function misPublicaciones(){
-		echo "muestra las publicaciones que son de mi usuario";
+		$msj = $this->revisarMensajes();
+		if($this->haySesion()){
+			$params = $this->mPubli->verMisPublicaciones($_SESSION['USUARIO']['id']);
+			echo $this->twig->render('misPublicaciones.twig.html', array('log' => '1',
+																		 'params' => $params,
+																		 'mensaje' => $msj));
+		} else {
+			$this->setMensaje("Usted no ha iniciado sesión.");
+			header('Location: ./index.php');
+		}
 	}
 
-	public function misSolicitudes(){
-		echo "muestra las solicitudes que me hicieron otros usuarios";
+	public function solicitudesPendientes(){
+		$msj = $this->revisarMensajes();
+		if($this->haySesion()){
+			$params = $this->mSolic->verSolicitudesPendientes($_SESSION['USUARIO']['id']);
+			echo $this->twig->render('listadoSolicitudesPendientes.twig.html', array('log' => '1',
+																					 'params' => $params,
+																					 'mensaje' => $msj));
+		} else {
+			$this->setMensaje("Usted no ha iniciado sesión.");
+			header('Location: ./index.php');
+		}
 	}
 
 	public function solicitudesRealizadas(){
-		echo "muestra las solicitudes que realicé y que todavía tengo pendiente de aceptación";
+		$msj = $this->revisarMensajes();
+		if($this->haySesion()){
+			$params = $this->mSolic->verSolicitudesRealizadas($_SESSION['USUARIO']['id']);
+			echo $this->twig->render('listadoSolicitudesRealizadas.twig.html', array('log' => '1',
+																					 'params' => $params,
+																					 'mensaje' => $msj));
+		} else {
+			$this->setMensaje("Usted no ha iniciado sesión.");
+			header('Location: ./index.php');
+		}
 	}
 
 	public function lugares(){
@@ -229,8 +298,16 @@ require_once __DIR__ . '/Controller.php';
 		echo "muestra las solicitudes que me fueron aprobadas como reservas";
 	}
 
-	public function misAlojamientos(){
-		echo "muestra las reservas que tienen mis publicaciones, a futuro y las pasadas tambien";
+	public function reservasAceptadas(){
+		echo "muestra las reservas que me aceptaron, ya puedo viajar";
+	}
+
+	public function reservasOtorgadas(){
+		echo "muestra las reservas que otorgué, voy a tener huéspedes";
+	}
+
+	public function modificarPublicacion($id){
+		echo "aca vamos a mostrar el formulario de modificar publicacion";
 	}
  }
 

@@ -14,18 +14,27 @@
 class Permisos {
 
     private static $accesos = array(
-		'administrador' => array('inicio'=>'0', 'tipos'=>'0', 'modificarUsuario'=>'0',
+		'administrador' => array('inicio'=>'0', 'tipos'=>'0', 'modificarUsuario'=>'0', 'modificarPass'=>'0',
 								 'verPublicacion' => '0', 'publicar' => '0',
-								 'misPublicaciones' => '0', 'misSolicitudes' => '0',
-								 'misReservas' => '0', 'solicitudesRealizadas' => '0',
-								 'misAlojamientos' => '0', 'modificarTipo'=>'0', 'provincias' => '0'
+								 'misPublicaciones' => '0', 'solicitudesPendientes' => '0',
+								 'reservasAceptadas' => '0', 'solicitudesRealizadas' => '0',
+								 'reservasOtorgadas' => '0', 'modificarTipo'=>'0', 'provincias' => '0',
+								 'modificarPublicacion' => '0'
 								 ),
-		'visitante' => array('inicio'=>'0', 'modificarUsuario'=>'0', 'usuarioPremium'=>'0',
+		'visitante' => array('inicio'=>'0', 'modificarUsuario'=>'0', 'modificarPass'=>'0', 'usuarioPremium'=>'0',
 							 'publicar'=>'0', 'pagar'=>'0', 'verPublicacion' => '0',
+<<<<<<< HEAD
 							 'misPublicaciones' => '0', 'misSolicitudes' => '0',
 							 'misReservas' => '0', 'solicitudesRealizadas' => '0',
 							 'misAlojamientos' => '0', 'provincias' => '0',
 							 'departamentos' => '0', 'ciudades' => '0'
+=======
+							 'misPublicaciones' => '0', 'solicitudesPendientes' => '0',
+							 'reservasAceptadas' => '0', 'solicitudesRealizadas' => '0',
+							 'reservasOtorgadas' => '0', 'provincias' => '0',
+							 'modificarPublicacion' => '0'
+
+>>>>>>> 21987d39d243dcd77a6187174942d554075b43ec
 							)
 	 );
 
