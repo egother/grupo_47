@@ -1,0 +1,76 @@
+{% extends "layoutBackUser.twig.html" %}
+
+{% block contenido %}
+
+<h2>{{params.encabezado}}</h2>
+<h4>{{params.descripcion}}</h4>
+<img alt="" src="data:image/png;base64,{{params.foto}}" style="width: 100%;"/>
+<h4>Dirección: {{params.direccion}}, {{params.lugar}}</h4>
+<h4>Tipo de alojamiento: {{params.tipo}}</h4>
+<h4>Capacidad máxima: {{params.capacidad}}</h4>
+<h4>Fecha de Publicación: {{params.fecha_publi}}</h4>
+
+{% if (source == 0) %}
+	<div align="right">
+	<a href="./backend.php?accion=verPublicacion&amp;id={{params.id_publicacion}}&amp;func=solicitar#abajo"><h2>Solicitar hospedaje</h2></a>
+	</div>
+{% elseif (source == 1) %}
+	<div align="right">
+	<a href="./backend.php?accion=modificarPublicacion&amp;id={{params.id_publicacion}}&amp;func=modificar"><h2>Modificar</h2></a>
+	</div>
+{% endif %}
+
+{% if (func=="solicitar")%}
+<br>
+<hr>
+<br>
+
+<script>
+	function setMinimo(){
+		var desde = document.getElementById("desde").value;
+		document.getElementById("hasta").disabled = false;
+		document.getElementById("hasta").min = desde;
+	}
+
+</script>
+
+<form class="formulario" method="POST" name="formulario"
+	  action="./backend.php?accion=verPublicacion&amp;id={{params.id_publicacion}}">
+    <h3>Formulario para solicitad hospedaje</h3>
+    <div>
+        <label>Viajeros</label>
+			<select id="cant" name="cant" required>
+				{% for index in 1..params.capacidad %}
+				<option value={{index}}>{{index}}</option>
+				{% endfor %}
+				</select>
+	</div>
+	<div>
+		<label>Desde</label>
+			<input id="desde" name="desde" type="date" min="{{hoy}}" onchange="setMinimo()" required/>
+	</div>
+	<div>
+		<label>Hasta</label>
+			<input id="hasta" name="hasta" type="date" min="{{hoy}}" disabled required/>
+	</div>
+	<div>
+		<label>Mi presentación</label>
+		<textarea rows="4" cols="20" id="texto" name="texto" required/></textarea>
+	</div>
+	
+	<br>
+
+    <button type="submit">Solicitar</button>
+	<button type="button" onclick="window.location.href='./backend.php'">Cancelar</button>
+
+</form>
+	<br>
+	<a name="abajo"></a>
+
+{% endif %}
+
+
+
+
+
+{% endblock %}

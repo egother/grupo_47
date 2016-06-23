@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <title>{% block title %}CouchInn Web{% endblock %}</title>
+	<meta charset="UTF-8" />
+
+ <link rel="stylesheet" media="(min-width: 481px)" href="./css/maqueta.css" type="text/css">
+ <link rel="stylesheet" media="(max-width: 480px)" href="./css/maquetaMobile.css" />
+ <link rel="stylesheet" href="./css/responsive.css" type="text/css"/>
+ <link rel="stylesheet" href="./css/form.css" type="text/css"/>
+ <link rel="stylesheet" href="./css/login.css" type="text/css"/>
+ <link rel="stylesheet" href="./css/listado.css" type="text/css"/>
+ <link rel="stylesheet" href="./css/bootstrap.min.css" type="text/css"/>
+
+ <link rel="stylesheet" href="./css/jquery-ui.css"/>
+ <script src="./js/jquery-1.9.1.js"></script>
+ <script src="./js/jquery-ui.js"></script>
+ <script src="./js/datapickers.js"></script>
+ <script src="./js/mensaje.js"></script>
+ <script src="./js/OpenLayers.js"></script>
+ 
+ <style type="text/css">
+#message_box{
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 1000;
+	background: #f55;
+	padding: 5px;
+	border: 1px solid #CCCCCC;
+	text-align: center;
+	width: 100%;
+	font-weight: bold;
+	font: 12px "Arial";
+}
+</style>
+
+
+
+</head>
+
+<body onload="setupMessageBox()">
+
+		<div id="fb-root"></div>
+		<script>(function(d, s, id) {
+		  var js, fjs = d.getElementsByTagName(s)[0];
+		  if (d.getElementById(id)) return;
+		  js = d.createElement(s); js.id = id;
+		  js.src = "//connect.facebook.net/es_LA/sdk.js#xfbml=1&version=v2.6";
+		  fjs.parentNode.insertBefore(js, fjs);
+		}(document, 'script', 'facebook-jssdk'));</script>
+
+	<!-- si tiene mensajes -->
+		{% if (mensaje) %} <div id="message_box">{{ mensaje }}</div>{% endif %}
+
+ 	<div id="global">
+
+		<div id="cabecera">
+
+			<a href="./backend.php"><img src="./img/logo.png" height="100" align="center" alt="logo de CouchInn Web"/></a>
+			<span style="float:right">
+				<div class="fb-share-button" data-href="http://couchinn.tumblr.com/" data-layout="button" data-mobile-iframe="true"></div>
+				<script type="IN/Share" data-url="https://grupo_48.proyecto2014.linti.unlp.edu.ar/"></script>
+			</span>
+
+		</div>
+		<div id="navegacion">
+
+			<ul class="egmenu" style="z-index:1;">
+						{% block botonera %}
+						{% endblock %}
+		<!-- desde acá se preguntaria por el usuario, o se hace un case o se mapea -->
+
+		<!-- hasta acá -->
+			</ul>
+
+		</div>
+
+
+		<div id="principal">
+		<!-- Contenido dinámico a mostrar -->
+
+		<div>
+
+		</div>
+
+			<div>
+				{% block contenido %}
+        <p>Bienvenido {{usuario.nombre}}. Aqui encontrará las opciones disponibles.</p>
+				<hr>
+
+        {% endblock %}
+			</div>
+		{% if (inicio == 1) %}
+			<div>
+			{% if publicaciones | length>0 %}
+						<h2>
+							Últimas publicaciones:
+						</h2>
+            {% for publicacion in publicaciones %}
+			<a href="./backend.php?accion=verPublicacion&amp;id={{publicacion.id_publicacion}}">
+        			<div>
+        				<h3>{{publicacion.encabezado}}</h3>
+        				<p>
+        					{{publicacion.descripcion}}
+        				</p>
+        				<img alt="" src="data:image/png;base64,{{publicacion.foto}}" style="width: 100%;"/>
+        			</div>
+			</a>
+					<hr>
+        		{% endfor %}
+			{% else %}
+						<h3>
+							No hay publicaciones para mostrar.
+						</h3>
+
+			{% endif %}
+
+
+		{% endif %}
+
+		</div>
+
+	</div>
+
+	<footer>
+	CouchInn Web | Diseñado por <a href="https://github.com/egother/grupo_47">Grupo 47</a>
+	</footer>
+
+	</body>
+</html>

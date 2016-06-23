@@ -1,0 +1,58 @@
+
+.formulario div{
+	list-style-type:none;
+    padding:12px;
+    border-bottom:1px solid #eee;
+    position:relative;
+}
+
+.formulario h2 {
+    margin:0;
+    display: inline;
+    
+}
+.textoChico {
+    margin:0px 0 0 0;
+    display:inline;
+    float:right;
+}
+.formulario label {
+    width:150px;
+    margin-top: 3px;
+    display:inline-block;
+    float:left;
+    padding:3px;
+}
+
+.formulario textarea {padding:8px; width:300px;}
+.formulario button {margin-left:156px;}
+
+.formulario input{
+    border:1px solid #aaa;
+	line-height: normal;
+    
+    height:25px;
+    width:220px;
+    padding:5px 8px;
+}
+
+.obligatorios{
+	margin:0px 0 0 0;
+    display:inline;
+    float:right;
+    font-size: 12px;
+    color: red;
+   
+
+}
+
+.form_hint{
+	color: #ababab
+	}
+
+.button{
+	margin: 5px 0 0 0;
+}
+
+
+

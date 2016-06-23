@@ -1,0 +1,72 @@
+{% extends "layoutFront.twig.html" %}
+
+{% block contenido %}
+
+<script>
+   function validarPass(){
+    if(document.getElementById("p1").value!=document.getElementById("p2").value)
+	{   alert("Las contraseñas no coinciden");
+
+		}
+
+
+}
+
+ </script>
+
+
+<form class="formulario" method="post" name="formulario" action="./index.php?accion=registrarse">
+    <h3>Registro de usuario</h3>
+    <div>
+        <label>Usuario</label>
+        <input type="text" name="usuario" value="{{ params['usuario'] }}" pattern="[A-Za-z0-9]{6,20}"required autofocus/>
+        <br><span class="form_hint">Solamente letras y numeros, minimo 6 caracteres</span>
+    </div>
+    <div>
+        <label>Nombre y Apellido</label>
+        <input type="text" name="nombre" value="{{ params['nombre'] }}" pattern="[A-Za-z]{3,20}[ ][A-Za-z ]{3,50}" required/>
+    </div>
+    <div>
+        <label>Teléfono:</label>
+        <input type="text" id="telefono" name="telefono" value="{{ params['telefono'] }}" pattern="[0-9]{2}[ ][0-9]{2,3}[ ][0-9]{7,8}"  required/>
+		<span class="form_hint">Ejemplo "54 11 08105544"</span>
+    </div>
+	<div>
+		<label>E-mail:</label>
+		<input type="email" id="mail" name="mail" value="{{ params['mail'] }}" required/>
+		<span class="form_hint">Ejemplo "direccion@dominio.com"</span>
+	</div>
+    <div>
+         <input type="date" id="fecha" name="fecha" value="{{ params['fecha'] }}" max="{{edad}}" required/>
+         <label>Fecha nacimiento</label>
+    </div>
+	<div>
+        <label>Contraseña:</label>
+        <input type="password" id="p1" name="p1" pattern=".{8,}" required/>
+		<span class="form_hint">Minimo 8 caracteres</span>
+
+    </div>
+
+    <div>
+        <label>Repetir Contraseña:</label>
+        <input type="password" id="p2" name="p2" pattern=".{8,}" onblur="validarPass()" required/>
+    </div>
+
+<table style="border-style:none">
+<tr>
+		<td style="width: 35px; border-style:none">
+			<input type="checkbox" id="acepto" name="acepto" style="width:25px" required/>
+			</td>
+		<td style="border-style:none">
+			<a href="./index.php?accion=terminosYcondiciones" target="_blank">
+				<h5 style="color:grey"> He leido y acepto los términos y condiciones de uso.</h5>
+			</a>
+		</td>
+</tr>
+</table>
+    <button type="submit">Registrarse</button>
+	<button type="button" onclick="window.location.href='./index.php?accion=inicio'">Cancelar</button>
+
+</form>
+</br>
+{% endblock %}
