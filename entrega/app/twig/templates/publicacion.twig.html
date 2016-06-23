@@ -52,4 +52,22 @@
 		<button type="button" onclick="window.location.href='./backend.php?accion=inicio'">Cancelar</button>
 	</form>
 <br>
+<script type="text/javascript">
+	$(function(){
+		$('#provincias').change(function(){
+			$.ajax({
+			  method: "POST",
+			  url: "./backend.php?accion=departamentos",
+			  data: { id: $(this).val() },
+				dataType: "json"
+			})
+			  .done(function( data ) {
+					$('#ciudades').children().remove();
+					$.each(data, function(i, value) {
+						 $('#ciudades').append($('<option>').text(value.nombre).attr('value', value.id));
+				 });
+			  });
+		});
+	});
+</script>
 {% endblock %}

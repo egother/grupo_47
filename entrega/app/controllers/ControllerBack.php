@@ -193,8 +193,14 @@ require_once __DIR__ . '/Controller.php';
 		}
 
 	}
+	
+  public function listarLocalidadesDeProvincia(){
+    $listado = $this->mLugares->listarLocalidadesDeProvincia($_POST['id']);
+    header('Content-type: application/json');
+    echo json_encode($listado);
+  }
 
-	public function verPublicacion(){
+  public function verPublicacion(){
 		$msj = $this->revisarMensajes();
 		$func="";
 		$source = 0;
