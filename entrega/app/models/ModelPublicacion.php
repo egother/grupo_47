@@ -48,7 +48,10 @@
    //}
 
    public function verPublicacion($id){
-    	$sql = $this->conexion->prepare("SELECT * FROM publicacion WHERE id_publicacion = :id");
+    	$sql = $this->conexion->prepare("SELECT p.*, pr.nombre, t.tipo AS nombre_tipo
+										 FROM publicacion AS p INNER JOIN provincias AS pr ON (p.lugar = pr.id)
+											INNER JOIN tipo_hospedaje AS t ON (p.tipo = t.id_tipo)
+										 WHERE id_publicacion = :id");
 		$sql->bindParam(':id', $id, PDO::PARAM_INT);
 		$sql->execute();
 		$publi = $sql->fetchAll(PDO::FETCH_ASSOC);
