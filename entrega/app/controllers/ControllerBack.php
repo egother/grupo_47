@@ -184,9 +184,9 @@ require_once __DIR__ . '/Controller.php';
 			$encabezado = $this->xss($_POST['encabezado']);
 			$direccion = $this->xss($_POST['direccion']);
 			$tipo = $this->xss($_POST['tipoViv']);
-			$lugar = $this->xss($_POST['lugar']);
+			$lugar = $this->xss($_POST['Provincia']);
 			$foto = $_FILES['imagen'];
-			$usuario = $_SESSION['USUARIO']['usuario'];
+			$usuario = $_SESSION['USUARIO']['id'];
 			$this->mPubli->agregar($foto, $tituloProp, $cantidad, $descripcion, $encabezado, $direccion, $usuario, $tipo, $lugar);
 			$msj="La Publicacion Fue Realizada";
 			echo $this->twig->render('layoutBackUser.twig.html', array(
