@@ -19,10 +19,22 @@ require_once __DIR__ . '/Controller.php';
 	public function inicio()
     {
 		$this->revisarMensajes();
+		if ((isset($_GET['tipo'])) && (isset($_GET['provincia']))){
+			$tipo = $this->xss($_GET['tipo']);
+			$provincia = $this->xss($_GET['provincia']);
+			$publicaciones = $this->mPubli->buscar($tipo, $provincia);
+			$busqueda = 1;
+		} else {
+			$publicaciones = $this->mPubli->listarPublicacion();
+			$busqueda = 0;
+		}
 		echo $this->twig->render('layoutBackUser.twig.html', array( 'mensaje' => $this->msj,
-																	'publicaciones' => $this->mPubli->listarPublicacion(),
+																	'publicaciones' => $publicaciones,
 																	// idUser verifica si cada publicacion es del usuario activo, cosa que no la pueda solicitar
-																	'idUser' => $_SESSION['USUARIO']['id'], 
+																	'idUser' => $_SESSION['USUARIO']['id'],
+																	'provincias' => $this->mLugares->listarProvincias(),
+																	'tipos' => $this->mTipos->listar(),
+																	'busqueda' => $busqueda,
 																	'inicio' => '1')); // habilita la visualizacion de las ultimas publicaciones
     }
 
@@ -288,7 +300,7 @@ require_once __DIR__ . '/Controller.php';
 			header('Location: ./index.php');
 		}
 	}
-
+	
 	public function lugares(){
 		echo "muestra una lista de lugares disponibles para que los usuarios ubiquen sus publicaciones";
 	}

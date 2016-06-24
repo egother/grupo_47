@@ -92,11 +92,40 @@
         {% endblock %}
 			</div>
 		{% if (inicio == 1) %}
+		<center>
+			<h2>Búsqueda de alojamientos</h2>
 			<div>
+				<form method="get" name="formulario" action="./backend.php?accion=buscar">
+				    <label>Tipo de Hospedaje:</label>
+					<select name="tipo">
+							<option value="0"></option>
+						{% for tipo in tipos %}
+							<option value="{{ tipo.id_tipo }}">{{tipo.tipo}}</option>
+						{% endfor %}
+					</select>
+					<label>Provincia:</label>
+					<select name="provincia">
+							<option value="0"></option>
+						{% for provincia in provincias %}
+							<option value="{{ provincia.id }}">{{provincia.nombre}}</option>
+						{% endfor %}
+					</select>
+
+					<button type="submit">Buscar</button>
+			</div>
+		</center>
+		<br>
+		<hr>
+		<br>
+			<div>
+				<h2>
+					{% if busqueda == 1 %}
+						Resultados de la búsqueda...
+					{% else %}
+						Últimas publicaciones:
+					{% endif %}
+				</h2>
 			{% if publicaciones | length>0 %}
-						<h2>
-							Últimas publicaciones:
-						</h2>
 				{% for publicacion in publicaciones %}
 					{% if publicacion.usuario == idUser %}
 						<a href="./backend.php?accion=verPublicacion&amp;id={{publicacion.id_publicacion}}&amp;source=1">
