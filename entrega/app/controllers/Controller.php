@@ -40,6 +40,10 @@ require_once __DIR__ . '/ControllerLogin.php';
     $this->mLugares = new ModelLugar(Config::$mvc_bd_nombre, Config::$mvc_bd_usuario,
             Config::$mvc_bd_clave, Config::$mvc_bd_hostname);
 
+    include_once(__DIR__.'/../models/ModelPago.php');
+    $this->mPagos = new ModelPago(Config::$mvc_bd_nombre, Config::$mvc_bd_usuario,
+                Config::$mvc_bd_clave, Config::$mvc_bd_hostname);
+
 		if (Model::testConect()){ //si la conexión resulta exitosa
 
 			if ($accion == 'publico') {

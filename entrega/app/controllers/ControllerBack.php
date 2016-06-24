@@ -48,13 +48,13 @@ require_once __DIR__ . '/Controller.php';
 		if (isset($_GET['func'])) {
 			$func = $_GET['func'];
 			if($func=='modificar'){
-				$nom = $this->mTipos->obtenerTipo($idTipo);	
+				$nom = $this->mTipos->obtenerTipo($idTipo);
 				$nom = $nom['tipo'];
-			}		
+			}
 		} else {
 			$func = 'nada';
 		}
-		
+
 		if ($_SERVER['REQUEST_METHOD'] == 'POST')
 		{	$nombre = $_POST['nombre'];
 			if ($func == 'agregar'){
@@ -86,7 +86,7 @@ require_once __DIR__ . '/Controller.php';
 																		  ));
 	}
 
-	
+
 	public function modificarUsuario()
 	{
 		$params = array('users' => $this->us->listarUsuario($_SESSION['USUARIO']['usuario']));
@@ -117,25 +117,25 @@ require_once __DIR__ . '/Controller.php';
 																	'edad' => $edad));
 
 	}
-	
+
 	public function modificarPass(){
-		
+
 		$params = array('users' => $this->us->listarUsuario($_SESSION['USUARIO']['usuario']));
-		
+
 		if ($_SERVER['REQUEST_METHOD'] == 'POST'){
-			
+
 			$id = $params['users'][0]['id'];
 			$p1 = $this->xss($_POST['p1']);
-			
+
 			$this->us->modificarPass($id, $p1);
 			$this->setMensaje("Contraseña modificada con éxito.");
 			header('Location: ./backend.php');
-			
-			
-		}else	
+
+
+		}else
 			echo $this->twig->render('formModPass.twig.html', array('users' => $params['users']));
-		
-		
+
+
 	}
 
 	public function usuarioPremium(){
@@ -158,8 +158,13 @@ require_once __DIR__ . '/Controller.php';
 
 	public function pagar(){
 		$msj = $this->revisarMensajes();
-		if(true){
+		if($this->haySesion()){
 		  if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+        $usuario = $_SESSION['USUARIO']['id'];
+        $monto = 300;
+        $nombre = $_POST['nombre'];
+        $numero = $_POST['numero'];
+        $this->mPagos->agregarPago($usuario,$nombre,$numero, $monto);
 			echo $this->twig->render('pagoTarjeta.twig.html', array('log' => '1', 'msj' => "El pago se realizo correctamente!"));
 		  }
 		  else{
@@ -184,10 +189,11 @@ require_once __DIR__ . '/Controller.php';
 			$encabezado = $this->xss($_POST['encabezado']);
 			$direccion = $this->xss($_POST['direccion']);
 			$tipo = $this->xss($_POST['tipoViv']);
-			$lugar = $this->xss($_POST['Provincia']);
+			$provincia = $this->xss($_POST['provincia']);
+			$ciudad = $this->xss($_POST['ciudad']);
 			$foto = $_FILES['imagen'];
 			$usuario = $_SESSION['USUARIO']['id'];
-			$this->mPubli->agregar($foto, $tituloProp, $cantidad, $descripcion, $encabezado, $direccion, $usuario, $tipo, $lugar);
+			$this->mPubli->agregar($foto, $tituloProp, $cantidad, $descripcion, $encabezado, $direccion, $usuario, $tipo, $provincia, $ciudad);
 			$msj="La Publicacion Fue Realizada";
 			echo $this->twig->render('layoutBackUser.twig.html', array(
 					'mensaje' => $msj,
@@ -203,7 +209,7 @@ require_once __DIR__ . '/Controller.php';
 		}
 
 	}
-	
+
   public function listarLocalidadesDeProvincia(){
     $listado = $this->mLugares->listarLocalidadesDeProvincia($_POST['id']);
     header('Content-type: application/json');
@@ -300,7 +306,7 @@ require_once __DIR__ . '/Controller.php';
 			header('Location: ./index.php');
 		}
 	}
-	
+
 	public function lugares(){
 		echo "muestra una lista de lugares disponibles para que los usuarios ubiquen sus publicaciones";
 	}

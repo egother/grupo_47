@@ -36,10 +36,14 @@
 		</div>
 		<div >
 			<label>Provincia-Ciudad:</label>
-			<select name="Provincia">
+			<select name="provincia" id="provincias">
 				{% for provincia in provincias %}
 					<option value="{{ provincia.id }}">{{provincia.nombre}}</option>
 				{% endfor %}
+			</select>
+			-
+			<select name="ciudad" id="ciudades">
+				
 			</select>
 		</div>
 		<div >

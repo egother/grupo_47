@@ -24,5 +24,20 @@
        return $listado;
      }
 
+     public function verProvincia($id){
+       $sql = $this->conexion->prepare("SELECT * FROM provincias WHERE id = :id");
+       $sql->bindParam(':id', $id, PDO::PARAM_INT);
+       $sql->execute();
+       return $sql;
+     }
+
+     public function verCiudad(){
+       $sql = $this->conexion->prepare("SELECT * FROM departamentos WHERE id = :id"
+       $sql->bindParam(':id', $id, PDO::PARAM_INT);
+       $sql->execute();
+       return $sql;
+
+     }
+
 
  }
