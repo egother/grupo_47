@@ -39,9 +39,10 @@ $map = array(
 	 'modificarPublicacion' => array('controller' => 'ControllerBack', 'accion' => 'modificarPublicacion'),
      'departamentos' => array('controller' => 'ControllerBack', 'accion' => 'listarLocalidadesDeProvincia'),
 	 'buscar' => array('controller' => 'ControllerBack', 'accion' => 'buscar'),
-	 
+
      'usuarioPremium' => array('controller' =>'ControllerBack', 'accion' =>'usuarioPremium'),
      'pagar' => array('controller' =>'ControllerBack', 'accion' =>'pagar'),
+     'agregarPago' => array('controller' =>'ControllerBack', 'accion' =>'agregarPago'),
 	 'verPublicacion'=> array('controller'=>'ControllerBack', 'accion'=>'verPublicacion'),
 
 
@@ -57,7 +58,7 @@ $map = array(
 	 'agregarTipo' => array('controller' => 'ControllerBack', 'accion' => 'agregarTipo'),
 	 'modificarTipo' => array('controller' => 'ControllerBack', 'accion' => 'modificarTipo'),
 	 'borrarTipo' => array('controller' => 'ControllerBack', 'accion' => 'eliminarTipo'),
-	 
+
 	 'lugares' => array('controller' => 'ControllerBack', 'accion' => 'lugares'),
 	 'agregarLugar' => array('controller' => 'ControllerBack', 'accion' => 'agregarLugar'),
 	 'modificarLugar' => array('controller' => 'ControllerBack', 'accion' => 'modificarLugar'),

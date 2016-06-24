@@ -7,20 +7,21 @@
      }
 
      //foto, titulo de propiedad, capacidad, descripcion, encabezado,direccion, fecha, usuario, tipo, lugar
-    public function agregar($foto, $tp, $c, $des, $e, $dir, $u, $t, $l){
+    public function agregar($foto, $tp, $c, $des, $e, $dir, $u, $t, $p, $c){
     		$fecha= (new DateTime())->format("Y-m-d");
     		$fotoBlob = fopen($foto['tmp_name'], 'rb');
-    		$sql = $this->conexion->prepare('INSERT INTO `publicacion`(`foto`, `fototype`, `titulo_prop`, `capacidad`, `descripcion`, `encabezado`, `direccion`, `fecha_publi`, `usuario`, `tipo`, `lugar`)
-    		VALUES (:foto, :fototype, :titulo, :capacidad, :descripcion, :encabezado, :direccion, :fecha, :usuario, :tipo, :lugar)');
-    		$sql->bindParam(':tipo', $tp, PDO::PARAM_STR);
+    		$sql = $this->conexion->prepare('INSERT INTO `publicacion`(`foto`, `fototype`, `titulo_prop`, `capacidad`, `descripcion`, `encabezado`, `direccion`, `fecha_publi`, `usuario`, `tipo`, `provincia`, `ciudad` )
+    		VALUES (:foto, :fototype, :titulo, :capacidad, :descripcion, :encabezado, :direccion, :fecha, :usuario, :tipo, :provincia, :ciudad)');
     		$sql->bindParam(':descripcion', $des, PDO::PARAM_STR);
+        $sql->bindParam(':tipo', $tp, PDO::PARAM_INT);
     		$sql->bindParam(':encabezado', $e, PDO::PARAM_STR);
     		$sql->bindParam(':direccion', $dir, PDO::PARAM_STR);
     		$sql->bindParam(':fecha', $fecha, PDO::PARAM_STR);
     		$sql->bindParam(':usuario', $u, PDO::PARAM_STR);
     		$sql->bindParam(':titulo', $t, PDO::PARAM_STR);
     		$sql->bindParam(':capacidad', $c, PDO::PARAM_STR);
-    		$sql->bindParam(':lugar', $l, PDO::PARAM_STR);
+    		$sql->bindParam(':provincia', $p, PDO::PARAM_INT);
+    		$sql->bindParam(':ciudad', $c, PDO::PARAM_INT);
     		$sql->bindParam(':fototype', $foto['type'], PDO::PARAM_STR);
     		$sql->bindParam(':foto', $fotoBlob, PDO::PARAM_LOB);
     		return $sql->execute();
@@ -55,9 +56,9 @@
 			$publi['0']['foto']=base64_encode($publi['0']['foto']);
 			return $publi['0'];
 		} else return null;
-	   
+
    }
-   
+
       public function verMisPublicaciones($id){
     	 $sql = $this->conexion->prepare("SELECT * FROM publicacion
     	 								  WHERE usuario = :id
@@ -72,7 +73,7 @@
          }
          return $publicaciones;
    }
-   
+
    public function verificar($id_publi, $id_user){
    		return true;
    }

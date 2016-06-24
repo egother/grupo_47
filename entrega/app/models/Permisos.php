@@ -26,6 +26,7 @@ class Permisos {
 							 'misPublicaciones' => '0', 'solicitudesPendientes' => '0',
 							 'reservasAceptadas' => '0', 'solicitudesRealizadas' => '0',
 							 'reservasOtorgadas' => '0', 'provincias' => '0',
+							 'departamentos' => '0', 'listarLocalidadesDeProvincia' => '0',
 							 'modificarPublicacion' => '0', 'buscar' => '0'
 
 							)
