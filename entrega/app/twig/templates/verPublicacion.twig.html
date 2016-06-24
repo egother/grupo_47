@@ -5,8 +5,8 @@
 <h2>{{params.encabezado}}</h2>
 <h4>{{params.descripcion}}</h4>
 <img alt="" src="data:image/png;base64,{{params.foto}}" style="width: 100%;"/>
-<h4>Dirección: {{params.direccion}}, {{params.lugar}}</h4>
-<h4>Tipo de alojamiento: {{params.tipo}}</h4>
+<h4>Dirección: {{params.direccion}}, {{provincia.nombre}} - {{ciudad.nombre}}</h4>
+<h4>Tipo de alojamiento: {{tipo.tipo}}</h4>
 <h4>Capacidad máxima: {{params.capacidad}}</h4>
 <h4>Fecha de Publicación: {{params.fecha_publi}}</h4>
 
@@ -57,7 +57,7 @@
 		<label>Mi presentación</label>
 		<textarea rows="4" cols="20" id="texto" name="texto" required/></textarea>
 	</div>
-	
+
 	<br>
 
     <button type="submit">Solicitar</button>

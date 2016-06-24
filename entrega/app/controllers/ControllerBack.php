@@ -260,8 +260,14 @@ require_once __DIR__ . '/Controller.php';
 			}
 		} else
 			$this->setMensaje("No se seleccionó una publicacion para visualizar");
+      $provincia = $this->mLugares->verProvincia($params['provincia']);
+      $ciudad = $this->mLugares->verCiudad($params['ciudad']);
+      $tipo = $this->mTipos->verTipo($params['tipo']);
 		echo $this->twig->render('verPublicacion.twig.html', array('log'=>'1',
 																   'params' => $params,
+                                   'provincia'=> $provincia,
+                                   'ciudad' => $ciudad,
+                                   'tipo' => $tipo,
 																   'mensaje' => $this->revisarMensajes(),
 																   'hoy' => $hoy,
 																   'func' => $func,
