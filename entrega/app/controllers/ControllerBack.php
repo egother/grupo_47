@@ -98,9 +98,8 @@ require_once __DIR__ . '/Controller.php';
 			$nombre = $this->xss($_POST['nombre']);
 			$tel = $this->xss($_POST['tel']);
 			$fecha = $this->xss($_POST['fecha']);
-			$mail = $this->xss($_POST['mail']);
 
-			$this->us->modificar($id, $nombre, $tel, $fecha, $mail);
+			$this->us->modificar($id, $nombre, $tel, $fecha);
 
 			$this->setMensaje("Usuario modificado con éxito.");
 
@@ -141,7 +140,7 @@ require_once __DIR__ . '/Controller.php';
 	public function usuarioPremium(){
 		if($this->haySesion()){
 		  if ($_SERVER['REQUEST_METHOD'] == 'POST'){
-			if ($_SESSION['USUARIO']['id']>7){
+			if ($this->us->soyPremium($_SESSION['USUARIO']['id'])){
 			  $msj="Usted ya es Usuario Premium!!!";
 			  echo $this->twig->render('layoutBackUser.twig.html', array('log' => '1', 'mensaje' => $msj));
 			}
@@ -159,17 +158,18 @@ require_once __DIR__ . '/Controller.php';
 	public function pagar(){
 		$msj = $this->revisarMensajes();
 		if($this->haySesion()){
-		  if ($_SERVER['REQUEST_METHOD'] == 'POST'){
-        $usuario = $_SESSION['USUARIO']['id'];
-        $monto = 300;
-        $nombre = $_POST['nombre'];
-        $numero = $_POST['numero'];
-        $this->mPagos->agregarPago($usuario,$nombre,$numero, $monto);
-			echo $this->twig->render('pagoTarjeta.twig.html', array('log' => '1', 'msj' => "El pago se realizo correctamente!"));
-		  }
-		  else{
-			echo $this->twig->render('pagoTarjeta.twig.html', array('log' => '1'));
-		  }
+			if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+				$usuario = $_SESSION['USUARIO']['id'];
+				$monto = 300;
+				$nombre = $_POST['nombre'];
+				$numero = $_POST['numero'];
+				$this->mPagos->agregarPago($usuario,$nombre,$numero, $monto);
+				$this->us->convertirPremium($usuario);
+				echo $this->twig->render('pagoTarjeta.twig.html', array('log' => '1', 'msj' => "El pago se realizo correctamente!"));
+			}
+			else{
+				echo $this->twig->render('pagoTarjeta.twig.html', array('log' => '1'));
+			}	
 		}
 		else{
 		  $msj="Debe iniciar sesion para realizar esta accion";
@@ -260,14 +260,15 @@ require_once __DIR__ . '/Controller.php';
 			}
 		} else
 			$this->setMensaje("No se seleccionó una publicacion para visualizar");
-      $provincia = $this->mLugares->verProvincia($params['provincia']);
-      $ciudad = $this->mLugares->verCiudad($params['ciudad']);
-      $tipo = $this->mTipos->verTipo($params['tipo']);
+//  las siguientes lineas se resuelven en la consulta de SQL y se ponen como parametros en "$params", menos ciudad
+//      $provincia = $this->mLugares->verProvincia($params['provincia']);
+//      $ciudad = $this->mLugares->verCiudad($params['ciudad']);
+//      $tipo = $this->mTipos->verTipo($params['tipo']);
 		echo $this->twig->render('verPublicacion.twig.html', array('log'=>'1',
 																   'params' => $params,
-                                   'provincia'=> $provincia,
-                                   'ciudad' => $ciudad,
-                                   'tipo' => $tipo,
+//																   'provincia'=> $provincia,
+//																   'ciudad' => $ciudad,
+//																   'tipo' => $tipo,
 																   'mensaje' => $this->revisarMensajes(),
 																   'hoy' => $hoy,
 																   'func' => $func,

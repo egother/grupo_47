@@ -188,17 +188,16 @@
 	}
 	 
 	 
-	 public function modificar($id, $n, $t, $f, $e)
+	 public function modificar($id, $n, $t, $f)
      {
 		$idaux = $id;
 		
 		$sql = $this->conexion->prepare("UPDATE shadow
-										 SET nombre = :n, telefono = :t, f_nacimiento = :f, correo = :e
+										 SET nombre = :n, telefono = :t, f_nacimiento = :f
 										 WHERE id = :id ");
 		$sql->bindParam(':n', $n, PDO::PARAM_STR);
 		$sql->bindParam(':t', $t, PDO::PARAM_STR);
 		$sql->bindParam(':f', $f, PDO::PARAM_STR);
-		$sql->bindParam(':e', $e, PDO::PARAM_STR);
 		$sql->bindParam(':id', $idaux, PDO::PARAM_INT);
 		
 		$sql->execute(); 
@@ -306,4 +305,22 @@
 		return $res;
 	}
 
+	public function soyPremium($id){
+		$sql = $this->conexion->prepare("SELECT * FROM shadow WHERE id = :id");
+		$sql->bindParam(':id', $id, PDO::PARAM_INT);
+		$sql->execute();
+        $res = $sql->fetchAll(PDO::FETCH_ASSOC);
+		
+		if ($res[0]['premium']==1){
+			return true;
+		} else {return false;}
+	}
+	
+	public function convertirPremium($id){
+		$sql = $this->conexion->prepare("UPDATE shadow
+										SET premium = '1'
+										WHERE id = :id");
+		$sql->bindParam(':id', $id, PDO::PARAM_INT);
+		return $sql->execute();
+	}
  }
