@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 23-06-2016 a las 20:52:36
+-- Tiempo de generación: 24-06-2016 a las 13:39:10
 -- Versión del servidor: 5.7.9
 -- Versión de PHP: 5.6.16
 
@@ -6332,7 +6332,7 @@ CREATE TABLE IF NOT EXISTS `shadow` (
 
 INSERT INTO `shadow` (`id`, `usuario`, `nombre`, `id_rol`, `pass`, `correo`, `f_nacimiento`, `telefono`, `premium`) VALUES
 (1, 'admin', 'Administrador', 1, 'admin', 'admin@couchinn.com', '1980-01-01', '0221 444-2222', 0),
-(2, 'visitante', 'Visitante Publicador', 2, 'visitante', 'visitante@couchinn.com', '1990-01-01', '0221 555-1111', 0),
+(2, 'visitante', 'Visitante Publicador', 2, 'visitante', 'visitante@couchinn.com', '1990-01-01', '0221 555-1111', 1),
 (3, 'egother', 'Ezequiel Gomez', 2, '123456', 'ezequiel@hotmail.com', '2008-05-08', '221 3145758', 0),
 (4, 'gera55', 'Gerardo Sosa', 2, 'gerasosa', 'sosa.gerardo92@gmail.com', '1992-02-12', '54 11 43950655', 0),
 (5, 'federico', 'Federico Rodriguez', 2, 'federico', 'fede@hotmail.com', '1990-09-25', '54 11 42267639', 0),
@@ -6366,8 +6366,8 @@ CREATE TABLE IF NOT EXISTS `solicitud` (
 --
 
 INSERT INTO `solicitud` (`id_solicitud`, `ocupantes`, `fec_inicio`, `fec_fin`, `texto`, `fec_solicitud`, `id_publicacion`, `id_usuario`) VALUES
-(1, 1, '2016-07-01', '2016-07-05', 'asd', '2016-06-21', 2, 2),
-(2, 1, '2016-07-21', '2016-07-24', 'mostrame', '2016-06-21', 2, 2);
+(1, 1, '2016-07-01', '2016-07-05', 'asd', '2016-06-21', 9, 2),
+(2, 1, '2016-07-21', '2016-07-24', 'mostrame', '2016-06-21', 8, 2);
 
 -- --------------------------------------------------------
 
@@ -6380,7 +6380,7 @@ CREATE TABLE IF NOT EXISTS `tipo_hospedaje` (
   `id_tipo` int(11) NOT NULL AUTO_INCREMENT,
   `tipo` varchar(20) NOT NULL,
   PRIMARY KEY (`id_tipo`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `tipo_hospedaje`
@@ -6391,7 +6391,8 @@ INSERT INTO `tipo_hospedaje` (`id_tipo`, `tipo`) VALUES
 (2, 'DEPARTAMENTO'),
 (3, 'CABAÑA'),
 (5, 'CHOZA'),
-(6, 'NUEVA');
+(6, 'NUEVA'),
+(7, 'BUNGALO');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

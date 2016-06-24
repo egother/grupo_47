@@ -27,13 +27,13 @@
 	 }
 
    public function listarPublicacion(){
-    	 $sql = $this->conexion->prepare("
+    	$sql = $this->conexion->prepare("
 						SELECT p.id_publicacion, p.foto, p.fototype, p.titulo_prop, p.capacidad, p.descripcion, p.encabezado,
 							   p.direccion, p.fecha_publi, p.usuario, p.tipo, p.lugar, s.premium
 						FROM publicacion AS p INNER JOIN shadow AS s ON (p.usuario = s.id)
-						ORDER BY s.premium DESC, p.fecha_publi		 
+						ORDER BY s.premium DESC, p.fecha_publi DESC
 					");
-    	 $sql->execute();
+    	$sql->execute();
        $listado = $sql->fetchAll(PDO::FETCH_ASSOC);
        $publicaciones=array();
        foreach ($listado as $key => $publicacion) {
