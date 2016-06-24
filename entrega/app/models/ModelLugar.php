@@ -31,8 +31,8 @@
        return $sql;
      }
 
-     public function verCiudad(){
-       $sql = $this->conexion->prepare("SELECT * FROM departamentos WHERE id = :id"
+     public function verCiudad($id){
+       $sql = $this->conexion->prepare("SELECT * FROM departamentos WHERE id = :id");
        $sql->bindParam(':id', $id, PDO::PARAM_INT);
        $sql->execute();
        return $sql;
