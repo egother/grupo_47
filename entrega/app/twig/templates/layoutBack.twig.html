@@ -97,18 +97,26 @@
 						<h2>
 							Últimas publicaciones:
 						</h2>
-            {% for publicacion in publicaciones %}
-			<a href="./backend.php?accion=verPublicacion&amp;id={{publicacion.id_publicacion}}">
-        			<div>
-        				<h3>{{publicacion.encabezado}}</h3>
-        				<p>
-        					{{publicacion.descripcion}}
-        				</p>
-        				<img alt="" src="data:image/png;base64,{{publicacion.foto}}" style="width: 100%;"/>
-        			</div>
-			</a>
+				{% for publicacion in publicaciones %}
+					{% if publicacion.usuario == idUser %}
+						<a href="./backend.php?accion=verPublicacion&amp;id={{publicacion.id_publicacion}}&amp;source=1">
+					{% else %}
+						<a href="./backend.php?accion=verPublicacion&amp;id={{publicacion.id_publicacion}}">
+					{% endif %}
+								<div>
+									<h3>{{publicacion.encabezado}}</h3>
+									<p>
+										{{publicacion.descripcion}}
+									</p>
+									{% if publicacion.premium == 1 %}
+										<img alt="" src="data:image/png;base64,{{publicacion.foto}}" style="width: 100%;"/>
+									{% else %}
+										<img alt="" src="./img/publi_logo.png" style="width: 100%;"/>
+									{% endif %}
+								</div>
+						</a>
 					<hr>
-        		{% endfor %}
+				{% endfor %}
 			{% else %}
 						<h3>
 							No hay publicaciones para mostrar.

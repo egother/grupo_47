@@ -17,16 +17,14 @@ require_once __DIR__ . '/Controller.php';
 
 
 	public function inicio()
-     {
+    {
 		$this->revisarMensajes();
-		//$publicaciones = $this->mPubli->listarPublicacionUsuario($_SESSION['usuarios']); //aca va el arreglo con la consulta sql de las ultimas publicaciones
-
-    echo $this->twig->render('layoutBackUser.twig.html', array(
-			'mensaje' => $this->msj,
-      'publicaciones' => $this->mPubli->listarPublicacion(),
-			//'publicaciones'=> $publicaciones,
-      'inicio' => '1')); // habilita la visualizacion de las ultimas publicaciones
-     }
+		echo $this->twig->render('layoutBackUser.twig.html', array( 'mensaje' => $this->msj,
+																	'publicaciones' => $this->mPubli->listarPublicacion(),
+																	// idUser verifica si cada publicacion es del usuario activo, cosa que no la pueda solicitar
+																	'idUser' => $_SESSION['USUARIO']['id'], 
+																	'inicio' => '1')); // habilita la visualizacion de las ultimas publicaciones
+    }
 
 	public function tipos()
 	{
