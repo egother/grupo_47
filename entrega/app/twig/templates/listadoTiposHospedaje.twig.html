@@ -39,7 +39,7 @@
     <h3>Agregar tipo de hospedaje</h3>
     <div>
         <label>Nombre</label>
-        <input type="text" name="nombre" value="" autofocus required/>
+        <input type="text" name="nombre" value="" pattern="[A-Za-z]{2,20}" autofocus required/>
     </div>
 
 	<br>
@@ -57,7 +57,7 @@
     <h3>Modificar tipo de hospedaje</h3>
     <div>
         <label>Nombre</label>
-        <input type="text" name="nombre" value="{{nom}}" autofocus required/>
+        <input type="text" name="nombre" value="{{nom}}" pattern="[A-Za-z]{2,20}" autofocus required/>
     </div>
 
 	<br>
