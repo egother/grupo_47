@@ -11,7 +11,7 @@
     		$fecha= (new DateTime())->format("Y-m-d");
     		$fotoBlob = fopen($foto['tmp_name'], 'rb');
     		$sql = $this->conexion->prepare('INSERT INTO `publicacion`(`foto`, `fototype`, `titulo_prop`, `capacidad`, `descripcion`, `encabezado`, `direccion`, `fecha_publi`, `usuario`, `tipo`, `provincia`, `ciudad` )
-    		VALUES (:foto, :fototype, :titulo, :capacidad, :descripcion, :encabezado, :direccion, :fecha, :usuario, :tipo, :provincia, :ciudad)');
+    		VALUES (:foto, :fototype, :titulo, :capacidad, :descripcion, :encabezado, :direccion, :fecha, :usuario, :tipo, :lugar :provincia, :ciudad)');
     		$sql->bindParam(':descripcion', $des, PDO::PARAM_STR);
         $sql->bindParam(':tipo', $tp, PDO::PARAM_INT);
     		$sql->bindParam(':encabezado', $e, PDO::PARAM_STR);
@@ -21,6 +21,7 @@
     		$sql->bindParam(':titulo', $t, PDO::PARAM_STR);
     		$sql->bindParam(':capacidad', $c, PDO::PARAM_STR);
     		$sql->bindParam(':provincia', $p, PDO::PARAM_INT);
+    		$sql->bindParam(':lugar', $p, PDO::PARAM_INT);
     		$sql->bindParam(':ciudad', $c, PDO::PARAM_INT);
     		$sql->bindParam(':fototype', $foto['type'], PDO::PARAM_STR);
     		$sql->bindParam(':foto', $fotoBlob, PDO::PARAM_LOB);
