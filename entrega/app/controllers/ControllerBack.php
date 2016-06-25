@@ -71,7 +71,7 @@ require_once __DIR__ . '/Controller.php';
 					header('Location: ./backend.php?accion=tipos');
 				}
 				else {
-					$this->setMensaje=("El tipo de hospedaje ya se encuentra registrado");
+					$this->setMensaje("El tipo de hospedaje ya se encuentra registrado");
 					header('Location: ./backend.php?accion=tipos');
 				}
 			}
@@ -89,6 +89,7 @@ require_once __DIR__ . '/Controller.php';
 
 	public function modificarUsuario()
 	{
+		$this->revisarMensajes();
 		$params = array('users' => $this->us->listarUsuario($_SESSION['USUARIO']['usuario']));
 		$edad = date("Y-m-d", strtotime("-18 years")); // guarda la fecha de hace 18 años para comprobar la mayoría de edad
 
