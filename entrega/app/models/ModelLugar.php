@@ -15,6 +15,13 @@
        return $listado;
      }
 
+     public function listarCiudades(){
+       $sql = $this->conexion->prepare("SELECT * FROM localidades ORDER BY nombre");
+    	 $sql->execute();
+       $listado = $sql->fetchAll(PDO::FETCH_ASSOC);
+
+       return $listado;
+     }
      public function listarLocalidadesDeProvincia($id){
        $sql = $this->conexion->prepare("SELECT * FROM departamentos WHERE provincia_id = :id ORDER BY nombre DESC");
        $sql->bindParam(':id', $id, PDO::PARAM_INT);

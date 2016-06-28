@@ -3,8 +3,14 @@
 {% block contenido %}
 
 
+{% if (form=="A") %}
 	<form class="formulario" method="post" name="formularioP" action="./backend.php?accion=publicar" enctype="multipart/form-data">
-		<h3> Realizar publicacion </h3>
+		<h3> Realizar publicación </h3>
+{% elseif (form=="M") %}
+	<form class="formulario" method="post" name="formularioP" action="./backend.php?accion=modificarPublicacion&amp;id={{params.id_publicacion}}" enctype="multipart/form-data">
+		<h3> Modificar publicación </h3>
+{% endif %}
+
 		<div >
 			<label>Encabezado:</label>
 			<input type="text" name="encabezado" value="{{ params['encabezado'] }}" required/>
@@ -20,7 +26,7 @@
 		</div>
 		<div >
 			<label>Descripcion:</label>
-			<textarea rows="4" cols="20" name="descripcion" required/></textarea>
+			<textarea rows="4" cols="20" name="descripcion" required/>{{ params['descripcion'] }}</textarea>
 		</div>
 		<div >
 			<label>Direccion:</label>
@@ -30,7 +36,11 @@
 			<label>Tipo de Hospedaje:</label>
 			<select name="tipoViv">
 				{% for tipo in tipos %}
-					<option value="{{ tipo.id_tipo }}">{{tipo.tipo}}</option>
+					{% if (tipo.id_tipo == params.tipo) %}
+						<option value="{{ tipo.id_tipo }}" selected="selected">{{tipo.tipo}}</option>
+					{% else %}
+						<option value="{{ tipo.id_tipo }}">{{tipo.tipo}}</option>
+					{% endif %}
 				{% endfor %}
 			</select>
 		</div>
@@ -38,21 +48,40 @@
 			<label>Provincia-Ciudad:</label>
 			<select name="provincia" id="provincias">
 				{% for provincia in provincias %}
+					{% if (provincia.id == params.provincia) %}
+						<option value="{{ provincia.id }}" selected="selected">{{provincia.nombre}}</option>
+					{% else %}
 					<option value="{{ provincia.id }}">{{provincia.nombre}}</option>
+					{% endif %}
 				{% endfor %}
 			</select>
 			-
 			<select name="ciudad" id="ciudades">
-				
+				{% for ciudad in ciudades %}
+					{% if (ciudad.id == params.ciudad) %}
+						<option value="{{ ciudad.id }}" selected="selected">{{ciudad.nombre}}</option>
+					{% else %}
+					<option value="{{ ciudad.id }}">{{ciudad.nombre}}</option>
+					{% endif %}
+				{% endfor %}
 			</select>
+
 		</div>
 		<div >
 			<label>Cargar Imagen:</label>
+{% if (form=="A") %}
 			<input type="file" name="imagen" required/>
+{% elseif (form=="M") %}
+			<input type="file" name="imagen" />
+{% endif %}
 		</div>
 
 		<br>
+{% if (form=="A") %}
 		<button type="submit">Publicar</button>
+{% elseif (form=="M") %}
+		<button type="submit">Modificar</button>
+{% endif %}
 		<button type="button" onclick="window.location.href='./backend.php?accion=inicio'">Cancelar</button>
 	</form>
 <br>

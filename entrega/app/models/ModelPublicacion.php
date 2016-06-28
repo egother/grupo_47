@@ -28,10 +28,35 @@
     		return $sql->execute();
 	 }
 
+    public function modificar($id, $foto, $tp, $c, $des, $e, $dir, $u, $t, $p, $cd){
+		$fecha= (new DateTime())->format("Y-m-d");
+		$fotoBlob = fopen($foto['tmp_name'], 'rb');
+		$sql = $this->conexion->prepare('
+			UPDATE `publicacion` SET (`id`=:id ,`foto`=:foto, `fototype`=:fototype, `titulo_prop`=:titulo,
+				`capacidad`=:capacidad, `descripcion`=:descripcion, `encabezado`=:encabezado, `direccion`=:direccion,
+				`fecha_publi`=:fecha, `usuario`=:usuario, `tipo`=:tipo, `provincia`=:provincia, `ciudad`=:ciudad, `lugar`=:lugar )');
+
+		$sql->bindParam(':id', $id, PDO::PARAM_INT);
+		$sql->bindParam(':descripcion', $des, PDO::PARAM_STR);
+		$sql->bindParam(':tipo', $tp, PDO::PARAM_INT);
+		$sql->bindParam(':encabezado', $e, PDO::PARAM_STR);
+		$sql->bindParam(':direccion', $dir, PDO::PARAM_STR);
+		$sql->bindParam(':fecha', $fecha, PDO::PARAM_STR);
+		$sql->bindParam(':usuario', $u, PDO::PARAM_STR);
+		$sql->bindParam(':titulo', $t, PDO::PARAM_STR);
+		$sql->bindParam(':capacidad', $c, PDO::PARAM_STR);
+		$sql->bindParam(':provincia', $p, PDO::PARAM_INT);
+		$sql->bindParam(':lugar', $p, PDO::PARAM_INT);
+		$sql->bindParam(':ciudad', $cd, PDO::PARAM_INT);
+		$sql->bindParam(':fototype', $foto['type'], PDO::PARAM_STR);
+		$sql->bindParam(':foto', $fotoBlob, PDO::PARAM_LOB);
+		return $sql->execute();
+	 }
+
    public function listarPublicacion(){
     	$sql = $this->conexion->prepare("
 						SELECT p.id_publicacion, p.foto, p.fototype, p.titulo_prop, p.capacidad, p.descripcion, p.encabezado,
-							   p.direccion, p.fecha_publi, p.usuario, p.tipo, p.lugar, s.premium
+							   p.direccion, p.fecha_publi, p.usuario, p.tipo, p.lugar, p.ciudad, p.provincia, s.premium
 						FROM publicacion AS p INNER JOIN shadow AS s ON (p.usuario = s.id)
 						ORDER BY s.premium DESC, p.fecha_publi DESC
 					");

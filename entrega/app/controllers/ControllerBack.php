@@ -178,44 +178,85 @@ require_once __DIR__ . '/Controller.php';
 		}
 	  }
 
-	public function publicar()
-	  {
-	  $msj = $this->revisarMensajes();
+	public function publicar(){
+		$msj = $this->revisarMensajes();
 
-	  if($this->haySesion()){
-		  if ($_SERVER['REQUEST_METHOD'] == 'POST'){
-			$tituloProp = $this->xss($_POST['tituloP']);
-			$cantidad = $this->xss($_POST['capacidad']);
-			$descripcion = $this->xss($_POST['descripcion']);
-			$encabezado = $this->xss($_POST['encabezado']);
-			$direccion = $this->xss($_POST['direccion']);
-			$tipo = $this->xss($_POST['tipoViv']);
-			$provincia = $this->xss($_POST['provincia']);
-			$ciudad = $this->xss($_POST['ciudad']);
-			$foto = $_FILES['imagen'];
-			$usuario = $_SESSION['USUARIO']['id'];
-			$this->mPubli->agregar($foto, $tituloProp, $cantidad, $descripcion, $encabezado, $direccion, $usuario, $tipo, $provincia, $ciudad);
-			$msj="La Publicacion Fue Realizada";
-			echo $this->twig->render('layoutBackUser.twig.html', array(
-					'mensaje' => $msj,
-			  'publicaciones' => $this->mPubli->listarPublicacion(),
-			  'inicio' => '1'));
-		  }else{
-			$tipos = $this->mTipos->listar();
-      $provincias = $this->mLugares->listarProvincias();
-			echo $this->twig->render('publicacion.twig.html', array('log' => '1', 'tipos' => $tipos, 'provincias' => $provincias));
-		  }
+		if($this->haySesion()){
+			if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+				$tituloProp = $this->xss($_POST['tituloP']);
+				$cantidad = $this->xss($_POST['capacidad']);
+				$descripcion = $this->xss($_POST['descripcion']);
+				$encabezado = $this->xss($_POST['encabezado']);
+				$direccion = $this->xss($_POST['direccion']);
+				$tipo = $this->xss($_POST['tipoViv']);
+				$provincia = $this->xss($_POST['provincia']);
+				$ciudad = $this->xss($_POST['ciudad']);
+				$foto = $_FILES['imagen'];
+				$usuario = $_SESSION['USUARIO']['id'];
+				$this->mPubli->agregar($foto, $tituloProp, $cantidad, $descripcion, $encabezado, $direccion, $usuario, $tipo, $provincia, $ciudad);
+				$msj="La Publicacion Fue Realizada";
+				echo $this->twig->render('layoutBackUser.twig.html', array(
+										 'mensaje' => $msj,
+										 'publicaciones' => $this->mPubli->listarPublicacion(),
+										 'inicio' => '1'));
+			} else {
+				$tipos = $this->mTipos->listar();
+				$provincias = $this->mLugares->listarProvincias();
+				echo $this->twig->render('publicacion.twig.html', array('log' => '1',
+																		'form' => 'A', // A = Agregar
+																		'tipos' => $tipos,
+																		'provincias' => $provincias));
+			}
 		}else{
-		  echo $this->twig->render('publicacion.twig.html', array());
+			$this->setMensaje("Usted no ha iniciado sesión");
+			header('Location: ./index.php');
 		}
-
 	}
 
-  public function listarLocalidadesDeProvincia(){
-    $listado = $this->mLugares->listarLocalidadesDeProvincia($_POST['id']);
-    header('Content-type: application/json');
-    echo json_encode($listado);
-  }
+	public function modificarPublicacion($id){ // no se cómo, pero recibe el id desde el $_GET
+		$msj = $this->revisarMensajes();
+		if($this->haySesion()){
+			if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+				$tituloProp = $this->xss($_POST['tituloP']);
+				$cantidad = $this->xss($_POST['capacidad']);
+				$descripcion = $this->xss($_POST['descripcion']);
+				$encabezado = $this->xss($_POST['encabezado']);
+				$direccion = $this->xss($_POST['direccion']);
+				$tipo = $this->xss($_POST['tipoViv']);
+				$provincia = $this->xss($_POST['provincia']);
+				$ciudad = $this->xss($_POST['ciudad']);
+				$foto = $_FILES['imagen'];
+				$usuario = $_SESSION['USUARIO']['id'];
+				$res = $this->mPubli->modificar($id, $foto, $tituloProp, $cantidad, $descripcion, $encabezado, $direccion, $usuario, $tipo, $provincia, $ciudad);
+				$msj="La modificación fue realizada con éxito";
+				echo $this->twig->render('layoutBackUser.twig.html', array(
+										 'mensaje' => $msj,
+										 'publicaciones' => $this->mPubli->listarPublicacion(),
+										 'inicio' => '1'));
+			} else {
+				$params = $this->mPubli->verPublicacion($id);
+//				var_dump($params); exit;
+				$tipos = $this->mTipos->listar();
+				$provincias = $this->mLugares->listarProvincias();
+				$ciudades = $this->mLugares->listarCiudades();
+				echo $this->twig->render('publicacion.twig.html', array('log' => '1',
+																		'form' => 'M', // M = Modificar
+																		'params' => $params,
+																		'tipos' => $tipos,
+																		'provincias' => $provincias,
+																		'ciudades' => $ciudades));
+			}
+		}else{
+			$this->setMensaje("Usted no ha iniciado sesión");
+			header('Location: ./index.php');
+		}
+	}
+
+	public function listarLocalidadesDeProvincia(){
+		$listado = $this->mLugares->listarLocalidadesDeProvincia($_POST['id']);
+		header('Content-type: application/json');
+		echo json_encode($listado);
+	}
 
   public function verPublicacion(){
 		$msj = $this->revisarMensajes();
@@ -331,9 +372,6 @@ require_once __DIR__ . '/Controller.php';
 		echo "muestra las reservas que otorgué, voy a tener huéspedes";
 	}
 
-	public function modificarPublicacion($id){
-		echo "aca vamos a mostrar el formulario de modificar publicacion";
-	}
  }
 
 ?>
