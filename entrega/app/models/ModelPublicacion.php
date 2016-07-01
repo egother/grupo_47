@@ -7,50 +7,69 @@
      }
 
      //foto, titulo de propiedad, capacidad, descripcion, encabezado,direccion, fecha, usuario, tipo, lugar
-    public function agregar($foto, $tp, $c, $des, $e, $dir, $u, $t, $p, $c){
+    public function agregar($foto, $tp, $c, $des, $e, $dir, $u, $t, $p, $cd){
     		$fecha= (new DateTime())->format("Y-m-d");
     		$fotoBlob = fopen($foto['tmp_name'], 'rb');
-    		$sql = $this->conexion->prepare('INSERT INTO `publicacion`(`foto`, `fototype`, `titulo_prop`, `capacidad`, `descripcion`, `encabezado`, `direccion`, `fecha_publi`, `usuario`, `tipo`, `provincia`, `ciudad` )
-    		VALUES (:foto, :fototype, :titulo, :capacidad, :descripcion, :encabezado, :direccion, :fecha, :usuario, :tipo, :lugar :provincia, :ciudad)');
+    		$sql = $this->conexion->prepare('INSERT INTO `publicacion`(`foto`, `fototype`, `titulo_prop`, `capacidad`, `descripcion`, `encabezado`, `direccion`, `fecha_publi`, `usuario`, `tipo`, `lugar`, `provincia`, `ciudad` )
+    		VALUES (:foto, :fototype, :titulo, :capacidad, :descripcion, :encabezado, :direccion, :fecha, :usuario, :tipo, :provincia, :provincia, :ciudad)');
     		$sql->bindParam(':descripcion', $des, PDO::PARAM_STR);
-        $sql->bindParam(':tipo', $tp, PDO::PARAM_INT);
+			$sql->bindParam(':tipo', $t, PDO::PARAM_INT);
     		$sql->bindParam(':encabezado', $e, PDO::PARAM_STR);
     		$sql->bindParam(':direccion', $dir, PDO::PARAM_STR);
     		$sql->bindParam(':fecha', $fecha, PDO::PARAM_STR);
     		$sql->bindParam(':usuario', $u, PDO::PARAM_STR);
-    		$sql->bindParam(':titulo', $t, PDO::PARAM_STR);
+    		$sql->bindParam(':titulo', $tp, PDO::PARAM_STR);
     		$sql->bindParam(':capacidad', $c, PDO::PARAM_STR);
     		$sql->bindParam(':provincia', $p, PDO::PARAM_INT);
-    		$sql->bindParam(':lugar', $p, PDO::PARAM_INT);
-    		$sql->bindParam(':ciudad', $c, PDO::PARAM_INT);
+    		$sql->bindParam(':ciudad', $cd, PDO::PARAM_INT);
     		$sql->bindParam(':fototype', $foto['type'], PDO::PARAM_STR);
     		$sql->bindParam(':foto', $fotoBlob, PDO::PARAM_LOB);
     		return $sql->execute();
 	 }
 
     public function modificar($id, $foto, $tp, $c, $des, $e, $dir, $u, $t, $p, $cd){
-		$fecha= (new DateTime())->format("Y-m-d");
-		$fotoBlob = fopen($foto['tmp_name'], 'rb');
-		$sql = $this->conexion->prepare('
-			UPDATE `publicacion` SET (`id`=:id ,`foto`=:foto, `fototype`=:fototype, `titulo_prop`=:titulo,
-				`capacidad`=:capacidad, `descripcion`=:descripcion, `encabezado`=:encabezado, `direccion`=:direccion,
-				`fecha_publi`=:fecha, `usuario`=:usuario, `tipo`=:tipo, `provincia`=:provincia, `ciudad`=:ciudad, `lugar`=:lugar )');
-
-		$sql->bindParam(':id', $id, PDO::PARAM_INT);
-		$sql->bindParam(':descripcion', $des, PDO::PARAM_STR);
-		$sql->bindParam(':tipo', $tp, PDO::PARAM_INT);
-		$sql->bindParam(':encabezado', $e, PDO::PARAM_STR);
-		$sql->bindParam(':direccion', $dir, PDO::PARAM_STR);
-		$sql->bindParam(':fecha', $fecha, PDO::PARAM_STR);
-		$sql->bindParam(':usuario', $u, PDO::PARAM_STR);
-		$sql->bindParam(':titulo', $t, PDO::PARAM_STR);
-		$sql->bindParam(':capacidad', $c, PDO::PARAM_STR);
-		$sql->bindParam(':provincia', $p, PDO::PARAM_INT);
-		$sql->bindParam(':lugar', $p, PDO::PARAM_INT);
-		$sql->bindParam(':ciudad', $cd, PDO::PARAM_INT);
-		$sql->bindParam(':fototype', $foto['type'], PDO::PARAM_STR);
-		$sql->bindParam(':foto', $fotoBlob, PDO::PARAM_LOB);
-		return $sql->execute();
+		if ($foto['error'] == 4){
+    		$sql = $this->conexion->prepare('
+				UPDATE `publicacion`
+				SET `titulo_prop` = :titulo, `capacidad` = :capacidad, `descripcion` = :descripcion,
+						`encabezado` = :encabezado, `direccion` = :direccion, `usuario` = :usuario, `tipo` = :tipo,
+						`lugar` = :provincia, `provincia` = :provincia, `ciudad` = :ciudad
+				WHERE `id_publicacion` = :id');
+			$sql->bindParam(':id', $id, PDO::PARAM_INT);
+    		$sql->bindParam(':descripcion', $des, PDO::PARAM_STR);
+			$sql->bindParam(':tipo', $t, PDO::PARAM_INT);
+    		$sql->bindParam(':encabezado', $e, PDO::PARAM_STR);
+    		$sql->bindParam(':direccion', $dir, PDO::PARAM_STR);
+    		$sql->bindParam(':fecha', $fecha, PDO::PARAM_STR);
+    		$sql->bindParam(':usuario', $u, PDO::PARAM_STR);
+    		$sql->bindParam(':titulo', $tp, PDO::PARAM_STR);
+    		$sql->bindParam(':capacidad', $c, PDO::PARAM_STR);
+    		$sql->bindParam(':provincia', $p, PDO::PARAM_INT);
+    		$sql->bindParam(':ciudad', $cd, PDO::PARAM_INT);
+    		return $sql->execute();
+			
+		} elseif ($foto['error'] == 0){
+			$fotoBlob = fopen($foto['tmp_name'], 'rb');
+			$sql = $this->conexion->prepare('
+				UPDATE `publicacion`
+				SET `foto` = :foto, `fototype` = :fototype, `titulo_prop` = :titulo, `capacidad` = :capacidad, `descripcion` = :descripcion,
+						`encabezado` = :encabezado, `direccion` = :direccion, `usuario` = :usuario, `tipo` = :tipo,
+						`lugar` = :provincia, `provincia` = :provincia, `ciudad` = :ciudad
+				WHERE `id_publicacion` = :id');
+			$sql->bindParam(':id', $id, PDO::PARAM_INT);
+    		$sql->bindParam(':descripcion', $des, PDO::PARAM_STR);
+			$sql->bindParam(':tipo', $t, PDO::PARAM_INT);
+    		$sql->bindParam(':encabezado', $e, PDO::PARAM_STR);
+    		$sql->bindParam(':direccion', $dir, PDO::PARAM_STR);
+    		$sql->bindParam(':usuario', $u, PDO::PARAM_STR);
+    		$sql->bindParam(':titulo', $tp, PDO::PARAM_STR);
+    		$sql->bindParam(':capacidad', $c, PDO::PARAM_STR);
+    		$sql->bindParam(':provincia', $p, PDO::PARAM_INT);
+    		$sql->bindParam(':ciudad', $cd, PDO::PARAM_INT);
+    		$sql->bindParam(':fototype', $foto['type'], PDO::PARAM_STR);
+    		$sql->bindParam(':foto', $fotoBlob, PDO::PARAM_LOB);
+    		return $sql->execute();
+		}
 	 }
 
    public function listarPublicacion(){
@@ -74,10 +93,11 @@
    //}
 
    public function verPublicacion($id){
-    	$sql = $this->conexion->prepare("SELECT p.*, pr.nombre, t.tipo AS nombre_tipo
-										 FROM publicacion AS p INNER JOIN provincias AS pr ON (p.lugar = pr.id)
+    	$sql = $this->conexion->prepare("SELECT p.*, pr.nombre AS nombre_provincia, l.nombre AS nombre_ciudad, t.tipo AS nombre_tipo
+										FROM publicacion AS p INNER JOIN provincias AS pr ON (p.lugar = pr.id)
+											INNER JOIN localidades AS l ON (p.ciudad = l.id)
 											INNER JOIN tipo_hospedaje AS t ON (p.tipo = t.id_tipo)
-										 WHERE id_publicacion = :id");
+										WHERE id_publicacion = :id");
 		$sql->bindParam(':id', $id, PDO::PARAM_INT);
 		$sql->execute();
 		$publi = $sql->fetchAll(PDO::FETCH_ASSOC);

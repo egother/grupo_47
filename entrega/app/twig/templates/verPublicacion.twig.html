@@ -5,7 +5,7 @@
 <h2>{{params.encabezado}}</h2>
 <h4>{{params.descripcion}}</h4>
 <img alt="" src="data:image/png;base64,{{params.foto}}" style="width: 100%;"/>
-<h4>Dirección: {{params.direccion}}, {{params.nombre}}</h4>
+<h4>Dirección: {{params.direccion}}, {{params.nombre_ciudad}} - {{params.nombre_provincia}}</h4>
 <h4>Tipo de alojamiento: {{params.nombre_tipo}}</h4>
 <h4>Capacidad máxima: {{params.capacidad}}</h4>
 <h4>Fecha de Publicación: {{params.fecha_publi}}</h4>
@@ -16,10 +16,7 @@
 	</div>
 {% elseif (source == 1) %}
 	<div align="right">
-<!--	
 	<a href="./backend.php?accion=modificarPublicacion&amp;id={{params.id_publicacion}}&amp;func=modificar"><h2>Modificar</h2></a>
--->
-	<h2>Modificar</h2> <!-- esta linea es temporal, hasta que se implemente el modificar publicacion -->
 	</div>
 {% endif %}
 

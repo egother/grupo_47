@@ -228,11 +228,8 @@ require_once __DIR__ . '/Controller.php';
 				$foto = $_FILES['imagen'];
 				$usuario = $_SESSION['USUARIO']['id'];
 				$res = $this->mPubli->modificar($id, $foto, $tituloProp, $cantidad, $descripcion, $encabezado, $direccion, $usuario, $tipo, $provincia, $ciudad);
-				$msj="La modificación fue realizada con éxito";
-				echo $this->twig->render('layoutBackUser.twig.html', array(
-										 'mensaje' => $msj,
-										 'publicaciones' => $this->mPubli->listarPublicacion(),
-										 'inicio' => '1'));
+				$this->setMensaje("La modificación fue realizada con éxito");
+				echo header('Location: ./backend.php?accion=misPublicaciones');
 			} else {
 				$params = $this->mPubli->verPublicacion($id);
 //				var_dump($params); exit;
@@ -302,15 +299,8 @@ require_once __DIR__ . '/Controller.php';
 			}
 		} else
 			$this->setMensaje("No se seleccionó una publicacion para visualizar");
-//  las siguientes lineas se resuelven en la consulta de SQL y se ponen como parametros en "$params", menos ciudad
-//      $provincia = $this->mLugares->verProvincia($params['provincia']);
-//      $ciudad = $this->mLugares->verCiudad($params['ciudad']);
-//      $tipo = $this->mTipos->verTipo($params['tipo']);
 		echo $this->twig->render('verPublicacion.twig.html', array('log'=>'1',
 																   'params' => $params,
-//																   'provincia'=> $provincia,
-//																   'ciudad' => $ciudad,
-//																   'tipo' => $tipo,
 																   'mensaje' => $this->revisarMensajes(),
 																   'hoy' => $hoy,
 																   'func' => $func,
