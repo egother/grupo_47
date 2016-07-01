@@ -29,6 +29,7 @@ require_once __DIR__ . '/Controller.php';
 			$busqueda = 0;
 		}
 		echo $this->twig->render('layoutBackUser.twig.html', array( 'mensaje' => $this->msj,
+																	'error' => $this->err,
 																	'publicaciones' => $publicaciones,
 																	// idUser verifica si cada publicacion es del usuario activo, cosa que no la pueda solicitar
 																	'idUser' => $_SESSION['USUARIO']['id'],
@@ -42,6 +43,7 @@ require_once __DIR__ . '/Controller.php';
 	{
 		$this->revisarMensajes();
 		$msj=$this->msj;
+		$err=$this->err;
 		$nom = ''; $idTipo='0';
 		if (isset($_GET['id'])){
 			$idTipo = $_GET['id'];}
@@ -61,18 +63,20 @@ require_once __DIR__ . '/Controller.php';
 				if ($this->mTipos->verificar($nombre)){ // verifica que ya no se haya agregado el mismo nombre
 					$this->mTipos->agregar($nombre);
 					$msj=("El tipo de hospedaje se ha agregado exitosamente");
+					$err=0;
 				} else {
 					$msj=("El tipo de hospedaje ya se encuentra registrado");
+					$err=1;
 				}
 			} elseif ($func == 'modificar'){
 				if ($this->mTipos->verificar($nombre)){
 					$this->mTipos->modificarTipo($idTipo,$nombre);
-					$this->setMensaje("El tipo de hospedaje se ha modificado exitosamente");
-					header('Location: ./backend.php?accion=tipos');
+					$msj=("El tipo de hospedaje se ha modificado exitosamente");
+					$err=0; $func = 'nada';
 				}
 				else {
-					$this->setMensaje("El tipo de hospedaje ya se encuentra registrado");
-					header('Location: ./backend.php?accion=tipos');
+					$msj=("El tipo de hospedaje ya se encuentra registrado");
+					$err=1; $func = 'nada';
 				}
 			}
 		}
@@ -81,6 +85,7 @@ require_once __DIR__ . '/Controller.php';
 																		  'func' => $func,
 																		  'tipos' => $params,
 																		  'mensaje' => $msj,
+																		  'error' => $err,
 																		  'nom' => $nom,
 																		  'id_tipo' => $idTipo
 																		  ));
@@ -102,7 +107,7 @@ require_once __DIR__ . '/Controller.php';
 
 			$this->us->modificar($id, $nombre, $tel, $fecha);
 
-			$this->setMensaje("Usuario modificado con éxito.");
+			$this->setMensaje("Usuario modificado con éxito.", 0);
 
 			$_SESSION['USUARIO']['nombre'] = Controller::xss($nombre);
 
@@ -114,6 +119,7 @@ require_once __DIR__ . '/Controller.php';
 			echo $this->twig->render('formModUser.twig.html', array('users' => $params['users'],
 																	'usuario' => dameUsuarioYRol(),
 																	'mensaje' => $this->msj,
+																	'error' => $this->err,
 																	'edad' => $edad));
 
 	}
@@ -128,7 +134,7 @@ require_once __DIR__ . '/Controller.php';
 			$p1 = $this->xss($_POST['p1']);
 
 			$this->us->modificarPass($id, $p1);
-			$this->setMensaje("Contraseña modificada con éxito.");
+			$this->setMensaje("Contraseña modificada con éxito.", 0);
 			header('Location: ./backend.php');
 
 
@@ -143,7 +149,7 @@ require_once __DIR__ . '/Controller.php';
 		  if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 			if ($this->us->soyPremium($_SESSION['USUARIO']['id'])){
 			  $msj="Usted ya es Usuario Premium!!!";
-			  echo $this->twig->render('layoutBackUser.twig.html', array('log' => '1', 'mensaje' => $msj));
+			  echo $this->twig->render('layoutBackUser.twig.html', array('log' => '1', 'mensaje' => $msj, 'error' => 1));
 			}
 			else {
 			  echo $this->twig->render('pagoTarjeta.twig.html', array('log' => '1'));
@@ -166,7 +172,7 @@ require_once __DIR__ . '/Controller.php';
 				$numero = $_POST['numero'];
 				$this->mPagos->agregarPago($usuario,$nombre,$numero, $monto);
 				$this->us->convertirPremium($usuario);
-				echo $this->twig->render('pagoTarjeta.twig.html', array('log' => '1', 'msj' => "El pago se realizo correctamente!"));
+				echo $this->twig->render('pagoTarjeta.twig.html', array('log' => '1', 'mensaje' => "El pago se realizo correctamente!", 'error' => 0));
 			}
 			else{
 				echo $this->twig->render('pagoTarjeta.twig.html', array('log' => '1'));
@@ -174,7 +180,7 @@ require_once __DIR__ . '/Controller.php';
 		}
 		else{
 		  $msj="Debe iniciar sesion para realizar esta accion";
-		  echo $this->twig->render('index.twig.html', array('log' => '1', 'mensaje' => $msj));
+		  echo $this->twig->render('index.twig.html', array('log' => '1', 'mensaje' => $msj, 'error' => 1));
 		}
 	  }
 
@@ -197,18 +203,21 @@ require_once __DIR__ . '/Controller.php';
 				$msj="La Publicacion Fue Realizada";
 				echo $this->twig->render('layoutBackUser.twig.html', array(
 										 'mensaje' => $msj,
+										 'error' => 0,
 										 'publicaciones' => $this->mPubli->listarPublicacion(),
 										 'inicio' => '1'));
 			} else {
 				$tipos = $this->mTipos->listar();
 				$provincias = $this->mLugares->listarProvincias();
+				$ciudades = $this->mLugares->listarCiudades();
 				echo $this->twig->render('publicacion.twig.html', array('log' => '1',
 																		'form' => 'A', // A = Agregar
 																		'tipos' => $tipos,
-																		'provincias' => $provincias));
+																		'provincias' => $provincias,
+																		'ciudades' => $ciudades));
 			}
 		}else{
-			$this->setMensaje("Usted no ha iniciado sesión");
+			$this->setMensaje("Usted no ha iniciado sesión", 1);
 			header('Location: ./index.php');
 		}
 	}
@@ -228,8 +237,8 @@ require_once __DIR__ . '/Controller.php';
 				$foto = $_FILES['imagen'];
 				$usuario = $_SESSION['USUARIO']['id'];
 				$res = $this->mPubli->modificar($id, $foto, $tituloProp, $cantidad, $descripcion, $encabezado, $direccion, $usuario, $tipo, $provincia, $ciudad);
-				$this->setMensaje("La modificación fue realizada con éxito");
-				echo header('Location: ./backend.php?accion=misPublicaciones');
+				$this->setMensaje("La modificación fue realizada con éxito", 0);
+				header('Location: ./backend.php?accion=misPublicaciones');
 			} else {
 				$params = $this->mPubli->verPublicacion($id);
 //				var_dump($params); exit;
@@ -244,19 +253,20 @@ require_once __DIR__ . '/Controller.php';
 																		'ciudades' => $ciudades));
 			}
 		}else{
-			$this->setMensaje("Usted no ha iniciado sesión");
+			$this->setMensaje("Usted no ha iniciado sesión", 1);
 			header('Location: ./index.php');
 		}
 	}
 
 	public function listarLocalidadesDeProvincia(){
+		echo($_POST['id']);
 		$listado = $this->mLugares->listarLocalidadesDeProvincia($_POST['id']);
 		header('Content-type: application/json');
 		echo json_encode($listado);
 	}
 
   public function verPublicacion(){
-		$msj = $this->revisarMensajes();
+		$this->revisarMensajes();
 		$func="";
 		$source = 0;
 		if (isset($_GET['id'])){
@@ -273,7 +283,7 @@ require_once __DIR__ . '/Controller.php';
 					$func = $_GET['func'];
 					if ($func == "solicitar"){
 						if ($params['usuario']==$_SESSION['USUARIO']['id']){
-							$this->setMensaje("Usted no puede auto-solicitarse hospedaje");
+							$this->setMensaje("Usted no puede auto-solicitarse hospedaje", 1);
 							header('Location: ./backend.php');
 						}
 					}
@@ -286,68 +296,69 @@ require_once __DIR__ . '/Controller.php';
 					$texto = $_POST["texto"];
 					if (($cant>0) && ($cant<=$params['capacidad']) && ($this->check_dates($desde, $hasta))){
 						$this->mSolic->agregarSolicitud($id, $_SESSION['USUARIO']['id'], $cant, $desde, $hasta, $texto);
-						$this->setMensaje("La solicitud fue ingresada correctamente.");
+						$this->setMensaje("La solicitud fue ingresada correctamente.", 0);
 						// se agrego bien, ahora mostramos el listado de las solicitudes que hice yo
 						header('Location: ./backend.php?accion=solicitudesRealizadas');
 					} else {
-						$msj = "Los datos ingresados no son correctos.";
+						$this->msj = "Los datos ingresados no son correctos.";
+						$this->err = 1;
 					}
 				}
 			} else {
-				$this->setMensaje("No existe la publicación buscada.");
+				$this->setMensaje("No existe la publicación buscada.", 1);
 				header('Location: ./backend.php');
 			}
 		} else
-			$this->setMensaje("No se seleccionó una publicacion para visualizar");
+			$this->setMensaje("No se seleccionó una publicacion para visualizar", 1);
 		echo $this->twig->render('verPublicacion.twig.html', array('log'=>'1',
 																   'params' => $params,
-																   'mensaje' => $this->revisarMensajes(),
+																   'mensaje' => $this->msj,
+																   'error' => $this->err,
 																   'hoy' => $hoy,
 																   'func' => $func,
 																   'source' => $source));
 	}
 
 	public function misPublicaciones(){
-		$msj = $this->revisarMensajes();
+		$this->revisarMensajes();
 		if($this->haySesion()){
 			$params = $this->mPubli->verMisPublicaciones($_SESSION['USUARIO']['id']);
 			echo $this->twig->render('misPublicaciones.twig.html', array('log' => '1',
 																		 'params' => $params,
-																		 'mensaje' => $msj));
+																		 'mensaje' => $this->msj,
+																		 'error' => $this->err));
 		} else {
-			$this->setMensaje("Usted no ha iniciado sesión.");
+			$this->setMensaje("Usted no ha iniciado sesión.", 1);
 			header('Location: ./index.php');
 		}
 	}
 
 	public function solicitudesPendientes(){
-		$msj = $this->revisarMensajes();
+		$this->revisarMensajes();
 		if($this->haySesion()){
 			$params = $this->mSolic->verSolicitudesPendientes($_SESSION['USUARIO']['id']);
 			echo $this->twig->render('listadoSolicitudesPendientes.twig.html', array('log' => '1',
 																					 'params' => $params,
-																					 'mensaje' => $msj));
+																					 'mensaje' => $this->msj,
+																					 'error' => $this->err));
 		} else {
-			$this->setMensaje("Usted no ha iniciado sesión.");
+			$this->setMensaje("Usted no ha iniciado sesión.", 1);
 			header('Location: ./index.php');
 		}
 	}
 
 	public function solicitudesRealizadas(){
-		$msj = $this->revisarMensajes();
+		$this->revisarMensajes();
 		if($this->haySesion()){
 			$params = $this->mSolic->verSolicitudesRealizadas($_SESSION['USUARIO']['id']);
 			echo $this->twig->render('listadoSolicitudesRealizadas.twig.html', array('log' => '1',
 																					 'params' => $params,
-																					 'mensaje' => $msj));
+																					 'mensaje' => $this->msj,
+																					 'error' => $this->err));
 		} else {
-			$this->setMensaje("Usted no ha iniciado sesión.");
+			$this->setMensaje("Usted no ha iniciado sesión.", 1);
 			header('Location: ./index.php');
 		}
-	}
-
-	public function lugares(){
-		echo "muestra una lista de lugares disponibles para que los usuarios ubiquen sus publicaciones";
 	}
 
 	public function misReservas(){

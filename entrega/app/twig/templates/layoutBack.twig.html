@@ -25,7 +25,11 @@
 	top: 0;
 	left: 0;
 	z-index: 1000;
+{% if error == 1 %}	
 	background: #f55;
+{% else %}
+	background: #9f9;
+{% endif %}
 	padding: 5px;
 	border: 1px solid #CCCCCC;
 	text-align: center;

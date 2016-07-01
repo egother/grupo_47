@@ -16,7 +16,8 @@ require_once __DIR__ . '/ControllerLogin.php';
 	protected $mCalifHos;// variable para la conexion del modelo calificacion hospedado
 	protected $mComent;	 // variable para la conexion del modelo comentarios
 	protected $mTipos;	 // variable para la conexion del modelo tipos de hospedaje
-	protected $msj;
+	protected $msj;		// variable para el mensaje en pantalla
+	protected $err;		// variable para saber si el mensaje es de error o no
 
 	//configura los parámetros de Twig para el controllerBack
 
@@ -91,11 +92,16 @@ require_once __DIR__ . '/ControllerLogin.php';
 			$this->msj = $_COOKIE['mensaje'];
 			setcookie('mensaje', 'content', 1);
 		}
+		if (isset($_COOKIE['error'])){
+			$this->err = $_COOKIE['error'];
+			setcookie('error', 'content', 1);
+		}
 	}
 
-	protected function setMensaje($m)
+	protected function setMensaje($m, $e)
 	{
 		setcookie('mensaje', $m);
+		setcookie('error', $e);
 	}
 
 	private static function configTwig(){

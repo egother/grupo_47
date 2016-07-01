@@ -23,7 +23,12 @@
        return $listado;
      }
      public function listarLocalidadesDeProvincia($id){
-       $sql = $this->conexion->prepare("SELECT * FROM departamentos WHERE provincia_id = :id ORDER BY nombre DESC");
+       $sql = $this->conexion->prepare("
+			SELECT  p.id AS id_provincia, p.nombre AS nombre_provincia,
+					d.id AS id_departamento, d.nombre AS nombre_departamento,
+					l.id AS id_ciudad, l.nombre AS nombre_ciudad
+			FROM provincias AS p INNER JOIN departamentos AS d ON p.id=d.provincia_id INNER JOIN localidades AS l ON d.id=l.departamento_id
+			WHERE p.id=:id");
        $sql->bindParam(':id', $id, PDO::PARAM_INT);
     	 $sql->execute();
        $listado = $sql->fetchAll(PDO::FETCH_ASSOC);
