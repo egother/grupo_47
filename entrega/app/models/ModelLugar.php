@@ -41,7 +41,12 @@
        $sql->bindParam(':id', $id, PDO::PARAM_INT);
        $sql->execute();
        $listado = $sql->fetchAll(PDO::FETCH_ASSOC);
-       return $listado[0];
+	   if (count($listado)>0) {
+			return $listado[0];
+	   } else {
+		   $listado = array('nombre' => "cualquier provincia");
+		   return $listado;
+		}
      }
 
      public function verCiudad($id){

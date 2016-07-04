@@ -25,9 +25,9 @@
 				<td style="width:32px">
 					<a href="./backend.php?accion=verPublicacion&amp;id={{sol.id_publicacion}}">{{sol.encabezado}}</a>
 				</td>
-				<td>{{sol.fec_solicitud}}</td>
-				<td>{{sol.fec_inicio}}</td>
-				<td>{{sol.fec_fin}}</td>
+				<td>{{sol.fec_solicitud|date("m-d-Y")}}</td>
+				<td>{{sol.fec_inicio|date("m-d-Y")}}</td>
+				<td>{{sol.fec_fin|date("m-d-Y")}}</td>
 				<td>{{sol.ocupantes}}</td>
 			</tr>
 	{% endfor %}

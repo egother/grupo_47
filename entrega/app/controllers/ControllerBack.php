@@ -24,9 +24,12 @@ require_once __DIR__ . '/Controller.php';
 			$provincia = $this->xss($_GET['provincia']);
 			$publicaciones = $this->mPubli->buscar($tipo, $provincia);
 			$busqueda = 1;
+			$paramsBusqueda = array('prov' => $this->mLugares->verProvincia($_GET['provincia']),
+									'tipo' => $this->mTipos->obtenerTipo($_GET['tipo']));
 		} else {
 			$publicaciones = $this->mPubli->listarPublicacion();
 			$busqueda = 0;
+			$paramsBusqueda = null;
 		}
 		echo $this->twig->render('layoutBackUser.twig.html', array( 'mensaje' => $this->msj,
 																	'error' => $this->err,
@@ -36,6 +39,7 @@ require_once __DIR__ . '/Controller.php';
 																	'provincias' => $this->mLugares->listarProvincias(),
 																	'tipos' => $this->mTipos->listar(),
 																	'busqueda' => $busqueda,
+																	'paramsBusqueda' => $paramsBusqueda,
 																	'inicio' => '1')); // habilita la visualizacion de las ultimas publicaciones
     }
 

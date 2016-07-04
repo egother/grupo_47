@@ -29,7 +29,12 @@
 		 $sql->bindParam(':idTipo', $idTipo, PDO::PARAM_STR);
          $sql->execute();
          $resultado = $sql->fetchAll(PDO::FETCH_ASSOC);
-		 return $resultado[0];
+		   if (count($resultado)>0) {
+				return $resultado[0];
+		   } else {
+			   $resultado = array('tipo' => "cualquier tipo de hospedaje");
+			   return $resultado;
+			}
 
 	 }
 

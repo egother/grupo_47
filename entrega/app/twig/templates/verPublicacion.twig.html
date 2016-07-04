@@ -8,7 +8,7 @@
 <h4>Dirección: {{params.direccion}}, {{params.nombre_ciudad}} - {{params.nombre_provincia}}</h4>
 <h4>Tipo de alojamiento: {{params.nombre_tipo}}</h4>
 <h4>Capacidad máxima: {{params.capacidad}}</h4>
-<h4>Fecha de Publicación: {{params.fecha_publi}}</h4>
+<h4>Fecha de Publicación: {{params.fecha_publi|date("m-d-Y")}}</h4>
 
 {% if (source == 0) %}
 	<div align="right">

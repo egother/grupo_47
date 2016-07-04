@@ -124,12 +124,15 @@
 			<div>
 				<h2>
 					{% if busqueda == 1 %}
-						Resultados de la búsqueda...
+						Resultados de la búsqueda:
+						<h3 align="center" style="font-style:italic">{{paramsBusqueda.prov.nombre}} / {{paramsBusqueda.tipo.tipo}}</h3>
 					{% else %}
 						Últimas publicaciones:
 					{% endif %}
 				</h2>
-			{% if publicaciones | length>0 %}
+						<br>
+					
+				{% if publicaciones | length>0 %}
 				{% for publicacion in publicaciones %}
 					{% if publicacion.usuario == idUser %}
 						<a href="./backend.php?accion=verPublicacion&amp;id={{publicacion.id_publicacion}}&amp;source=1">
