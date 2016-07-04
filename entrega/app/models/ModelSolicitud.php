@@ -27,7 +27,9 @@
      }
      
      public function verSolicitudesRealizadas($id){
-		$sql = $this->conexion->prepare("SELECT * FROM solicitud WHERE id_usuario = :id ORDER BY fec_solicitud DESC");
+		$sql = $this->conexion->prepare("SELECT solicitud.*, publicacion.encabezado 
+														  FROM solicitud INNER JOIN publicacion ON (solicitud.id_publicacion=publicacion.id_publicacion)
+														  WHERE solicitud.id_usuario = :id ORDER BY fec_solicitud DESC");
 		$sql->bindParam(':id', $id, PDO::PARAM_INT);
 		$sql->execute();
 		$res = $sql->fetchAll(PDO::FETCH_ASSOC);

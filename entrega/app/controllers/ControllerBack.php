@@ -200,12 +200,8 @@ require_once __DIR__ . '/Controller.php';
 				$foto = $_FILES['imagen'];
 				$usuario = $_SESSION['USUARIO']['id'];
 				$this->mPubli->agregar($foto, $tituloProp, $cantidad, $descripcion, $encabezado, $direccion, $usuario, $tipo, $provincia, $ciudad);
-				$msj="La Publicacion Fue Realizada";
-				echo $this->twig->render('layoutBackUser.twig.html', array(
-										 'mensaje' => $msj,
-										 'error' => 0,
-										 'publicaciones' => $this->mPubli->listarPublicacion(),
-										 'inicio' => '1'));
+				$this->setMensaje("La Publicacion Fue Realizada", 0);
+				header('Location: ./backend?accion=misPublicaciones');
 			} else {
 				$tipos = $this->mTipos->listar();
 				$provincias = $this->mLugares->listarProvincias();
@@ -336,11 +332,21 @@ require_once __DIR__ . '/Controller.php';
 	public function solicitudesPendientes(){
 		$this->revisarMensajes();
 		if($this->haySesion()){
-			$params = $this->mSolic->verSolicitudesPendientes($_SESSION['USUARIO']['id']);
+			$params = $this->mSolic->verSolicitudesRealizadas($_SESSION['USUARIO']['id']);
+			$detalle = 0;
+			if (isset($_GET['id'])) {
+				$id = $_GET['id'];
+				// esto busca el comentario dentro de la lista de solicitudes que coincida con el id de la solicitud
+				$key = array_search($id, array_column($params, 'id_solicitud'));
+				if (is_bool($key) === false){
+					$detalle = $params[$key];
+				}
+			}
 			echo $this->twig->render('listadoSolicitudesPendientes.twig.html', array('log' => '1',
 																					 'params' => $params,
 																					 'mensaje' => $this->msj,
-																					 'error' => $this->err));
+																					 'error' => $this->err,
+																					 'detalle' => $detalle));
 		} else {
 			$this->setMensaje("Usted no ha iniciado sesión.", 1);
 			header('Location: ./index.php');
@@ -359,6 +365,14 @@ require_once __DIR__ . '/Controller.php';
 			$this->setMensaje("Usted no ha iniciado sesión.", 1);
 			header('Location: ./index.php');
 		}
+	}
+
+	public function aceptarSolicitud(){
+		
+	}
+
+	public function rechazarSolicitud(){
+		
 	}
 
 	public function misReservas(){

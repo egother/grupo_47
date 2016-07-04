@@ -22,8 +22,8 @@
 	{% for sol in params %}
 			<tr> 
 				
-				<td>
-					<a href="./backend.php?accion=verPublicacion&amp;id={{sol.id_publicacion}}">#{{sol.id_publicacion}}</a>
+				<td style="width:32px">
+					<a href="./backend.php?accion=verPublicacion&amp;id={{sol.id_publicacion}}">{{sol.encabezado}}</a>
 				</td>
 				<td>{{sol.fec_solicitud}}</td>
 				<td>{{sol.fec_inicio}}</td>

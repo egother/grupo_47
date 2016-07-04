@@ -39,6 +39,9 @@ $map = array(
 	 'modificarPublicacion' => array('controller' => 'ControllerBack', 'accion' => 'modificarPublicacion'),
      'departamentos' => array('controller' => 'ControllerBack', 'accion' => 'listarLocalidadesDeProvincia'),
 	 'buscar' => array('controller' => 'ControllerBack', 'accion' => 'buscar'),
+	 'aceptarSolicitud' => array('controller' => 'ControllerBack', 'accion' => 'aceptarSolicitud'),
+	 'rechazarSolicitud' => array('controller' => 'ControllerBack', 'accion' => 'rechazarSolicitud'),
+	 
 
      'usuarioPremium' => array('controller' =>'ControllerBack', 'accion' =>'usuarioPremium'),
      'pagar' => array('controller' =>'ControllerBack', 'accion' =>'pagar'),
