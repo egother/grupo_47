@@ -505,7 +505,23 @@ require_once __DIR__ . '/Controller.php';
 			$this->setMensaje("Hubo un problema en el sistema. Reinténtelo.", 1);
 		header('Location: ./backend.php?accion=misPublicaciones');
 	}
-	
+
+	public function borrarTipo(){
+		if (isset($_GET['id']) && $this->haySesion()){
+			$id = $_GET['id'];
+			$res = 0;
+			$res = $this->mPubli->buscarPorTipo($id);
+			if (sizeof($res)>0){
+				$this->setMensaje("No se pudo eliminar. El Tipo de Hospedaje está en uso.", 1);
+			} else {
+				$this->mTipos->borrar($id);
+				$this->setMensaje("El Tipo de Hospedaje fue eliminado correctamente.", 0);
+			}
+		} else {
+			$this->setMensaje("Hubo un problema en el sistema. Reinténtelo.", 1);
+		}
+		header('Location: ./backend.php?accion=tipos');
+	}
 
 	public function misReservas(){
 		echo "muestra las solicitudes que me fueron aprobadas como reservas";

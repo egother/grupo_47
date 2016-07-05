@@ -15,16 +15,21 @@
 			</tr>
 		{% for tipo_hospedaje in tipos %}
 			<tr>
-			       	<td>{{ tipo_hospedaje.tipo }}</td>
-		        	<td style="width:32px"> <a href="./backend.php?accion=tipos&amp;id={{tipo_hospedaje.id_tipo}}&amp;func=modificar#abajo">
-							<img src="./img/lapiz.jpg" alt="modificar tipo hospedaje" title="Modificar Tipo Hospedaje"></a>
+			       	<td>
+					{{ tipo_hospedaje.tipo }}
+					</td>
+		        	<td style="width:32px">
+						<a href="./backend.php?accion=tipos&amp;id={{tipo_hospedaje.id_tipo}}&amp;func=modificar#abajo">
+							<img src="./img/lapiz.jpg" alt="modificar tipo hospedaje" title="Modificar Tipo Hospedaje">
+						</a>
+					</td>
+		        	<td style="width:32px">
+						<a href="javascript: if (confirm('Confirmar la eliminación?'))
+								{ window.location.href='./backend.php?accion=borrarTipo&amp;id={{tipo_hospedaje.id_tipo}}' } else { void('') };">
+							<img src="./img/cruz.png" alt="Borrar Tipo Hospedaje" title="Borrar Tipo Hospedaje">
+						</a>
+					</td>
 
-							</td>
-		        	<td style="width:32px"><a href="javascript: if (confirm('Confirmar la eliminación?'))
-							{ window.location.href='./backend.php?accion=borrarTipo&amp;id={{tipo_hospedaje.id_tipo}}' } else { void('') };">
-						</a></td>
-<!--						<img src="./img/cruz.png" alt="Borrar Tipo Hospedaje" title="Borrar Tipo Hospedaje"></a></td>
--->
 			</tr>
 		{% endfor %}
 		</tbody>

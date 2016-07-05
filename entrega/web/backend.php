@@ -65,7 +65,7 @@ $map = array(
 	 'tipos' => array('controller' => 'ControllerBack', 'accion' => 'tipos'),
 	 'agregarTipo' => array('controller' => 'ControllerBack', 'accion' => 'agregarTipo'),
 	 'modificarTipo' => array('controller' => 'ControllerBack', 'accion' => 'modificarTipo'),
-	 'borrarTipo' => array('controller' => 'ControllerBack', 'accion' => 'eliminarTipo'),
+	 'borrarTipo' => array('controller' => 'ControllerBack', 'accion' => 'borrarTipo'),
 
 	 'lugares' => array('controller' => 'ControllerBack', 'accion' => 'lugares'),
 	 'agregarLugar' => array('controller' => 'ControllerBack', 'accion' => 'agregarLugar'),

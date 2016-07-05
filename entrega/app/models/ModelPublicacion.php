@@ -191,5 +191,15 @@
 		
 	 }
 
-
+	 public function buscarPorTipo($id){
+		$sql = $this->conexion->prepare("
+						SELECT p.id_publicacion, p.encabezado, p.usuario, p.tipo, p.estado
+						FROM publicacion AS p
+						WHERE (p.tipo = :tipo) AND (p.estado = 'A')
+					");
+		$sql->bindParam(':tipo', $id, PDO::PARAM_INT);
+		$sql->execute();
+		$listado = $sql->fetchAll(PDO::FETCH_ASSOC);
+		return $listado;
+	 }
  }

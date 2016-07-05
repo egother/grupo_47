@@ -12,7 +12,7 @@
 
       public function listar(){
 
-		 $sql = $this->conexion->prepare("SELECT * FROM tipo_hospedaje ORDER BY tipo");
+		 $sql = $this->conexion->prepare("SELECT * FROM tipo_hospedaje WHERE estado='A' ORDER BY tipo");
 
 		 $sql->execute();
 
@@ -74,14 +74,11 @@
 
 	 public function borrar($id)
     {
-		$res = $this->listarUsuario($id);
-
-		if ($res!=-1){
-			$sql = $this->conexion->prepare("DELETE from shadow	WHERE id = :id");
+			$sql = $this->conexion->prepare("UPDATE tipo_hospedaje
+											 SET estado='B'
+											 WHERE id_tipo = :id");
 			$sql->bindParam(':id', $id, PDO::PARAM_INT);
 			$sql->execute();
-		} else
-			return -1;
 	}
 
 	 public function modificar($id, $n, $r, $p)
