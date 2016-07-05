@@ -16,6 +16,7 @@ require_once  '../app/twig/lib/Twig/Autoloader.php';
  require_once '../app/models/ModelCalificacionHospedado.php';
  require_once '../app/models/ModelComentario.php';
  require_once '../app/models/ModelTipoHospedaje.php';
+ require_once '../app/models/ModelComentario.php';
 
 
  // carga de los controladores
@@ -41,12 +42,13 @@ $map = array(
 	 'buscar' => array('controller' => 'ControllerBack', 'accion' => 'buscar'),
 	 'aceptarSolicitud' => array('controller' => 'ControllerBack', 'accion' => 'aceptarSolicitud'),
 	 'rechazarSolicitud' => array('controller' => 'ControllerBack', 'accion' => 'rechazarSolicitud'),
-	 
+
 
      'usuarioPremium' => array('controller' =>'ControllerBack', 'accion' =>'usuarioPremium'),
      'pagar' => array('controller' =>'ControllerBack', 'accion' =>'pagar'),
      'agregarPago' => array('controller' =>'ControllerBack', 'accion' =>'agregarPago'),
 	 'verPublicacion'=> array('controller'=>'ControllerBack', 'accion'=>'verPublicacion'),
+   'agregarComentario'=> array('controller'=>'ControllerBack', 'accion'=>'agregarComentario'),
 
 
      'users' => array('controller' =>'ControllerBack', 'accion' =>'users'),

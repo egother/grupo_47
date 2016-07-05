@@ -11,10 +11,10 @@
                 trim($str);
 				$trozos = explode ("-", $str);
 				if (count($trozos)==3){
-					$a�o=$trozos[0];
+					$año=$trozos[0];
 					$mes=$trozos[1];
 					$dia=$trozos[2];
-					if(checkdate ($mes,$dia,$a�o)){
+					if(checkdate ($mes,$dia,$año)){
 						return true;
 					}
 				}
@@ -33,6 +33,6 @@
 										 WHERE id_comentario = :id ");
     $sql->bindParam(':res', $respuesta, PDO::PARAM_STR);
     $sql->bindParam(':id', $idComentario, PDO::PARAM_INT);
-    $sql->execute(); 
+    $sql->execute();
   }
  }

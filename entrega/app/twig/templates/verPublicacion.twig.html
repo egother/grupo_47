@@ -10,6 +10,22 @@
 <h4>Capacidad máxima: {{params.capacidad}}</h4>
 <h4>Fecha de Publicación: {{params.fecha_publi|date("m-d-Y")}}</h4>
 
+<div id="DIV_1">
+	<form class="comentario"action="./backend.php?accion=agregarComentario" method="post" id="FORM_2">
+		<div id="DIV_5">
+			<i id="I_6"></i> <span id="SPAN_7">Pregunta:</span>
+			<p id="P_8">
+				<textarea name="questionText" id="TEXTAREA_11" cols="110" placeholder="Escribe tu pregunta..."></textarea>
+			</p>
+		</div>
+		<div id="DIV_12">
+			<div id="DIV_13">
+				<input type="submit" value="Preguntar" name="preguntar" id="INPUT_14" /> No ingreses datos de contacto o uses lenguaje vulgar.
+			</div>
+		</div>
+	</form>
+</div>
+
 {% if (source == 0) %}
 	<div align="right">
 	<a href="./backend.php?accion=verPublicacion&amp;id={{params.id_publicacion}}&amp;func=solicitar#abajo"><h2>Solicitar hospedaje</h2></a>
@@ -33,7 +49,6 @@
 	}
 
 </script>
-
 <form class="formulario" method="POST" name="formulario"
 	  action="./backend.php?accion=verPublicacion&amp;id={{params.id_publicacion}}">
     <h3>Formulario para solicitad hospedaje</h3>
