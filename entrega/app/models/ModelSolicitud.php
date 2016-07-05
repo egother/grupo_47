@@ -69,6 +69,17 @@
 		}
 		
 	 }
+	 
+	 public function descartar_solo($estasNo){
+ 		foreach ($estasNo as $elem){
+			$sql = $this->conexion->prepare("
+				UPDATE solicitud
+				SET estado='R'
+				WHERE (id_solicitud = :id) ");
+			$sql->bindParam(':id', $elem['id_solicitud'], PDO::PARAM_INT);
+			$sql->execute();
+		}
+	 }
  	 
 	 public function rechazar($estaNO){
 		$sql = $this->conexion->prepare("
@@ -90,6 +101,21 @@
 		
 	 }
 
+     public function verSolicitudesDePublicacion($id){
+		$sql = $this->conexion->prepare("
+				SELECT s.*, p.encabezado 
+				FROM solicitud AS s INNER JOIN publicacion AS p ON (s.id_publicacion = p.id_publicacion)
+				WHERE (s.id_publicacion = :id) AND (s.estado = 'E') AND (s.fec_inicio > :hoy)
+				ORDER BY s.fec_solicitud DESC");
+		$hoy = new DateTime();
+		$hoy = $hoy->format("Ymd");
+		$sql->bindParam(':id', $id, PDO::PARAM_INT);
+		$sql->bindParam(':hoy', $hoy, PDO::PARAM_STR);
+		$sql->execute();
+		$res = $sql->fetchAll(PDO::FETCH_ASSOC);
+		return $res;
+     }
+	 
 }
 
 ?>

@@ -110,8 +110,9 @@
    }
 
       public function verMisPublicaciones($id){
-    	 $sql = $this->conexion->prepare("SELECT * FROM publicacion
-    	 								  WHERE (usuario = :id) AND (estado = 'A')
+    	 $sql = $this->conexion->prepare("SELECT publicacion.*, tipo_hospedaje.tipo AS nombre_tipo
+										  FROM publicacion INNER JOIN tipo_hospedaje ON (publicacion.tipo = tipo_hospedaje.id_tipo)
+    	 								  WHERE (usuario = :id) AND (publicacion.estado = 'A')
     	 								  ORDER BY fecha_publi DESC");
     	 $sql->bindParam(':id', $id, PDO::PARAM_INT);
     	 $sql->execute();
@@ -165,7 +166,7 @@
 								SELECT p.id_publicacion, p.foto, p.fototype, p.titulo_prop, p.capacidad, p.descripcion, p.encabezado,
 									   p.direccion, p.fecha_publi, p.usuario, p.tipo, p.lugar, p.estado, s.premium, pr.id
 								FROM publicacion AS p INNER JOIN shadow AS s ON (p.usuario = s.id) INNER JOIN provincias AS pr ON (p.lugar = pr.id)
-								WHERE ((p.estado = 'A')
+								WHERE (p.estado = 'A')
 								ORDER BY s.premium DESC, p.fecha_publi DESC
 							");
 			}
@@ -179,5 +180,16 @@
        }
        return $publicaciones;
    }
+   
+     public function borrar($estaNO){
+		$sql = $this->conexion->prepare("
+			UPDATE publicacion
+			SET estado='B'
+			WHERE (id_publicacion = :id) ");
+		$sql->bindParam(':id', $estaNO['id_publicacion'], PDO::PARAM_INT);
+		$sql->execute();
+		
+	 }
+
 
  }

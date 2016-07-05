@@ -22,9 +22,9 @@
 				<td>
 					<a target="_blank" href="./backend.php?accion=verPublicacion&amp;id={{solicitud.id_publicacion}}">{{solicitud.encabezado}}</a>
 				</td>
-				<td>{{solicitud.fec_solicitud|date("m-d-Y")}}</td>
-				<td>{{solicitud.fec_inicio|date("m-d-Y")}}</td>
-				<td>{{solicitud.fec_fin|date("m-d-Y") }}</td>
+				<td>{{solicitud.fec_solicitud|date("d-m-Y")}}</td>
+				<td>{{solicitud.fec_inicio|date("d-m-Y")}}</td>
+				<td>{{solicitud.fec_fin|date("d-m-Y") }}</td>
 				<td>{{solicitud.ocupantes}}</td>
 			</tr>
 		</table>
@@ -45,7 +45,9 @@
 		<hr>
 {% if params | length>0 %}
 	{% if (func == 'aceptar') %}
-		<img src='./img/warning.png' />
+		<div align='center'>
+			<img src='./img/warning.png' />
+		</div>
 		<h2>Estas son las Solicitudes que se superponen con la que estás a punto de confirmar.</h2>
 	{% elseif (func == 'rechazar') %}
 		<h2>Estas son las Solicitudes que se superponen con la que estás a punto de rechazar.</h2>
@@ -67,9 +69,9 @@
 				<td>
 					<a target="_blank" href="./backend.php?accion=verPublicacion&amp;id={{sol.id_publicacion}}">{{sol.encabezado}}</a>
 				</td>
-				<td>{{sol.fec_solicitud|date("m-d-Y")}}</td>
-				<td>{{sol.fec_inicio|date("m-d-Y")}}</td>
-				<td>{{sol.fec_fin|date("m-d-Y") }}</td>
+				<td>{{sol.fec_solicitud|date("d-m-Y")}}</td>
+				<td>{{sol.fec_inicio|date("d-m-Y")}}</td>
+				<td>{{sol.fec_fin|date("d-m-Y") }}</td>
 				<td>{{sol.ocupantes}}</td>
 				<td style="width:15px">
 					<a href="./backend.php?accion=solicitudesPendientes&amp;id={{sol.id_solicitud}}#abajo"><img src='./img/inspect.png'/></a>

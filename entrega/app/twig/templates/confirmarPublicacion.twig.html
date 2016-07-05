@@ -1,0 +1,97 @@
+{% extends "layoutBackUser.twig.html" %}
+
+{% block contenido %}
+<style>
+	td {width:150px;}
+</style>
+
+
+
+<div align="right" position="float">
+<h2 style="color:#f55;">¿Eliminar Publicación?</h2>
+	<form class="formulario" method="post" name="formulario" action="./backend.php?accion=eliminarPublicacion&amp;id={{id}}"
+		 onsubmit="return confirm('¿Desea eliminar la solicitud?')">
+		<button type="submit" name="botones">Confirmar</button>
+		<button type="button" onclick="window.location.href='./backend.php?accion=misPublicaciones'">Volver</button>
+	</form>
+<h5>*Si existen solicitudes pendientes, al eliminar la publicación, éstas se rechazarán automáticamente.<br>
+	Las reservas que se hayan hecho seguirán vigentes.</h5>
+</div>
+<hr>
+
+{% if solicitudes | length>0 %}
+		<div align='center'>
+			<img src='./img/warning.png' />
+		</div>
+		<h2>Solicitudes realizadas a tu publicación:</h2>
+		<table class="table table-striped" style="border:none;">
+			<tr style="background-color:#f99;">
+				<td style="width:15px">Nro.</td>
+				<td>Ver publicación</td>
+				<td>Fecha de Solicitud</td>
+				<td>Desde</td>
+				<td>Hasta</td>
+				<td>Ocupantes</td>
+				<td style="width:15px">Ver</td>
+			</tr>
+	{% for sol in solicitudes %}
+			<tr> 
+				<td style="width:15px">{{sol.id_solicitud}}</td>
+				<td>
+					<a target="_blank" href="./backend.php?accion=verPublicacion&amp;id={{sol.id_publicacion}}">{{sol.encabezado}}</a>
+				</td>
+				<td>{{sol.fec_solicitud|date("d-m-Y")}}</td>
+				<td>{{sol.fec_inicio|date("d-m-Y")}}</td>
+				<td>{{sol.fec_fin|date("d-m-Y") }}</td>
+				<td>{{sol.ocupantes}}</td>
+				<td style="width:15px">
+					<a href="./backend.php?accion=solicitudesPendientes&amp;id={{sol.id_solicitud}}#abajo"><img src='./img/inspect.png'/></a>
+				</td>
+			</tr>
+	{% endfor %}
+		</table>
+
+{% else %}
+						<h2>
+							No hay solicitudes realizadas a tu publicación.
+						</h2>
+
+{% endif %}
+<hr>
+{% if reservas | length>0 %}
+		<h2>Reservas en curso o futuras de tu publicación:</h2>
+		<table class="table table-striped" style="border:none;">
+			<tr style="background-color:#f99;">
+				<td style="width:15px">Nro.</td>
+				<td>Ver publicación</td>
+				<td>Desde</td>
+				<td>Hasta</td>
+				<td>Ocupantes</td>
+				<td style="width:15px">Ver</td>
+			</tr>
+	{% for res in reservas %}
+			<tr> 
+				<td style="width:15px">{{res.id_solicitud}}</td>
+				<td>
+					<a target="_blank" href="./backend.php?accion=verPublicacion&amp;id={{res.id_publicacion}}">{{res.encabezado}}</a>
+				</td>
+				<td>{{res.f_inicio|date("d-m-Y")}}</td>
+				<td>{{res.f_fin|date("d-m-Y") }}</td>
+				<td>{{res.ocupantes}}</td>
+				<td style="width:15px">
+					<a href="./backend.php?accion=reservasOtorgadas&amp;id={{res.id_reserva}}#abajo"><img src='./img/inspect.png'/></a>
+				</td>
+			</tr>
+	{% endfor %}
+		</table>
+
+{% else %}
+						<h2>
+							No hay reservas realizadas con tu publicación.
+						</h2>
+
+{% endif %}
+
+{% endblock %}
+
+

@@ -474,6 +474,39 @@ require_once __DIR__ . '/Controller.php';
 		header('Location: ./backend.php?accion=solicitudesRealizadas');
 	}
 
+	public function eliminarPublicacion(){
+		if (isset($_GET['id']) && $this->haySesion()){
+			$id = $_GET['id'];
+			$miLista = $this->mPubli->verMisPublicaciones($_SESSION['USUARIO']['id']);
+			$key = array_search($id, array_column($miLista, 'id_publicacion'));
+// verificamos que el usuario actual sea dueño de la publicacion a la que pertenece la solicitud
+			if ($key > -1){
+				// verificamos cuales de la lista se cruzan en fecha con la solicitud
+				$solicitudes = $this->mSolic->verSolicitudesDePublicacion($id);
+				$reservas = $this->mReser->verReservasDePublicacion($id);
+				if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+					$this->mSolic->descartar_solo($solicitudes);
+					$this->mPubli->borrar($miLista[$key]);
+					$this->setMensaje("La Publicación se ha eliminado correctamente.", 0);
+				} else {
+					echo $this->twig->render('confirmarPublicacion.twig.html', array('log' => '1',
+																				   'id' => $id,
+																				   'func' => 'borrar',
+																				   'solicitudes' => $solicitudes,
+																				   'reservas' => $reservas,
+																				   'mensaje' => $this->msj,
+																				   'error' => $this->err));
+					return;
+				}
+			} else {
+				$this->setMensaje("Hubo un problema en el sistema. Reinténtelo.", 1);
+			}
+		} else
+			$this->setMensaje("Hubo un problema en el sistema. Reinténtelo.", 1);
+		header('Location: ./backend.php?accion=misPublicaciones');
+	}
+	
+
 	public function misReservas(){
 		echo "muestra las solicitudes que me fueron aprobadas como reservas";
 	}

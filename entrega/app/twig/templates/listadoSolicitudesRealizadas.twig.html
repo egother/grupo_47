@@ -26,9 +26,9 @@
 				<td>
 					<a href="./backend.php?accion=verPublicacion&amp;id={{sol.id_publicacion}}">{{sol.encabezado}}</a>
 				</td>
-				<td>{{sol.fec_solicitud|date("m-d-Y")}}</td>
-				<td>{{sol.fec_inicio|date("m-d-Y")}}</td>
-				<td>{{sol.fec_fin|date("m-d-Y") }}</td>
+				<td>{{sol.fec_solicitud|date("d-m-Y")}}</td>
+				<td>{{sol.fec_inicio|date("d-m-Y")}}</td>
+				<td>{{sol.fec_fin|date("d-m-Y") }}</td>
 				<td>{{sol.ocupantes}}</td>
 				<td style="width:15px">
 					<a href="./backend.php?accion=solicitudesRealizadas&amp;id={{sol.id_solicitud}}#abajo"><img src='./img/inspect.png'/></a>
@@ -46,9 +46,9 @@
 				<h3>
 					Detalle de la solicitud #{{detalle.id_solicitud}}:
 				</h3>
-				<p>Fecha Solicitud: {{detalle.fec_solicitud|date("m-d-Y")}}</p><p>
-				<p>Desde: {{detalle.fec_inicio|date("m-d-Y")}}</p>
-				<p>Hasta: {{detalle.fec_fin|date("m-d-Y")}}</p>
+				<p>Fecha Solicitud: {{detalle.fec_solicitud|date("d-m-Y")}}</p><p>
+				<p>Desde: {{detalle.fec_inicio|date("d-m-Y")}}</p>
+				<p>Hasta: {{detalle.fec_fin|date("d-m-Y")}}</p>
 				<p>Ocupantes: {{detalle.fec_ocupantes}}</p>
 				<p>Comentario: {{detalle.texto}}</p>
 

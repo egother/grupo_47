@@ -8,7 +8,7 @@
 <h4>Dirección: {{params.direccion}}, {{params.nombre_ciudad}} - {{params.nombre_provincia}}</h4>
 <h4>Tipo de alojamiento: {{params.nombre_tipo}}</h4>
 <h4>Capacidad máxima: {{params.capacidad}}</h4>
-<h4>Fecha de Publicación: {{params.fecha_publi|date("m-d-Y")}}</h4>
+<h4>Fecha de Publicación: {{params.fecha_publi|date("d-m-Y")}}</h4>
 
 <div id="DIV_1">
 	<form class="comentario"action="./backend.php?accion=agregarComentario" method="post" id="FORM_2">
@@ -27,15 +27,22 @@
 </div>
 <br>
 <br>
+			<div align="right">
+				<h3>
 {% if (source == 0) %}
-	<div align="right">
-	<a href="./backend.php?accion=verPublicacion&amp;id={{params.id_publicacion}}&amp;func=solicitar#abajo"><h2>Solicitar hospedaje</h2></a>
-	</div>
+						<a href='./backend.php?accion=verPublicacion&amp;id={{params.id_publicacion}}&amp;func=solicitar#abajo'>
+							<span style="background: #9f9; padding:5px; border: 2px solid black;">Solicitar hospedaje</span>
+						</a>
 {% elseif (source == 1) %}
-	<div align="right">
-	<a href="./backend.php?accion=modificarPublicacion&amp;id={{params.id_publicacion}}&amp;func=modificar"><h2>Modificar</h2></a>
-	</div>
+						<a href='./backend.php?accion=modificarPublicacion&amp;id={{params.id_publicacion}}&amp;func=modificar'>
+							<span style="background: #9f9; padding:5px; border: 2px solid black;">Modificar</span>
+						</a>
+						<a href='./backend.php?accion=eliminarPublicacion&amp;id={{params.id_publicacion}}'>
+							<span style="background: #f99; padding:5px; border: 2px solid black;">Eliminar</span>
+						</a>
 {% endif %}
+				</h3>
+			</div>
 
 {% if (func=="solicitar")%}
 <br>
