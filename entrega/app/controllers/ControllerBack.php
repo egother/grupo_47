@@ -180,7 +180,7 @@ require_once __DIR__ . '/Controller.php';
 			}
 			else{
 				echo $this->twig->render('pagoTarjeta.twig.html', array('log' => '1'));
-			}	
+			}
 		}
 		else{
 		  $msj="Debe iniciar sesion para realizar esta accion";
@@ -289,6 +289,7 @@ require_once __DIR__ . '/Controller.php';
 					}
 				}
 				elseif ($_SERVER['REQUEST_METHOD'] == 'POST'){
+          //if(isset ( $ _POST [ 'enviar' ])
 					// se accedió a la publicacion a traves de un $id y por formulario de solicitud
 					$cant = $_POST["cant"];
 					$desde = $_POST["desde"];
@@ -398,13 +399,13 @@ require_once __DIR__ . '/Controller.php';
 			} else {
 				$this->setMensaje("Hubo un problema en el sistema. Reinténtelo.", 1);
 			}
-		} else 
+		} else
 			$this->setMensaje("Hubo un problema en el sistema. Reinténtelo.", 1);
 		header('Location: ./backend.php?accion=solicitudesPendientes');
 	}
 
 	public function rechazarSolicitud(){
-		
+
 	}
 
 	public function misReservas(){
