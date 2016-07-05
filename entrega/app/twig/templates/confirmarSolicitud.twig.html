@@ -7,10 +7,51 @@
 
 
 <br>
+	<h2> Detalles de la Solicitud </h2>
+		<table class="table table-striped" >
+		<tbody>
+			<tr class="encabezado">
+				<td style="width:15px">Nro.</td>
+				<td>Ver publicación</td>
+				<td>Fecha de Solicitud</td>
+				<td>Desde</td>
+				<td>Hasta</td>
+				<td>Ocupantes</td>
+			</tr>
+			<tr> 
+				<td style="width:15px">{{solicitud.id_solicitud}}</td>
+				<td>
+					<a target="_blank" href="./backend.php?accion=verPublicacion&amp;id={{solicitud.id_publicacion}}">{{solicitud.encabezado}}</a>
+				</td>
+				<td>{{solicitud.fec_solicitud|date("m-d-Y")}}</td>
+				<td>{{solicitud.fec_inicio|date("m-d-Y")}}</td>
+				<td>{{solicitud.fec_fin|date("m-d-Y") }}</td>
+				<td>{{solicitud.ocupantes}}</td>
+			</tr>
+		</tbody>
+		</table>
+		<p>Comentario: {{solicitud.texto}}</p>
+		
+	{% if (func == 'aceptar') %}
+		<h2>¿Desea Confirmar la Reserva de la misma?</h2>
+		<form class="formulario" method="post" name="formulario" action="./backend.php?accion=aceptarSolicitud&amp;id={{id}}">
+	{% elseif (func == 'rechazar') %}
+		<h2>¿Desea Rechazar la Solicitud?</h2>
+		<form class="formulario" method="post" name="formulario" action="./backend.php?accion=rechazarSolicitud&amp;id={{id}}">
+	{% endif %}
+			<button type="submit" name="botones">Confirmar</button>
+			<button type="button" onclick="window.location.href='./backend.php?accion=solicitudesPendientes'">Volver</button>
+		</form>
+
+		<br>
+		<hr>
 {% if params | length>0 %}
+	{% if (func == 'aceptar') %}
 		<img src='./img/warning.png' />
-		<h2>Estas son las Solicitudes que se superponen con la que estás a punto de confirmar.</br>
-			En caso de aceptarla, estarás rechazando las que aparecen a continuación.</h2>
+		<h2>Estas son las Solicitudes que se superponen con la que estás a punto de confirmar.</h2>
+	{% elseif (func == 'rechazar') %}
+		<h2>Estas son las Solicitudes que se superponen con la que estás a punto de rechazar.</h2>
+	{% endif %}
 		<br>
 		<table class="table table-striped" >
 		<tbody>
@@ -27,7 +68,7 @@
 			<tr> 
 				<td style="width:15px">{{sol.id_solicitud}}</td>
 				<td>
-					<a href="./backend.php?accion=verPublicacion&amp;id={{sol.id_publicacion}}">{{sol.encabezado}}</a>
+					<a target="_blank" href="./backend.php?accion=verPublicacion&amp;id={{sol.id_publicacion}}">{{sol.encabezado}}</a>
 				</td>
 				<td>{{sol.fec_solicitud|date("m-d-Y")}}</td>
 				<td>{{sol.fec_inicio|date("m-d-Y")}}</td>
@@ -43,39 +84,11 @@
 
 {% else %}
 						<h2>
-							No hay solicitudes que se superpongan. ¿Desea Confirmar?
+							No hay solicitudes que se superpongan.
 						</h2>
-		<table class="table table-striped" >
-		<tbody>
-			<tr class="encabezado">
-				<td style="width:15px">Nro.</td>
-				<td>Ver publicación</td>
-				<td>Fecha de Solicitud</td>
-				<td>Desde</td>
-				<td>Hasta</td>
-				<td>Ocupantes</td>
-			</tr>
-			<tr> 
-				<td style="width:15px">{{solicitud.id_solicitud}}</td>
-				<td>
-					<a href="./backend.php?accion=verPublicacion&amp;id={{sol.id_publicacion}}">{{solicitud.encabezado}}</a>
-				</td>
-				<td>{{solicitud.fec_solicitud|date("m-d-Y")}}</td>
-				<td>{{solicitud.fec_inicio|date("m-d-Y")}}</td>
-				<td>{{solicitud.fec_fin|date("m-d-Y") }}</td>
-				<td>{{solicitud.ocupantes}}</td>
-			</tr>
-		</tbody>
-		</table>
-		<p>Comentario: {{solicitud.texto}}</p>
-
-<form class="formulario" method="post" name="formulario" action="./backend.php?accion=aceptarSolicitud&amp;id={{id}}">
-    <button type="submit" name="botones">Confirmar</button>
-	<button type="button" onclick="window.location.href='./backend.php?accion=solicitudesPendientes'">Cancelar</button>
-</form>
-						
 
 {% endif %}
+		
 {% endblock %}
 
 

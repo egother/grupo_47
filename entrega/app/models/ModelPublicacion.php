@@ -75,8 +75,9 @@
    public function listarPublicacion(){
     	$sql = $this->conexion->prepare("
 						SELECT p.id_publicacion, p.foto, p.fototype, p.titulo_prop, p.capacidad, p.descripcion, p.encabezado,
-							   p.direccion, p.fecha_publi, p.usuario, p.tipo, p.lugar, p.ciudad, p.provincia, s.premium
+							   p.direccion, p.fecha_publi, p.usuario, p.tipo, p.lugar, p.ciudad, p.provincia, p.estado, s.premium
 						FROM publicacion AS p INNER JOIN shadow AS s ON (p.usuario = s.id)
+						WHERE (p.estado = 'A')
 						ORDER BY s.premium DESC, p.fecha_publi DESC
 					");
     	$sql->execute();
@@ -97,7 +98,7 @@
 										FROM publicacion AS p INNER JOIN provincias AS pr ON (p.lugar = pr.id)
 											INNER JOIN localidades AS l ON (p.ciudad = l.id)
 											INNER JOIN tipo_hospedaje AS t ON (p.tipo = t.id_tipo)
-										WHERE id_publicacion = :id");
+										WHERE (id_publicacion = :id) AND (p.estado = 'A')");
 		$sql->bindParam(':id', $id, PDO::PARAM_INT);
 		$sql->execute();
 		$publi = $sql->fetchAll(PDO::FETCH_ASSOC);
@@ -110,7 +111,7 @@
 
       public function verMisPublicaciones($id){
     	 $sql = $this->conexion->prepare("SELECT * FROM publicacion
-    	 								  WHERE usuario = :id
+    	 								  WHERE (usuario = :id) AND (estado = 'A')
     	 								  ORDER BY fecha_publi DESC");
     	 $sql->bindParam(':id', $id, PDO::PARAM_INT);
     	 $sql->execute();
@@ -132,9 +133,9 @@
 			if ($prov > 0 ){		// y se eligió una provincia
 				$sql = $this->conexion->prepare("
 								SELECT p.id_publicacion, p.foto, p.fototype, p.titulo_prop, p.capacidad, p.descripcion, p.encabezado,
-									   p.direccion, p.fecha_publi, p.usuario, p.tipo, p.lugar, s.premium, pr.id
+									   p.direccion, p.fecha_publi, p.usuario, p.tipo, p.lugar, p.estado s.premium, pr.id
 								FROM publicacion AS p INNER JOIN shadow AS s ON (p.usuario = s.id) INNER JOIN provincias AS pr ON (p.lugar = pr.id)
-								WHERE (p.tipo = :tipo) AND (pr.id = :prov)
+								WHERE (p.tipo = :tipo) AND (pr.id = :prov) AND (p.estado = 'A')
 								ORDER BY s.premium DESC, p.fecha_publi DESC
 							");
 				$sql->bindParam(':tipo', $tipo, PDO::PARAM_INT);
@@ -142,9 +143,9 @@
 			} else {				// si solo se eligió un tipo
 				$sql = $this->conexion->prepare("
 								SELECT p.id_publicacion, p.foto, p.fototype, p.titulo_prop, p.capacidad, p.descripcion, p.encabezado,
-									   p.direccion, p.fecha_publi, p.usuario, p.tipo, p.lugar, s.premium, pr.id
+									   p.direccion, p.fecha_publi, p.usuario, p.tipo, p.lugar, p.estado, s.premium, pr.id
 								FROM publicacion AS p INNER JOIN shadow AS s ON (p.usuario = s.id) INNER JOIN provincias AS pr ON (p.lugar = pr.id)
-								WHERE (p.tipo = :tipo)
+								WHERE (p.tipo = :tipo) AND (p.estado = 'A')
 								ORDER BY s.premium DESC, p.fecha_publi DESC
 							");
 				$sql->bindParam(':tipo', $tipo, PDO::PARAM_INT);
@@ -153,17 +154,18 @@
 			if ($prov > 0 ){	// si solo se eligió una provincia
 				$sql = $this->conexion->prepare("
 								SELECT p.id_publicacion, p.foto, p.fototype, p.titulo_prop, p.capacidad, p.descripcion, p.encabezado,
-									   p.direccion, p.fecha_publi, p.usuario, p.tipo, p.lugar, s.premium, pr.id
+									   p.direccion, p.fecha_publi, p.usuario, p.tipo, p.lugar, p.estado, s.premium, pr.id
 								FROM publicacion AS p INNER JOIN shadow AS s ON (p.usuario = s.id) INNER JOIN provincias AS pr ON (p.lugar = pr.id)
-								WHERE (pr.id = :prov)
+								WHERE (pr.id = :prov) AND (p.estado = 'A')
 								ORDER BY s.premium DESC, p.fecha_publi DESC
 							");
 				$sql->bindParam(':prov', $prov, PDO::PARAM_INT);
 			} else {			// no se eligió nada
 				$sql = $this->conexion->prepare("
 								SELECT p.id_publicacion, p.foto, p.fototype, p.titulo_prop, p.capacidad, p.descripcion, p.encabezado,
-									   p.direccion, p.fecha_publi, p.usuario, p.tipo, p.lugar, s.premium, pr.id
+									   p.direccion, p.fecha_publi, p.usuario, p.tipo, p.lugar, p.estado, s.premium, pr.id
 								FROM publicacion AS p INNER JOIN shadow AS s ON (p.usuario = s.id) INNER JOIN provincias AS pr ON (p.lugar = pr.id)
+								WHERE ((p.estado = 'A')
 								ORDER BY s.premium DESC, p.fecha_publi DESC
 							");
 			}

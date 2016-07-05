@@ -53,8 +53,14 @@
 
 	<div align="right">
 			
-			<h3><a href='./backend.php?accion=aceptarSolicitud&amp;id={{detalle.id_solicitud}}'>Aceptar Solicitud</a>  -  
-			<a href='./backend.php?accion=rechazarSolicitud&amp;id={{detalle.id_solicitud}}'>Rechazar Solicitud</a></h3>
+			<h3>
+				<a href='./backend.php?accion=aceptarSolicitud&amp;id={{detalle.id_solicitud}}'>
+					<span style="background: #9f9; padding:5px; border: 2px solid black;">Aceptar Solicitud</span>
+				</a>
+				<a href='./backend.php?accion=rechazarSolicitud&amp;id={{detalle.id_solicitud}}'>
+					<span style="background: #f99; padding:5px; border: 2px solid black;">Rechazar Solicitud</span>
+				</a>
+			</h3>
 	</div>
 	{% endif %}
 		

@@ -28,8 +28,9 @@
      
      public function verSolicitudesRealizadas($id){
 		$sql = $this->conexion->prepare("SELECT solicitud.*, publicacion.encabezado 
-										  FROM solicitud INNER JOIN publicacion ON (solicitud.id_publicacion=publicacion.id_publicacion)
-										  WHERE solicitud.id_usuario = :id ORDER BY fec_solicitud DESC");
+										  FROM solicitud INNER JOIN publicacion ON (solicitud.id_publicacion = publicacion.id_publicacion)
+										  WHERE (solicitud.id_usuario = :id) AND (solicitud.estado = 'E')
+										  ORDER BY fec_solicitud DESC");
 		$sql->bindParam(':id', $id, PDO::PARAM_INT);
 		$sql->execute();
 		$res = $sql->fetchAll(PDO::FETCH_ASSOC);
@@ -39,9 +40,9 @@
 	 public function verSolicitudesPendientes($id){
 		$sql = $this->conexion->prepare("
 					SELECT p.id_publicacion, p.encabezado, s.id_solicitud, s.ocupantes, s.fec_inicio, s.fec_fin,
-							s.texto, s.fec_solicitud
+							s.texto, s.fec_solicitud, s.estado
 					FROM solicitud AS s INNER JOIN publicacion AS p ON (s.id_publicacion = p.id_publicacion)
-					WHERE  (p.usuario = :id)
+					WHERE  (p.usuario = :id) AND (s.estado = 'E')
 					ORDER BY s.fec_solicitud");
 		$sql->bindParam(':id', $id, PDO::PARAM_INT);
 		$sql->execute();
@@ -49,6 +50,7 @@
 		return $res;
 	 }
 	 
+	 // descarta las que se superponen y cambia el estado de la (A)ceptada
 	 public function descartar($estasNO, $estaSI){
 		$sql = $this->conexion->prepare("
 			UPDATE solicitud
@@ -67,6 +69,27 @@
 		}
 		
 	 }
- }
+ 	 
+	 public function rechazar($estaNO){
+		$sql = $this->conexion->prepare("
+			UPDATE solicitud
+			SET estado='R'
+			WHERE (id_solicitud = :id) ");
+		$sql->bindParam(':id', $estaNO['id_solicitud'], PDO::PARAM_INT);
+		$sql->execute();
+		
+	 }
+	 
+ 	 public function eliminar($estaNO){
+		$sql = $this->conexion->prepare("
+			UPDATE solicitud
+			SET estado='B'
+			WHERE (id_solicitud = :id) ");
+		$sql->bindParam(':id', $estaNO['id_solicitud'], PDO::PARAM_INT);
+		$sql->execute();
+		
+	 }
+
+}
 
 ?>
