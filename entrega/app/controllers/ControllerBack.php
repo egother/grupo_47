@@ -336,7 +336,7 @@ require_once __DIR__ . '/Controller.php';
 	public function solicitudesPendientes(){
 		$this->revisarMensajes();
 		if($this->haySesion()){
-			$params = $this->mSolic->verSolicitudesRealizadas($_SESSION['USUARIO']['id']);
+			$params = $this->mSolic->verSolicitudesPendientes($_SESSION['USUARIO']['id']);
 			$detalle = 0;
 			if (isset($_GET['id'])) {
 				$id = $_GET['id'];
@@ -372,7 +372,35 @@ require_once __DIR__ . '/Controller.php';
 	}
 
 	public function aceptarSolicitud(){
-		
+		if (isset($_GET['id']) && $this->haySesion()){
+			$id = $_GET['id'];
+			$miLista = $this->mSolic->verSolicitudesPendientes($_SESSION['USUARIO']['id']);
+			$key = array_search($id, array_column($miLista, 'id_solicitud'));
+//			var_dump($id, $miLista, $key); exit;
+// verificamos que el usuario actual sea dueño de la publicacion a la que pertenece la solicitud
+			if ($key > -1){
+				// verificamos cuales de la lista se cruzan en fecha con la solicitud
+				$seCruzan = $this->seCruzanFechas($miLista, $key);
+				if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+					$this->mReser->agregar($miLista[$key]);
+					$this->mSolic->descartar($seCruzan, $miLista[$key]);
+					$this->setMensaje("La reserva ha sido concretada con éxito.", 0);
+					header('Location: ./backend.php?accion=reservasAceptadas');
+				} else {
+					echo $this->twig->render('confirmarSolicitud.twig.html', array('log' => '1',
+																				   'id' => $id,
+																				   'params' => $seCruzan,
+																				   'solicitud' => $miLista[$key],
+																				   'mensaje' => $this->msj,
+																				   'error' => $this->err));
+					return;
+				}
+			} else {
+				$this->setMensaje("Hubo un problema en el sistema. Reinténtelo.", 1);
+			}
+		} else 
+			$this->setMensaje("Hubo un problema en el sistema. Reinténtelo.", 1);
+		header('Location: ./backend.php?accion=solicitudesPendientes');
 	}
 
 	public function rechazarSolicitud(){

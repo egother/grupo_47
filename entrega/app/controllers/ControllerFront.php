@@ -15,6 +15,7 @@ class ControllerFront extends Controller
     $this->revisarMensajes();
     $data=array(
       'mensaje' => $this->msj,
+	  'error' => $this->err,
       'publicaciones' => $this->mPubli->listarPublicacion()
     );
     if($this->haySesion()){
@@ -25,7 +26,9 @@ class ControllerFront extends Controller
 
   public function inicioErr()
   {
-    echo $this->twig->render('index.twig.html', array('mensaje' => 'Usuario o contraseña incorrectos.'));
+    echo $this->twig->render('index.twig.html', array('mensaje' => 'Usuario o contraseña incorrectos.',
+													  'error' => '1'
+														));
   }
 
   public function quienesSomos()
@@ -52,11 +55,13 @@ class ControllerFront extends Controller
   public function registrarse()
   {
     $msj="";
+	$err="";
 	$edad = date("Y-m-d", strtotime("-18 years")); // guarda la fecha de hace 18 años para comprobar la mayoría de edad
 
     if($this->haySesion()){
       $msj=("Cierre la sesión actual para registrarse como nuevo usuario");
-      echo $this->twig->render('index.twig.html', array('log' => '1', 'mensaje' => $msj));
+	  $err=1;
+      echo $this->twig->render('index.twig.html', array('log' => '1', 'mensaje' => $msj, 'error'=>$err));
 	  return;
     }
     elseif (($_SERVER['REQUEST_METHOD'] == 'POST') && (isset($_POST['p1'])) && (isset($_POST['p2'])))
@@ -72,7 +77,7 @@ class ControllerFront extends Controller
         // comprueba que el usuario no exista ya
         if (!$this->us->existeUsuario($usuario, $mail)){
           $this->us->agregar($usuario, $nombre, $mail, $telefono, $p1, $fecha);
-          $this->setMensaje("El usuario se ha agregado correctamente.");
+          $this->setMensaje("El usuario se ha agregado correctamente.", 0);
           header('Location: ./index.php');
         }
         else {
@@ -85,6 +90,7 @@ class ControllerFront extends Controller
           );
           // mostrar mensaje, lo hiciste mal, llenalo de nuevo
           $msj=("El usuario y/o correo elegidos ya han sido registrados");
+		  $err=1;
         }
       } else {
         $params = array(
@@ -95,24 +101,28 @@ class ControllerFront extends Controller
           'fecha' => $_POST['fecha'],
         );//prueba
         $msj=("Las contraseñas ingresadas no coinciden");
+		$err=1;
       }
     } else $params = array(
       'usuario' => '',
       'nombre' => '',
       'mail' => '',
       'telefono' => '',
-      'fecha' => '1990-01-01'
+      'fecha' => '01-01-1990'
     );
     echo $this->twig->render('registro.twig.html', array('params' => $params,
 														 'mensaje' => $msj,
+														 'error' => $err,
 														 'edad' => $edad));
   }
   
   public function recuperarPass(){
 	$msj="";
+	$err="";
     if($this->haySesion()){
       $msj=("Existe una sesión abierta. No puede realizar la acción solicitada.");
-      echo $this->twig->render('index.twig.html', array('log' => '1', 'mensaje' => $msj));
+	  $err=1;
+      echo $this->twig->render('index.twig.html', array('log' => '1', 'mensaje' => $msj, 'error' => $err));
 	  return;
     }
     elseif (($_SERVER['REQUEST_METHOD'] == 'POST') && (isset($_POST['mail'])))
@@ -121,18 +131,27 @@ class ControllerFront extends Controller
 		$res = $this->us->recuperarPass($mail);
 		if (count($res)==1) {
 			// aca supuestamente se le envia un correo al usuario $res devuelto con su misma contraseña
-			$params = array('mail' => $mail);
-			echo $this->twig->render('recuperarPassCorrecto.twig.html', array('params' => $params,
-																			  'mensaje' => $msj));
-			return;
+			if ($res[0]['estado']=='B'){
+				$params = array('mail' => $mail);
+				$msj=("El usuario fue dado de baja.");
+				$err=1;
+			} else {
+				$params = array('mail' => $mail);
+				echo $this->twig->render('recuperarPassCorrecto.twig.html', array('params' => $params,
+																				  'mensaje' => $msj,
+																				  'error' => $err));
+				return;
+			}
 		} else {
 			$params = array('mail' => $mail);
 			$msj=("El correo ingresado no pertenece a una cuenta de usuario.");
+			$err=1;
 		}
     }else
 		$params = array('mail' => '');
     echo $this->twig->render('recuperarPass.twig.html', array('params' => $params,
-															  'mensaje' => $msj));
+															  'mensaje' => $msj,
+															  'error' => $err));
   }
   
   public function terminosYcondiciones(){

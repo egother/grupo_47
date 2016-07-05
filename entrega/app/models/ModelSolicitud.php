@@ -28,8 +28,8 @@
      
      public function verSolicitudesRealizadas($id){
 		$sql = $this->conexion->prepare("SELECT solicitud.*, publicacion.encabezado 
-														  FROM solicitud INNER JOIN publicacion ON (solicitud.id_publicacion=publicacion.id_publicacion)
-														  WHERE solicitud.id_usuario = :id ORDER BY fec_solicitud DESC");
+										  FROM solicitud INNER JOIN publicacion ON (solicitud.id_publicacion=publicacion.id_publicacion)
+										  WHERE solicitud.id_usuario = :id ORDER BY fec_solicitud DESC");
 		$sql->bindParam(':id', $id, PDO::PARAM_INT);
 		$sql->execute();
 		$res = $sql->fetchAll(PDO::FETCH_ASSOC);
@@ -47,6 +47,25 @@
 		$sql->execute();
 		$res = $sql->fetchAll(PDO::FETCH_ASSOC);
 		return $res;
+	 }
+	 
+	 public function descartar($estasNO, $estaSI){
+		$sql = $this->conexion->prepare("
+			UPDATE solicitud
+			SET estado='A'
+			WHERE (id_solicitud = :id) ");
+		$sql->bindParam(':id', $estaSI['id_solicitud'], PDO::PARAM_INT);
+		$sql->execute();
+		
+		foreach ($estasNO as $elem){
+			$sql = $this->conexion->prepare("
+				UPDATE solicitud
+				SET estado='R'
+				WHERE (id_solicitud = :id) ");
+			$sql->bindParam(':id', $elem['id_solicitud'], PDO::PARAM_INT);
+			$sql->execute();
+		}
+		
 	 }
  }
 

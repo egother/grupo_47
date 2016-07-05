@@ -21,7 +21,7 @@
 											shadow.correo, shadow.f_nacimiento, shadow.telefono,
 											shadow.premium, rol.nombreRol
 									   FROM shadow INNER JOIN rol on (shadow.id_rol = rol.id )
-									   WHERE (usuario = :user) and (pass = :pass)");
+									   WHERE (usuario = :user) and (pass = :pass) and (estado='A')");
 		$sql->bindParam(':user', $user, PDO::PARAM_STR);
 		$sql->bindParam(':pass', $pass, PDO::PARAM_STR);
 		$sql->execute();
