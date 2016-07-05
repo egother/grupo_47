@@ -7,7 +7,7 @@
 
 
 <br>
-<h2>Mis Solicitudes Pendientes de Revisión</h2>
+<h2>Solicitudes Pendientes que debo Revisar</h2>
 <br>
 {% if params | length>0 %}
 		<table class="table table-striped" >
@@ -42,26 +42,29 @@
 	{% if not(detalle == 0) %}
 	<br>
 	<hr>
-			<h3>
-				Detalle de la solicitud #{{detalle.id_solicitud}}:
-			</h3>
-			<p>Fecha Solicitud: {{detalle.fec_solicitud|date("m-d-Y")}}</p><p>
-			<p>Desde: {{detalle.fec_inicio|date("m-d-Y")}}</p>
-			<p>Hasta: {{detalle.fec_fin|date("m-d-Y")}}</p>
-			<p>Ocupantes: {{detalle.fec_ocupantes}}</p>
-			<p>Comentario: {{detalle.texto}}</p>
+	<br>
+		<div style="border:1px solid black; padding:20px; background-color:#ddd;">
+				<h3>
+					Detalle de la solicitud #{{detalle.id_solicitud}}:
+				</h3>
+				<p>Fecha Solicitud: {{detalle.fec_solicitud|date("m-d-Y")}}</p><p>
+				<p>Desde: {{detalle.fec_inicio|date("m-d-Y")}}</p>
+				<p>Hasta: {{detalle.fec_fin|date("m-d-Y")}}</p>
+				<p>Ocupantes: {{detalle.fec_ocupantes}}</p>
+				<p>Comentario: {{detalle.texto}}</p>
 
-	<div align="right">
-			
-			<h3>
-				<a href='./backend.php?accion=aceptarSolicitud&amp;id={{detalle.id_solicitud}}'>
-					<span style="background: #9f9; padding:5px; border: 2px solid black;">Aceptar Solicitud</span>
-				</a>
-				<a href='./backend.php?accion=rechazarSolicitud&amp;id={{detalle.id_solicitud}}'>
-					<span style="background: #f99; padding:5px; border: 2px solid black;">Rechazar Solicitud</span>
-				</a>
-			</h3>
-	</div>
+			<div align="right">
+					
+					<h3>
+						<a href='./backend.php?accion=aceptarSolicitud&amp;id={{detalle.id_solicitud}}'>
+							<span style="background: #9f9; padding:5px; border: 2px solid black;">Aceptar Solicitud</span>
+						</a>
+						<a href='./backend.php?accion=rechazarSolicitud&amp;id={{detalle.id_solicitud}}'>
+							<span style="background: #f99; padding:5px; border: 2px solid black;">Rechazar Solicitud</span>
+						</a>
+					</h3>
+			</div>
+		</div>
 	{% endif %}
 		
 {% else %}

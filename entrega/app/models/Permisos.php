@@ -21,7 +21,7 @@ class Permisos {
 								 'reservasOtorgadas' => '0', 'modificarTipo'=>'0', 'provincias' => '0',
 								 'modificarPublicacion' => '0', 'buscar' => '0', 'lugares' => '0',
 								 'aceptarSolicitud' => '0', 'aceptarSolicitud' => '0',
-								 'rechazarSolicitud' => '0'
+								 'rechazarSolicitud' => '0', 'borrarSolicitud' => '0'
 								 ),
 		'visitante' => array('inicio'=>'0', 'modificarUsuario'=>'0', 'modificarPass'=>'0', 'usuarioPremium'=>'0',
 							 'publicar'=>'0', 'pagar'=>'0', 'verPublicacion' => '0',
@@ -31,7 +31,7 @@ class Permisos {
 							 'departamentos' => '0', 'listarLocalidadesDeProvincia' => '0',
 							 'modificarPublicacion' => '0', 'buscar' => '0',
 							 'aceptarSolicitud' => '0', 'aceptarSolicitud' => '0',
-							 'rechazarSolicitud' => '0'
+							 'rechazarSolicitud' => '0', 'borrarSolicitud' => '0'
 							)
 	 );
 

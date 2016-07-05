@@ -80,7 +80,7 @@
 		
 	 }
 	 
- 	 public function eliminar($estaNO){
+ 	 public function borrar($estaNO){
 		$sql = $this->conexion->prepare("
 			UPDATE solicitud
 			SET estado='B'

@@ -362,10 +362,20 @@ require_once __DIR__ . '/Controller.php';
 		$this->revisarMensajes();
 		if($this->haySesion()){
 			$params = $this->mSolic->verSolicitudesRealizadas($_SESSION['USUARIO']['id']);
+			$detalle = 0;
+			if (isset($_GET['id'])) {
+				$id = $_GET['id'];
+				// esto busca el comentario dentro de la lista de solicitudes que coincida con el id de la solicitud
+				$key = array_search($id, array_column($params, 'id_solicitud'));
+				if (is_bool($key) === false){
+					$detalle = $params[$key];
+				}
+			}
 			echo $this->twig->render('listadoSolicitudesRealizadas.twig.html', array('log' => '1',
 																					 'params' => $params,
 																					 'mensaje' => $this->msj,
-																					 'error' => $this->err));
+																					 'error' => $this->err,
+																					 'detalle' => $detalle));
 		} else {
 			$this->setMensaje("Usted no ha iniciado sesión.", 1);
 			header('Location: ./index.php');
@@ -377,7 +387,6 @@ require_once __DIR__ . '/Controller.php';
 			$id = $_GET['id'];
 			$miLista = $this->mSolic->verSolicitudesPendientes($_SESSION['USUARIO']['id']);
 			$key = array_search($id, array_column($miLista, 'id_solicitud'));
-//			var_dump($id, $miLista, $key); exit;
 // verificamos que el usuario actual sea dueño de la publicacion a la que pertenece la solicitud
 			if ($key > -1){
 				// verificamos cuales de la lista se cruzan en fecha con la solicitud
@@ -411,7 +420,6 @@ require_once __DIR__ . '/Controller.php';
 			$id = $_GET['id'];
 			$miLista = $this->mSolic->verSolicitudesPendientes($_SESSION['USUARIO']['id']);
 			$key = array_search($id, array_column($miLista, 'id_solicitud'));
-//			var_dump($id, $miLista, $key); exit;
 // verificamos que el usuario actual sea dueño de la publicacion a la que pertenece la solicitud
 			if ($key > -1){
 				// verificamos cuales de la lista se cruzan en fecha con la solicitud
@@ -435,6 +443,35 @@ require_once __DIR__ . '/Controller.php';
 		} else
 			$this->setMensaje("Hubo un problema en el sistema. Reinténtelo.", 1);
 		header('Location: ./backend.php?accion=solicitudesPendientes');
+	}
+	
+	public function borrarSolicitud(){
+		if (isset($_GET['id']) && $this->haySesion()){
+			$id = $_GET['id'];
+			$miLista = $this->mSolic->verSolicitudesRealizadas($_SESSION['USUARIO']['id']);
+			$key = array_search($id, array_column($miLista, 'id_solicitud'));
+// verificamos que el usuario actual sea dueño de la publicacion a la que pertenece la solicitud
+			if ($key > -1){
+				// verificamos cuales de la lista se cruzan en fecha con la solicitud
+				if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+					$this->mSolic->borrar($miLista[$key]);
+					$this->setMensaje("La solicitud se ha eliminado.", 0);
+				} else {
+					echo $this->twig->render('confirmarSolicitud.twig.html', array('log' => '1',
+																				   'id' => $id,
+																				   'func' => 'borrar',
+																				   'params' => array(),
+																				   'solicitud' => $miLista[$key],
+																				   'mensaje' => $this->msj,
+																				   'error' => $this->err));
+					return;
+				}
+			} else {
+				$this->setMensaje("Hubo un problema en el sistema. Reinténtelo.", 1);
+			}
+		} else
+			$this->setMensaje("Hubo un problema en el sistema. Reinténtelo.", 1);
+		header('Location: ./backend.php?accion=solicitudesRealizadas');
 	}
 
 	public function misReservas(){

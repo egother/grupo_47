@@ -8,9 +8,8 @@
 
 <br>
 	<h2> Detalles de la Solicitud </h2>
-		<table class="table table-striped" >
-		<tbody>
-			<tr class="encabezado">
+		<table class="table table-striped" style="border:none;">
+			<tr style="background-color:#9f9;">
 				<td style="width:15px">Nro.</td>
 				<td>Ver publicación</td>
 				<td>Fecha de Solicitud</td>
@@ -28,7 +27,6 @@
 				<td>{{solicitud.fec_fin|date("m-d-Y") }}</td>
 				<td>{{solicitud.ocupantes}}</td>
 			</tr>
-		</tbody>
 		</table>
 		<p>Comentario: {{solicitud.texto}}</p>
 		
@@ -53,9 +51,8 @@
 		<h2>Estas son las Solicitudes que se superponen con la que estás a punto de rechazar.</h2>
 	{% endif %}
 		<br>
-		<table class="table table-striped" >
-		<tbody>
-			<tr class="encabezado">
+		<table class="table table-striped" style="border:none;">
+			<tr style="background-color:#f99;">
 				<td style="width:15px">Nro.</td>
 				<td>Ver publicación</td>
 				<td>Fecha de Solicitud</td>
@@ -79,7 +76,6 @@
 				</td>
 			</tr>
 	{% endfor %}
-		</tbody>
 		</table>
 
 {% else %}

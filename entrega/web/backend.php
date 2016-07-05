@@ -42,6 +42,8 @@ $map = array(
 	 'buscar' => array('controller' => 'ControllerBack', 'accion' => 'buscar'),
 	 'aceptarSolicitud' => array('controller' => 'ControllerBack', 'accion' => 'aceptarSolicitud'),
 	 'rechazarSolicitud' => array('controller' => 'ControllerBack', 'accion' => 'rechazarSolicitud'),
+	 'borrarSolicitud' => array('controller' => 'ControllerBack', 'accion' => 'borrarSolicitud'),
+	 
 
 
      'usuarioPremium' => array('controller' =>'ControllerBack', 'accion' =>'usuarioPremium'),
