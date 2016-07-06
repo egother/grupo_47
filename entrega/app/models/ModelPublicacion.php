@@ -13,7 +13,7 @@
     		$sql = $this->conexion->prepare('INSERT INTO `publicacion`(`foto`, `fototype`, `titulo_prop`, `capacidad`, `descripcion`, `encabezado`, `direccion`, `fecha_publi`, `usuario`, `tipo`, `lugar`, `provincia`, `ciudad` )
     		VALUES (:foto, :fototype, :titulo, :capacidad, :descripcion, :encabezado, :direccion, :fecha, :usuario, :tipo, :provincia, :provincia, :ciudad)');
     		$sql->bindParam(':descripcion', $des, PDO::PARAM_STR);
-			$sql->bindParam(':tipo', $t, PDO::PARAM_INT);
+			  $sql->bindParam(':tipo', $t, PDO::PARAM_INT);
     		$sql->bindParam(':encabezado', $e, PDO::PARAM_STR);
     		$sql->bindParam(':direccion', $dir, PDO::PARAM_STR);
     		$sql->bindParam(':fecha', $fecha, PDO::PARAM_STR);
@@ -47,7 +47,7 @@
     		$sql->bindParam(':provincia', $p, PDO::PARAM_INT);
     		$sql->bindParam(':ciudad', $cd, PDO::PARAM_INT);
     		return $sql->execute();
-			
+
 		} elseif ($foto['error'] == 0){
 			$fotoBlob = fopen($foto['tmp_name'], 'rb');
 			$sql = $this->conexion->prepare('
@@ -180,7 +180,7 @@
        }
        return $publicaciones;
    }
-   
+
      public function borrar($estaNO){
 		$sql = $this->conexion->prepare("
 			UPDATE publicacion
@@ -188,7 +188,7 @@
 			WHERE (id_publicacion = :id) ");
 		$sql->bindParam(':id', $estaNO['id_publicacion'], PDO::PARAM_INT);
 		$sql->execute();
-		
+
 	 }
 
 	 public function buscarPorTipo($id){

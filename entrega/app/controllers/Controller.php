@@ -45,6 +45,10 @@ require_once __DIR__ . '/ControllerLogin.php';
     $this->mPagos = new ModelPago(Config::$mvc_bd_nombre, Config::$mvc_bd_usuario,
                 Config::$mvc_bd_clave, Config::$mvc_bd_hostname);
 
+    include_once(__DIR__.'/../models/ModelComentario.php');
+    $this->mComent = new ModelComentario(Config::$mvc_bd_nombre, Config::$mvc_bd_usuario,
+                Config::$mvc_bd_clave, Config::$mvc_bd_hostname);
+
 		if (Model::testConect()){ //si la conexión resulta exitosa
 
 			if ($accion == 'publico') {
@@ -152,9 +156,9 @@ require_once __DIR__ . '/ControllerLogin.php';
                 }
                 return false;
 	}
-	
+
 	public function seCruzanFechas($lista, $key){
-		
+
 		$inicio = new DateTime($lista[$key]['fec_inicio']);
 		$fin = new DateTime($lista[$key]['fec_fin']);
 		$id_solicitud = $lista[$key]['id_solicitud'];

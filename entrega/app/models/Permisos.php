@@ -32,7 +32,8 @@ class Permisos {
 							 'departamentos' => '0', 'listarLocalidadesDeProvincia' => '0',
 							 'modificarPublicacion' => '0', 'buscar' => '0',
 							 'aceptarSolicitud' => '0', 'aceptarSolicitud' => '0',
-							 'rechazarSolicitud' => '0', 'borrarSolicitud' => '0', 'eliminarPublicacion' => '0'
+							 'rechazarSolicitud' => '0', 'borrarSolicitud' => '0', 'eliminarPublicacion' => '0',
+							 'agregarComentario' => '0', 'agregarComentario' => '0', 'agregarComentario' => '0'
 							)
 	 );
 

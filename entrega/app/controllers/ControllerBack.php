@@ -265,6 +265,13 @@ require_once __DIR__ . '/Controller.php';
 		echo json_encode($listado);
 	}
 
+  public function agregarComentario(){
+    $id=$_POST['idPublicacion'];
+    $pregunta=$_POST['pregunta'];
+    $this->mComent->agregarComentario($pregunta, $id);
+    header('Location: ./backend.php?accion=verPublicacion&id='.$id);
+  }
+
   public function verPublicacion(){
 		$this->revisarMensajes();
 		$func="";
@@ -444,7 +451,7 @@ require_once __DIR__ . '/Controller.php';
 			$this->setMensaje("Hubo un problema en el sistema. Reinténtelo.", 1);
 		header('Location: ./backend.php?accion=solicitudesPendientes');
 	}
-	
+
 	public function borrarSolicitud(){
 		if (isset($_GET['id']) && $this->haySesion()){
 			$id = $_GET['id'];
