@@ -28,6 +28,18 @@
 </div>
 <br>
 <br>
+<div>
+	{% if comentarios | length>0 %}
+				{% for comentario in comentarios %}
+					<div>
+						<h3>{{comentario.pregunta}}</h3><h4>{{comentario.fec_preg}}</h4>
+						{%if comentario.respuesta | length>0 %}
+							<h5>{{comentario.respuesta}}</h5><h6>{{comentario.fec_resp}}</h6>
+						{% endif %}
+					</div>
+				{% endfor %}
+	{% endif %}
+</div>
 			<div align="right">
 				<h3>
 {% if (source == 0) %}

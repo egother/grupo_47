@@ -269,6 +269,7 @@ require_once __DIR__ . '/Controller.php';
     $id=$_POST['idPublicacion'];
     $pregunta=$_POST['pregunta'];
     $this->mComent->agregarComentario($pregunta, $id);
+    $this->setMensaje("La Pregunta fue enviada", 0);
     header('Location: ./backend.php?accion=verPublicacion&id='.$id);
   }
 
@@ -296,7 +297,6 @@ require_once __DIR__ . '/Controller.php';
 					}
 				}
 				elseif ($_SERVER['REQUEST_METHOD'] == 'POST'){
-          //if(isset ( $ _POST [ 'enviar' ])
 					// se accedió a la publicacion a traves de un $id y por formulario de solicitud
 					$cant = $_POST["cant"];
 					$desde = $_POST["desde"];
@@ -318,13 +318,16 @@ require_once __DIR__ . '/Controller.php';
 			}
 		} else
 			$this->setMensaje("No se seleccionó una publicacion para visualizar", 1);
+    $comentarios = $this->mComent->listarComentarios($id);
+    //var_dump($comentarios);die;
 		echo $this->twig->render('verPublicacion.twig.html', array('log'=>'1',
 																   'params' => $params,
 																   'mensaje' => $this->msj,
 																   'error' => $this->err,
 																   'hoy' => $hoy,
 																   'func' => $func,
-																   'source' => $source));
+																   'source' => $source,
+                                   'comentarios' => $comentarios));
 	}
 
 	public function misPublicaciones(){

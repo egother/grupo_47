@@ -37,10 +37,11 @@
     $sql->execute();
   }
   public function listarComentarios($id){
-    $sql = $this->conexion->prepare("SELECT * comentario WHERE id_publicacion = :id");
+    $sql = $this->conexion->prepare("SELECT * FROM `comentario` WHERE `id_publicacion`= :id");
     $sql->bindParam(':id', $id, PDO::PARAM_INT);
     $sql->execute();
     $listado = $sql->fetchAll(PDO::FETCH_ASSOC);
-    return $litado;
+    //var_dump($listado);die;
+    return $listado['0'];
   }
  }
