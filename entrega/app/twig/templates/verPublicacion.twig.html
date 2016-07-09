@@ -10,43 +10,65 @@
 <h4>Capacidad máxima: {{params.capacidad}}</h4>
 <h4>Fecha de Publicación: {{params.fecha_publi|date("d-m-Y")}}</h4>
 
-<div id="DIV_1">
-	<form class="comentario"action="./backend.php?accion=agregarComentario" method="post" id="FORM_2">
-		<div id="DIV_5">
-			<i id="I_6"></i> <span id="SPAN_7">Pregunta:</span>
-			<p id="P_8">
-				<textarea name="pregunta" id="TEXTAREA_11" cols="110" placeholder="Escribe tu pregunta..."></textarea>
-			</p>
-		</div>
-		<div id="DIV_12">
-			<div id="DIV_13">
-				<input type="hidden" value="{{params.id_publicacion}}" name="idPublicacion"/>
-				<input type="submit" value="Preguntar" name="preguntar" /> No ingreses datos de contacto o uses lenguaje vulgar.
-			</div>
-		</div>
-	</form>
-</div>
-<br>
-<br>
-<div>
-	{% if comentarios | length>0 %}
-				{% for comentario in comentarios %}
-					<div>
-						<h3>{{comentario.pregunta}}</h3><h4>{{comentario.fec_preg}}</h4>
-						{%if comentario.respuesta | length>0 %}
-							<h5>{{comentario.respuesta}}</h5><h6>{{comentario.fec_resp}}</h6>
-						{% endif %}
-					</div>
-				{% endfor %}
-	{% endif %}
-</div>
+
 			<div align="right">
 				<h3>
 {% if (source == 0) %}
+						<div id="DIV_1">
+							<form class="comentario"action="./backend.php?accion=agregarComentario" method="post" id="FORM_2">
+								<div id="DIV_5">
+									<i id="I_6"></i> <span id="SPAN_7">Pregunta:</span>
+									<p id="P_8">
+										<textarea name="pregunta" id="TEXTAREA_11" cols="110" placeholder="Escribe tu pregunta..."></textarea>
+									</p>
+								</div>
+								<div id="DIV_12">
+									<div id="DIV_13">
+										<input type="hidden" value="{{params.id_publicacion}}" name="idPublicacion"/>
+										<input type="submit" value="Preguntar" name="preguntar" /> No ingreses datos de contacto o uses lenguaje vulgar.
+									</div>
+								</div>
+							</form>
+						</div>
+						<br>
+						<br>
+						<div align="left">
+							{% if comentarios | length>0 %}
+							{% for comentario in comentarios %}
+							<div id="comentario">
+								<div id="pregunta">{{comentario.pregunta}}-</div><div id="f-pregunta">{{comentario.fec_preg}}</div>
+								<br>
+								{%if comentario.respuesta | length>0 %}
+								<div id="respuesta">{{comentario.respuesta}}-</div><div id="f-respuesta">{{comentario.fec_resp}}</div>
+								<br>
+								{% endif %}
+							</div>
+							{% endfor %}
+							{% endif %}
+						</div>
 						<a href='./backend.php?accion=verPublicacion&amp;id={{params.id_publicacion}}&amp;func=solicitar#abajo'>
 							<span style="background: #9f9; padding:5px; border: 2px solid black;">Solicitar hospedaje</span>
 						</a>
 {% elseif (source == 1) %}
+						{% if comentarios | length>0 %}
+							{% for comentario in comentarios %}
+								{%if comentario.respuesta | length==0 %}
+								<div id="comentario"align="left">
+									<a href="./backend.php?accion=responderComentario&amp;id={{comentario.id_comentario}">
+									<div id="pregunta">{{comentario.pregunta}}-</div><div id="f-pregunta">{{comentario.fec_preg}}</div>
+									</a>
+								</div>
+								{% else %}
+									<div id="comentario"align="left">
+										<div id="pregunta">{{comentario.pregunta}}-</div><div id="f-pregunta">{{comentario.fec_preg}}</div>
+										<br>
+										<div id="respuesta">{{comentario.respuesta}}-</div><div id="f-respuesta">{{comentario.fec_resp}}</div>
+									</div>
+								{% endif %}
+
+							{% endfor %}
+						{% endif %}
+
 						<a href='./backend.php?accion=modificarPublicacion&amp;id={{params.id_publicacion}}&amp;func=modificar'>
 							<span style="background: #9f9; padding:5px; border: 2px solid black;">Modificar</span>
 						</a>

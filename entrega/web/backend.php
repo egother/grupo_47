@@ -44,7 +44,7 @@ $map = array(
 	 'aceptarSolicitud' => array('controller' => 'ControllerBack', 'accion' => 'aceptarSolicitud'),
 	 'rechazarSolicitud' => array('controller' => 'ControllerBack', 'accion' => 'rechazarSolicitud'),
 	 'borrarSolicitud' => array('controller' => 'ControllerBack', 'accion' => 'borrarSolicitud'),
-	 
+
 
 
      'usuarioPremium' => array('controller' =>'ControllerBack', 'accion' =>'usuarioPremium'),
@@ -52,6 +52,7 @@ $map = array(
      'agregarPago' => array('controller' =>'ControllerBack', 'accion' =>'agregarPago'),
 	 'verPublicacion'=> array('controller'=>'ControllerBack', 'accion'=>'verPublicacion'),
    'agregarComentario'=> array('controller'=>'ControllerBack', 'accion'=>'agregarComentario'),
+   'responderComentario'=> array('controller'=>'ControllerBack', 'accion'=>'responderComentario'),
 
 
      'users' => array('controller' =>'ControllerBack', 'accion' =>'users'),

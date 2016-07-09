@@ -273,6 +273,10 @@ require_once __DIR__ . '/Controller.php';
     header('Location: ./backend.php?accion=verPublicacion&id='.$id);
   }
 
+  public function responderComentario(){
+    echo $this->twig->render('responderComentario.twig.html', array('log' => '1'));
+  }
+
   public function verPublicacion(){
 		$this->revisarMensajes();
 		$func="";

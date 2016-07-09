@@ -42,6 +42,6 @@
     $sql->execute();
     $listado = $sql->fetchAll(PDO::FETCH_ASSOC);
     //var_dump($listado);die;
-    return $listado['0'];
+    return $listado;
   }
  }

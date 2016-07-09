@@ -163,3 +163,37 @@
     font: normal normal normal normal 11px / 25px Arial, Helvetica, "Nimbus Sans L", sans-serif;
     outline: rgb(153, 153, 153) none 0px;
 }/*#DIV_13*/
+
+#pregunta {
+    display: inline-block;
+    margin: 0px;
+    font: normal normal normal normal 15px / 25px Arial, Helvetica, "Nimbus Sans L", sans-serif;
+
+}
+
+#f-pregunta{
+  display: inline-block;
+  margin: 8px;
+  font: normal normal normal normal 12px / 25px Arial, Helvetica, "Nimbus Sans L", sans-serif;
+  color: rgb(128, 128, 128);
+}
+
+#f-respuesta  {
+    display: inline-block;
+    margin: 8px;
+    font: normal normal normal normal 12px / 25px Arial, Helvetica, "Nimbus Sans L", sans-serif;
+    color: rgb(128, 128, 128);
+}
+
+#respuesta {
+    display: inline-block;
+    margin: 0px;
+    margin-left: 25px;
+    font: normal normal normal normal 15px / 25px Arial, Helvetica, "Nimbus Sans L", sans-serif;
+}
+
+#comentario {
+  background-color: rgb(188,238,104);
+  margin-top: 2em;
+  margin-bottom: 2em;
+}
