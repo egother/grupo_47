@@ -54,7 +54,7 @@
 							{% for comentario in comentarios %}
 								{%if comentario.respuesta | length==0 %}
 								<div id="comentario"align="left">
-									<a href="./backend.php?accion=responderComentario&amp;id={{comentario.id_comentario}">
+									<a href="./backend.php?accion=responderComentario&amp;id={{comentario.id_comentario}}">
 									<div id="pregunta">{{comentario.pregunta}}-</div><div id="f-pregunta">{{comentario.fec_preg}}</div>
 									</a>
 								</div>
