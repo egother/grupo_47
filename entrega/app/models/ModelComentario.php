@@ -29,9 +29,9 @@
       $sql->execute();
   }
   public function responder($idComentario, $respuesta){
-    $sql = $this->conexion->prepare("UPDATE comentario
-										 SET respuesta = :res, fec_rsp = NOW()
-										 WHERE id_comentario = :id ");
+    //var_dump($idComentario);die;
+    $sql = $this->conexion->prepare("UPDATE `comentario` SET `respuesta`= :res,`fec_resp`= NOW()
+                                          WHERE `id_comentario` = :id ");
     $sql->bindParam(':res', $respuesta, PDO::PARAM_STR);
     $sql->bindParam(':id', $idComentario, PDO::PARAM_INT);
     $sql->execute();
@@ -43,5 +43,12 @@
     $listado = $sql->fetchAll(PDO::FETCH_ASSOC);
     //var_dump($listado);die;
     return $listado;
+  }
+  public function unComentario($id){
+    $sql = $this->conexion->prepare("SELECT * FROM `comentario` WHERE `id_comentario`= :id");
+    $sql->bindParam(':id', $id, PDO::PARAM_INT);
+    $sql->execute();
+    $comentario = $sql->fetchAll(PDO::FETCH_ASSOC);
+    return $comentario[0];
   }
  }

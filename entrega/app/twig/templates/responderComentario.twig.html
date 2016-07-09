@@ -8,15 +8,17 @@
 <br>
 <br>
 <div id="DIV_1">
-	<form class="comentario"action="./backend.php?accion=responderComentario" method="post" id="FORM_2">
+	<form class="comentario"action="./backend.php?accion=responder" method="post" id="FORM_2">
 		<div id="DIV_5">
 			<i id="I_6"></i> <span id="SPAN_7">Pregunta:</span>
 			<p id="P_8">
-				<textarea name="pregunta" id="TEXTAREA_11" cols="110" placeholder="Escribe tu respuesta..."></textarea>
+				<textarea name="respuesta" id="TEXTAREA_11" cols="110" placeholder="Escribe tu respuesta..."></textarea>
 			</p>
 		</div>
 		<div id="DIV_12">
 			<div id="DIV_13">
+				<input type="hidden" value="{{comentario.id_comentario}}" name="idComentario"/>
+				<input type="hidden" value="{{comentario.id_publicacion}}" name="idPublicacion"/>
 				<input type="submit" value="Responder" name="responder" /> No ingreses datos de contacto o uses lenguaje vulgar.
 			</div>
 		</div>

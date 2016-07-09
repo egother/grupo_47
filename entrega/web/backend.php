@@ -53,6 +53,7 @@ $map = array(
 	 'verPublicacion'=> array('controller'=>'ControllerBack', 'accion'=>'verPublicacion'),
    'agregarComentario'=> array('controller'=>'ControllerBack', 'accion'=>'agregarComentario'),
    'responderComentario'=> array('controller'=>'ControllerBack', 'accion'=>'responderComentario'),
+   'responder'=> array('controller'=>'ControllerBack', 'accion'=>'responder'),
 
 
      'users' => array('controller' =>'ControllerBack', 'accion' =>'users'),

@@ -274,7 +274,24 @@ require_once __DIR__ . '/Controller.php';
   }
 
   public function responderComentario(){
-    echo $this->twig->render('responderComentario.twig.html', array('log' => '1'));
+    if (isset($_GET['id']) && $this->haySesion()){
+			$id = $_GET['id'];
+      $comentario = $this->mComent->unComentario($id);
+      echo $this->twig->render('responderComentario.twig.html', array('log' => '1',
+                                                            'comentario' => $comentario));
+    }
+  }
+
+  public function responder(){
+    if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+      $id=$_POST['idComentario'];
+      $idP=$_POST['idPublicacion'];
+      $respuesta=$_POST['respuesta'];
+      $this->mComent->responder($id, $respuesta);
+      $this->setMensaje("La respuesta fue enviada", 0);
+      header('Location: ./backend.php?accion=verPublicacion&id='.$idP);
+
+    }
   }
 
   public function verPublicacion(){
