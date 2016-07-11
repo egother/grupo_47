@@ -57,7 +57,6 @@
 			</select>
 			-
 			<select name="ciudad" id="ciudades">
-{% if (form=="M") %} <!-- Si se entró por Modificar, agrega el input de ciudad con la ciudad de la publicacion seleccionada -->
 				{% for ciudad in ciudades %}
 					{% if (ciudad.id == params.ciudad) %}
 						<option value="{{ ciudad.id }}" selected="selected">{{ciudad.nombre}}</option>
@@ -65,7 +64,6 @@
 					<option value="{{ ciudad.id }}">{{ciudad.nombre}}</option>
 					{% endif %}
 				{% endfor %}
-{% endif %}			<!-- Y sino, no agrega nada, para que lo agregue AJAX-->
 			</select>
 
 		</div>
@@ -105,10 +103,11 @@ La accion "departamento" devuelve una consulta de SQL con las ciudades perteneci
 			  .done(function( data ) {
 					$('#ciudades').children().remove();
 					$.each(data, function(i, value) {
-						 $('#ciudades').append($('<option>').text(value.nombre_ciudad).attr('value', value.id_ciudad));
+						 $('#ciudades').append($('<option>').text(value.nombre).attr('value', value.id));
 				 });
 			  });
 		});
 	});
 </script>
+
 {% endblock %}

@@ -35,6 +35,17 @@
 
        return $listado;
      }
+	 
+	 public function departamentos($id){
+       $sql = $this->conexion->prepare("SELECT l.id, l.nombre
+										FROM localidades as l inner join departamentos as d ON (l.departamento_id = d.id)
+										WHERE d.provincia_id = :id ");
+       $sql->bindParam(':id', $id, PDO::PARAM_INT);
+    	 $sql->execute();
+       $listado = $sql->fetchAll(PDO::FETCH_ASSOC);
+
+       return $listado;
+	 }
 
      public function verProvincia($id){
        $sql = $this->conexion->prepare("SELECT * FROM provincias WHERE id = :id");

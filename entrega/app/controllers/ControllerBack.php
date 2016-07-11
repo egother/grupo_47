@@ -209,7 +209,7 @@ require_once __DIR__ . '/Controller.php';
 			} else {
 				$tipos = $this->mTipos->listar();
 				$provincias = $this->mLugares->listarProvincias();
-				$ciudades = $this->mLugares->listarCiudades();
+				$ciudades = $this->mLugares->departamentos(1);
 				echo $this->twig->render('publicacion.twig.html', array('log' => '1',
 																		'form' => 'A', // A = Agregar
 																		'tipos' => $tipos,
@@ -244,7 +244,7 @@ require_once __DIR__ . '/Controller.php';
 //				var_dump($params); exit;
 				$tipos = $this->mTipos->listar();
 				$provincias = $this->mLugares->listarProvincias();
-				$ciudades = $this->mLugares->listarCiudades();
+				$ciudades = $this->mLugares->departamentos($params['provincia']);
 				echo $this->twig->render('publicacion.twig.html', array('log' => '1',
 																		'form' => 'M', // M = Modificar
 																		'params' => $params,
@@ -258,12 +258,11 @@ require_once __DIR__ . '/Controller.php';
 		}
 	}
 
-	public function listarLocalidadesDeProvincia(){
-		echo($_POST['id']);
-		$listado = $this->mLugares->listarLocalidadesDeProvincia($_POST['id']);
-		header('Content-type: application/json');
-		echo json_encode($listado);
-	}
+  public function listarLocalidadesDeProvincia(){
+    $listado = $this->mLugares->departamentos($_POST['id']);
+    header('Content-type: application/json');
+    echo json_encode($listado);
+  }
 
   public function agregarComentario(){
     $id=$_POST['idPublicacion'];
