@@ -236,7 +236,12 @@ require_once __DIR__ . '/Controller.php';
 				$ciudad = $this->xss($_POST['ciudad']);
 				$foto = $_FILES['imagen'];
 				$usuario = $_SESSION['USUARIO']['id'];
-				$res = $this->mPubli->modificar($id, $foto, $tituloProp, $cantidad, $descripcion, $encabezado, $direccion, $usuario, $tipo, $provincia, $ciudad);
+				if ($_POST['habilitado'] = 'on'){
+					$habilitado = $_POST['A'];
+				} elseif ($_POST['habilitado'] = 'off'){
+					$habilitado = $_POST['B'];
+				}
+				$res = $this->mPubli->modificar($id, $foto, $tituloProp, $cantidad, $descripcion, $encabezado, $direccion, $usuario, $tipo, $provincia, $ciudad, $habilitado);
 				$this->setMensaje("La modificación fue realizada con éxito", 0);
 				header('Location: ./backend.php?accion=misPublicaciones');
 			} else {

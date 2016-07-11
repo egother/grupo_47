@@ -27,13 +27,13 @@
     		return $sql->execute();
 	 }
 
-    public function modificar($id, $foto, $tp, $c, $des, $e, $dir, $u, $t, $p, $cd){
+    public function modificar($id, $foto, $tp, $c, $des, $e, $dir, $u, $t, $p, $cd, $est){
 		if ($foto['error'] == 4){
     		$sql = $this->conexion->prepare('
 				UPDATE `publicacion`
 				SET `titulo_prop` = :titulo, `capacidad` = :capacidad, `descripcion` = :descripcion,
 						`encabezado` = :encabezado, `direccion` = :direccion, `usuario` = :usuario, `tipo` = :tipo,
-						`lugar` = :provincia, `provincia` = :provincia, `ciudad` = :ciudad
+						`lugar` = :provincia, `provincia` = :provincia, `ciudad` = :ciudad, `estado` = :est
 				WHERE `id_publicacion` = :id');
 			$sql->bindParam(':id', $id, PDO::PARAM_INT);
     		$sql->bindParam(':descripcion', $des, PDO::PARAM_STR);
@@ -46,6 +46,7 @@
     		$sql->bindParam(':capacidad', $c, PDO::PARAM_STR);
     		$sql->bindParam(':provincia', $p, PDO::PARAM_INT);
     		$sql->bindParam(':ciudad', $cd, PDO::PARAM_INT);
+    		$sql->bindParam(':est', $est, PDO::PARAM_STR);
     		return $sql->execute();
 
 		} elseif ($foto['error'] == 0){
@@ -54,7 +55,7 @@
 				UPDATE `publicacion`
 				SET `foto` = :foto, `fototype` = :fototype, `titulo_prop` = :titulo, `capacidad` = :capacidad, `descripcion` = :descripcion,
 						`encabezado` = :encabezado, `direccion` = :direccion, `usuario` = :usuario, `tipo` = :tipo,
-						`lugar` = :provincia, `provincia` = :provincia, `ciudad` = :ciudad
+						`lugar` = :provincia, `provincia` = :provincia, `ciudad` = :ciudad, `estado` = :est
 				WHERE `id_publicacion` = :id');
 			$sql->bindParam(':id', $id, PDO::PARAM_INT);
     		$sql->bindParam(':descripcion', $des, PDO::PARAM_STR);
@@ -66,6 +67,7 @@
     		$sql->bindParam(':capacidad', $c, PDO::PARAM_STR);
     		$sql->bindParam(':provincia', $p, PDO::PARAM_INT);
     		$sql->bindParam(':ciudad', $cd, PDO::PARAM_INT);
+    		$sql->bindParam(':est', $est, PDO::PARAM_STR);
     		$sql->bindParam(':fototype', $foto['type'], PDO::PARAM_STR);
     		$sql->bindParam(':foto', $fotoBlob, PDO::PARAM_LOB);
     		return $sql->execute();
@@ -98,7 +100,7 @@
 										FROM publicacion AS p INNER JOIN provincias AS pr ON (p.lugar = pr.id)
 											INNER JOIN localidades AS l ON (p.ciudad = l.id)
 											INNER JOIN tipo_hospedaje AS t ON (p.tipo = t.id_tipo)
-										WHERE (id_publicacion = :id) AND (p.estado = 'A')");
+										WHERE (id_publicacion = :id)");
 		$sql->bindParam(':id', $id, PDO::PARAM_INT);
 		$sql->execute();
 		$publi = $sql->fetchAll(PDO::FETCH_ASSOC);
@@ -112,7 +114,7 @@
       public function verMisPublicaciones($id){
     	 $sql = $this->conexion->prepare("SELECT publicacion.*, tipo_hospedaje.tipo AS nombre_tipo
 										  FROM publicacion INNER JOIN tipo_hospedaje ON (publicacion.tipo = tipo_hospedaje.id_tipo)
-    	 								  WHERE (usuario = :id) AND (publicacion.estado = 'A')
+    	 								  WHERE (usuario = :id)
     	 								  ORDER BY fecha_publi DESC");
     	 $sql->bindParam(':id', $id, PDO::PARAM_INT);
     	 $sql->execute();

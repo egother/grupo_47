@@ -66,6 +66,7 @@ class ControllerFront extends Controller
     }
     elseif (($_SERVER['REQUEST_METHOD'] == 'POST') && (isset($_POST['p1'])) && (isset($_POST['p2'])))
     {
+		var_dump($_POST); exit;
       $p1 = $this->xss($_POST['p1']);
       $p2 = $this->xss($_POST['p2']);
       if ($p1==$p2) {
