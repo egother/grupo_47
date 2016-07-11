@@ -22,7 +22,8 @@
 	}
   public function agregarComentario($comentario, $idPublicacion){
 
-      $sql = $this->conexion->prepare("INSERT INTO `comentario` (`id_comentario`, `pregunta`, `respuesta`, `fec_preg`, `fec_resp`, `id_publicacion`) VALUES (NULL, :c , NULL, NOW(), NULL, :idP )");
+      $sql = $this->conexion->prepare("INSERT INTO `comentario` (`pregunta`, `fec_preg`, `id_publicacion`)
+									   VALUES (:c , NOW(), :idP )");
 
       $sql->bindParam(':c', $comentario, PDO::PARAM_STR);
       $sql->bindParam(':idP', $idPublicacion, PDO::PARAM_INT);

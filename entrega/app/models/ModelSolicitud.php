@@ -25,6 +25,17 @@
     		return $sql;
 
      }
+
+	 public function verIdPublicacion($id){
+		$sql = $this->conexion->prepare("select p.id_publicacion
+										from publicacion as p inner join solicitud as s ON p.id_publicacion = s.id_publicacion
+										where s.id_solicitud = :id");
+		$sql->bindParam(':id', $id, PDO::PARAM_INT);
+		$sql->execute();
+		$res = $sql->fetchAll(PDO::FETCH_ASSOC);
+		return $res[0]['id_publicacion'];
+		 
+	 }
      
      public function verSolicitudesRealizadas($id){
 		$sql = $this->conexion->prepare("SELECT solicitud.*, publicacion.encabezado 
@@ -37,14 +48,25 @@
 		return $res;
      }
 	 
-	 public function verSolicitudesPendientes($id){
-		$sql = $this->conexion->prepare("
-					SELECT p.id_publicacion, p.encabezado, s.id_solicitud, s.ocupantes, s.fec_inicio, s.fec_fin,
-							s.texto, s.fec_solicitud, s.estado
-					FROM solicitud AS s INNER JOIN publicacion AS p ON (s.id_publicacion = p.id_publicacion)
-					WHERE  (p.usuario = :id) AND (s.estado = 'E')
-					ORDER BY s.fec_solicitud");
-		$sql->bindParam(':id', $id, PDO::PARAM_INT);
+	 public function verSolicitudesPendientes($id, $publi){
+		 if ($publi == 0){
+			$sql = $this->conexion->prepare("
+						SELECT p.id_publicacion, p.encabezado, s.id_solicitud, s.ocupantes, s.fec_inicio, s.fec_fin,
+								s.texto, s.fec_solicitud, s.estado
+						FROM solicitud AS s INNER JOIN publicacion AS p ON (s.id_publicacion = p.id_publicacion)
+						WHERE  (p.usuario = :id) AND (s.estado = 'E')
+						ORDER BY s.fec_solicitud");
+			$sql->bindParam(':id', $id, PDO::PARAM_INT);
+		 } else {
+			$sql = $this->conexion->prepare("
+						SELECT p.id_publicacion, p.encabezado, s.id_solicitud, s.ocupantes, s.fec_inicio, s.fec_fin,
+								s.texto, s.fec_solicitud, s.estado
+						FROM solicitud AS s INNER JOIN publicacion AS p ON (s.id_publicacion = p.id_publicacion)
+						WHERE  (p.usuario = :id) AND (s.estado = 'E') AND (p.id_publicacion = :idP)
+						ORDER BY s.fec_solicitud");
+			$sql->bindParam(':id', $id, PDO::PARAM_INT);
+			$sql->bindParam(':idP', $publi, PDO::PARAM_INT);
+		 }
 		$sql->execute();
 		$res = $sql->fetchAll(PDO::FETCH_ASSOC);
 		return $res;

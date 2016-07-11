@@ -367,7 +367,7 @@ require_once __DIR__ . '/Controller.php';
 	public function solicitudesPendientes(){
 		$this->revisarMensajes();
 		if($this->haySesion()){
-			$params = $this->mSolic->verSolicitudesPendientes($_SESSION['USUARIO']['id']);
+			$params = $this->mSolic->verSolicitudesPendientes($_SESSION['USUARIO']['id'], 0);
 			$detalle = 0;
 			if (isset($_GET['id'])) {
 				$id = $_GET['id'];
@@ -415,7 +415,8 @@ require_once __DIR__ . '/Controller.php';
 	public function aceptarSolicitud(){
 		if (isset($_GET['id']) && $this->haySesion()){
 			$id = $_GET['id'];
-			$miLista = $this->mSolic->verSolicitudesPendientes($_SESSION['USUARIO']['id']);
+			$idPubli = $this->mSolic->verIdPublicacion($id);
+			$miLista = $this->mSolic->verSolicitudesPendientes($_SESSION['USUARIO']['id'], $idPubli);
 			$key = array_search($id, array_column($miLista, 'id_solicitud'));
 // verificamos que el usuario actual sea dueño de la publicacion a la que pertenece la solicitud
 			if ($key > -1){
@@ -448,7 +449,8 @@ require_once __DIR__ . '/Controller.php';
 	public function rechazarSolicitud(){
 		if (isset($_GET['id']) && $this->haySesion()){
 			$id = $_GET['id'];
-			$miLista = $this->mSolic->verSolicitudesPendientes($_SESSION['USUARIO']['id']);
+			$idPubli = $this->mSolic->verIdPublicacion($id);
+			$miLista = $this->mSolic->verSolicitudesPendientes($_SESSION['USUARIO']['id'], $idPubli);
 			$key = array_search($id, array_column($miLista, 'id_solicitud'));
 // verificamos que el usuario actual sea dueño de la publicacion a la que pertenece la solicitud
 			if ($key > -1){
