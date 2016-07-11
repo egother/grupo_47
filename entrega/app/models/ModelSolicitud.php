@@ -40,7 +40,7 @@
      public function verSolicitudesRealizadas($id){
 		$sql = $this->conexion->prepare("SELECT solicitud.*, publicacion.encabezado 
 										  FROM solicitud INNER JOIN publicacion ON (solicitud.id_publicacion = publicacion.id_publicacion)
-										  WHERE (solicitud.id_usuario = :id) AND (solicitud.estado = 'E')
+										  WHERE (solicitud.id_usuario = :id) AND NOT ((solicitud.estado = 'B') OR (solicitud.estado = 'A'))
 										  ORDER BY fec_solicitud DESC");
 		$sql->bindParam(':id', $id, PDO::PARAM_INT);
 		$sql->execute();
@@ -54,7 +54,7 @@
 						SELECT p.id_publicacion, p.encabezado, s.id_solicitud, s.ocupantes, s.fec_inicio, s.fec_fin,
 								s.texto, s.fec_solicitud, s.estado
 						FROM solicitud AS s INNER JOIN publicacion AS p ON (s.id_publicacion = p.id_publicacion)
-						WHERE  (p.usuario = :id) AND (s.estado = 'E')
+						WHERE  (p.usuario = :id) AND ((s.estado = 'E') OR (s.estado = 'P'))
 						ORDER BY s.fec_solicitud");
 			$sql->bindParam(':id', $id, PDO::PARAM_INT);
 		 } else {
@@ -62,7 +62,7 @@
 						SELECT p.id_publicacion, p.encabezado, s.id_solicitud, s.ocupantes, s.fec_inicio, s.fec_fin,
 								s.texto, s.fec_solicitud, s.estado
 						FROM solicitud AS s INNER JOIN publicacion AS p ON (s.id_publicacion = p.id_publicacion)
-						WHERE  (p.usuario = :id) AND (s.estado = 'E') AND (p.id_publicacion = :idP)
+						WHERE  (p.usuario = :id) AND ((s.estado = 'E') OR (s.estado = 'P')) AND (p.id_publicacion = :idP)
 						ORDER BY s.fec_solicitud");
 			$sql->bindParam(':id', $id, PDO::PARAM_INT);
 			$sql->bindParam(':idP', $publi, PDO::PARAM_INT);
@@ -137,6 +137,16 @@
 		$res = $sql->fetchAll(PDO::FETCH_ASSOC);
 		return $res;
      }
+	 
+	 public static function revisarSolicitudes($id){
+		 $cn= New ModelSolicitud(Config::$mvc_bd_nombre, Config::$mvc_bd_usuario, Config::$mvc_bd_clave, Config::$mvc_bd_hostname);
+		 $sql = $cn->conexion->prepare("
+				UPDATE `solicitud`
+				SET `estado`='P'
+				WHERE DATE(NOW()) >= DATE(`fec_inicio`)
+			");
+		 $sql->execute();
+	 }
 	 
 }
 

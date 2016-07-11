@@ -115,7 +115,7 @@
     	 $sql = $this->conexion->prepare("SELECT publicacion.*, tipo_hospedaje.tipo AS nombre_tipo
 										  FROM publicacion INNER JOIN tipo_hospedaje ON (publicacion.tipo = tipo_hospedaje.id_tipo)
     	 								  WHERE (usuario = :id)
-    	 								  ORDER BY fecha_publi DESC");
+    	 								  ORDER BY publicacion.estado, fecha_publi DESC");
     	 $sql->bindParam(':id', $id, PDO::PARAM_INT);
     	 $sql->execute();
          $listado = $sql->fetchAll(PDO::FETCH_ASSOC);

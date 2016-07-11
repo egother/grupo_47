@@ -4,6 +4,7 @@ session_start();
 require_once './Config.php';
 require_once './models/Model.php';
 require_once './models/ModelLogin.php';
+require_once './models/ModelSolicitud.php';
 require_once './controllers/ControllerLogin.php';
 
 
@@ -24,6 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 		$_SESSION['USUARIO']['nombre'] = Controller::xss($intentoLogin[0]['nombre']);
 		$_SESSION['USUARIO']['nombreRol'] = Controller::xss($intentoLogin[0]['nombreRol']);
 		$_SESSION['USUARIO']['id'] = Controller::xss($intentoLogin[0]['id']);
+		ModelSolicitud::revisarSolicitudes($_SESSION['USUARIO']['id']);
 		header('Location: ../web/backend.php');
 	
 	}

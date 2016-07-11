@@ -21,7 +21,11 @@
 				<td style="width:15px">Ver</td>
 			</tr>
 	{% for sol in params %}
+		{% if (sol.estado=='E') %}
 			<tr> 
+		{% elseif (sol.estado=='R') or (sol.estado=='P') %}
+			<tr style="background-color:#f99">
+		{% endif %}
 				<td style="width:15px">{{sol.id_solicitud}}</td>
 				<td>
 					<a href="./backend.php?accion=verPublicacion&amp;id={{sol.id_publicacion}}">{{sol.encabezado}}</a>
@@ -44,7 +48,11 @@
 	<br>
 		<div style="border:1px solid black; padding:20px; background-color:#ddd;">
 				<h3>
+		{% if (detalle.estado=='E') %}
 					Detalle de la solicitud #{{detalle.id_solicitud}}:
+		{% elseif (detalle.estado=='R') %}
+					Detalle de la solicitud #{{detalle.id_solicitud}} ----- ### RECHAZADA ###:
+		{% endif %}
 				</h3>
 				<p>Fecha Solicitud: {{detalle.fec_solicitud|date("d-m-Y")}}</p><p>
 				<p>Desde: {{detalle.fec_inicio|date("d-m-Y")}}</p>

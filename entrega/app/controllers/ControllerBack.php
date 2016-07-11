@@ -236,17 +236,18 @@ require_once __DIR__ . '/Controller.php';
 				$ciudad = $this->xss($_POST['ciudad']);
 				$foto = $_FILES['imagen'];
 				$usuario = $_SESSION['USUARIO']['id'];
-				if ($_POST['habilitado'] = 'on'){
-					$habilitado = $_POST['A'];
-				} elseif ($_POST['habilitado'] = 'off'){
-					$habilitado = $_POST['B'];
+				if (! isset($_POST['habilitado'])) {
+					$habilitado = 'A';
 				}
-				$res = $this->mPubli->modificar($id, $foto, $tituloProp, $cantidad, $descripcion, $encabezado, $direccion, $usuario, $tipo, $provincia, $ciudad, $habilitado);
+				elseif ($_POST['habilitado'] = 'on'){
+					$habilitado = 'B';
+				}
+				$res = $this->mPubli->modificar($id, $foto, $tituloProp, $cantidad, $descripcion,
+							$encabezado, $direccion, $usuario, $tipo, $provincia, $ciudad, $habilitado);
 				$this->setMensaje("La modificación fue realizada con éxito", 0);
 				header('Location: ./backend.php?accion=misPublicaciones');
 			} else {
 				$params = $this->mPubli->verPublicacion($id);
-//				var_dump($params); exit;
 				$tipos = $this->mTipos->listar();
 				$provincias = $this->mLugares->listarProvincias();
 				$ciudades = $this->mLugares->departamentos($params['provincia']);
@@ -524,7 +525,7 @@ require_once __DIR__ . '/Controller.php';
 				if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 					$this->mSolic->descartar_solo($solicitudes);
 					$this->mPubli->borrar($miLista[$key]);
-					$this->setMensaje("La Publicación se ha eliminado correctamente.", 0);
+					$this->setMensaje("La Publicación se ha deshabilitado correctamente.", 0);
 				} else {
 					echo $this->twig->render('confirmarPublicacion.twig.html', array('log' => '1',
 																				   'id' => $id,

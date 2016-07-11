@@ -22,7 +22,11 @@
 				<td style="width:15px">Ver</td>
 			</tr>
 	{% for sol in params %}
+		{% if (sol.estado=='E') %}
 			<tr> 
+		{% elseif (sol.estado=='P') %}
+			<tr style="background-color:#f99">
+		{% endif %}
 				<td style="width:15px">{{sol.id_solicitud}}</td>
 				<td>
 					<a href="./backend.php?accion=verPublicacion&amp;id={{sol.id_publicacion}}">{{sol.encabezado}}</a>
@@ -45,7 +49,11 @@
 	<br>
 		<div style="border:1px solid black; padding:20px; background-color:#ddd;">
 				<h3>
+		{% if (detalle.estado=='E') %}
 					Detalle de la solicitud #{{detalle.id_solicitud}}:
+		{% elseif (detalle.estado=='P') %}
+					Detalle de la solicitud #{{detalle.id_solicitud}}: ### FUERA DE TIEMPO ###
+		{% endif %}
 				</h3>
 				<p>Fecha Solicitud: {{detalle.fec_solicitud|date("d-m-Y")}}</p><p>
 				<p>Desde: {{detalle.fec_inicio|date("d-m-Y")}}</p>
@@ -56,9 +64,11 @@
 			<div align="right">
 					
 					<h3>
+		{% if (detalle.estado=='E') %}
 						<a href='./backend.php?accion=aceptarSolicitud&amp;id={{detalle.id_solicitud}}'>
 							<span style="background: #9f9; padding:5px; border: 2px solid black;">Aceptar Solicitud</span>
 						</a>
+		{% endif %}
 						<a href='./backend.php?accion=rechazarSolicitud&amp;id={{detalle.id_solicitud}}'>
 							<span style="background: #f99; padding:5px; border: 2px solid black;">Rechazar Solicitud</span>
 						</a>

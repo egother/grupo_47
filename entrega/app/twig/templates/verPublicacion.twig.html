@@ -14,6 +14,7 @@
 			<div align="right">
 				<h3>
 {% if (source == 0) %}
+	{% if (params.estado=="A") %}
 						<div id="DIV_1">
 							<form class="comentario"action="./backend.php?accion=agregarComentario" method="post" id="FORM_2">
 								<div id="DIV_5">
@@ -46,9 +47,12 @@
 							{% endfor %}
 							{% endif %}
 						</div>
-						<a href='./backend.php?accion=verPublicacion&amp;id={{params.id_publicacion}}&amp;func=solicitar#abajo'>
-							<span style="background: #9f9; padding:5px; border: 2px solid black;">Solicitar hospedaje</span>
-						</a>
+							<a href='./backend.php?accion=verPublicacion&amp;id={{params.id_publicacion}}&amp;func=solicitar#abajo'>
+								<span style="background: #9f9; padding:5px; border: 2px solid black;">Solicitar hospedaje</span>
+							</a>
+	{% elseif (params.estado=="B") %}
+								<span style="background: #555; padding:5px; border: 2px solid black;">Solicitar hospedaje</span>
+	{% endif %}
 {% elseif (source == 1) %}
 						{% if comentarios | length>0 %}
 							{% for comentario in comentarios %}
@@ -72,9 +76,11 @@
 						<a href='./backend.php?accion=modificarPublicacion&amp;id={{params.id_publicacion}}&amp;func=modificar'>
 							<span style="background: #9f9; padding:5px; border: 2px solid black;">Modificar</span>
 						</a>
+	{% if (params.estado=="A") %}
 						<a href='./backend.php?accion=eliminarPublicacion&amp;id={{params.id_publicacion}}'>
-							<span style="background: #f99; padding:5px; border: 2px solid black;">Eliminar</span>
+							<span style="background: #f99; padding:5px; border: 2px solid black;">Deshabilitar</span>
 						</a>
+	{% endif %}
 {% endif %}
 				</h3>
 			</div>

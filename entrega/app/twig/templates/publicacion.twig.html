@@ -75,10 +75,12 @@
 			<input type="file" name="imagen" />
 {% endif %}
 		</div>
+{% if (params.estado=='B') %}
 		<div>
-			<label> Habilitado </label>
-			<input type="checkbox" id="habilitado" name="habilitado" style="width:25px" />
+			<label> Deshabilitado </label>
+			<input type="checkbox" id="habilitado" name="habilitado" style="width:25px" checked/>
 		</div>
+{% endif %}
 		
 		<br>
 {% if (form=="A") %}
@@ -89,11 +91,6 @@
 		<button type="button" onclick="window.location.href='./backend.php?accion=inicio'">Cancelar</button>
 	</form>
 <br>
-
-<!--
-La accion "departamento" devuelve una consulta de SQL con las ciudades pertenecientes a una provincia y con los siguientes encabezados:
-{ id_provincia, nombre_provincia, id_departamento, nombre_departamento, id_ciudad, nombre_ciudad }
--->
 
 <script type="text/javascript">
 	$(function(){

@@ -7,8 +7,13 @@
 						<h2 align="center">Mis Publicaciones</h2>
             {% for publicacion in params %}
 			<a href="./backend.php?accion=verPublicacion&amp;id={{publicacion.id_publicacion}}&amp;source=1">
+	{% if (publicacion.estado=="A") %}
         			<div>
         				<h3>{{publicacion.encabezado}}</h3>
+	{% elseif (publicacion.estado=="B") %}
+        			<div style="background-color:#ccc">
+        				<h3>{{publicacion.encabezado}} - <span style="color:#f55">[ Publicación Deshabilitada ]</span></h3>
+	{% endif %}
         				<p>
         					{{publicacion.descripcion}}
         				</p>
