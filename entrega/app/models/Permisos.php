@@ -35,7 +35,7 @@ class Permisos {
 							 'aceptarSolicitud' => '0', 'aceptarSolicitud' => '0',
 							 'rechazarSolicitud' => '0', 'borrarSolicitud' => '0', 'eliminarPublicacion' => '0',
 							 'agregarComentario' => '0', 'responderComentario' => '0', 'responder' => '0',
-               'misPreguntas' => '0'
+               'misPreguntas' => '0', 'preguntasAresponder' => '0'
 							)
 	 );
 

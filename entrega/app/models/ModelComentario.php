@@ -61,4 +61,12 @@
     $comentarios = $sql->fetchAll(PDO::FETCH_ASSOC);
     return $comentarios;
   }
+  public function preguntasAresponder($idUsuario){
+    $sql = $this->conexion->prepare("SELECT * FROM `comentario` AS com INNER JOIN  `publicacion`As p
+                                    ON (com.id_publicacion=p.id_publicacion) WHERE id_usuario = :id");
+    $sql->bindParam(':id', $idUsuario, PDO::PARAM_INT);
+    $sql->execute();
+    $comentarios = $sql->fetchAll(PDO::FETCH_ASSOC);
+    return $comentarios;
+  }
  }

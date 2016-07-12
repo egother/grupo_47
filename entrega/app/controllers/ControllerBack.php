@@ -311,6 +311,17 @@ require_once __DIR__ . '/Controller.php';
 		}
   }
 
+  public function preguntasAresponder(){
+      $this->revisarMensajes();
+  		if($this->haySesion()){
+  			$comentarios = $this->mComent->preguntasAresponder($_SESSION['USUARIO']['id']);
+  			echo $this->twig->render('misPreguntasAresponder.twig.html', array('log' => '1',
+  																		 'comentarios' => $comentarios,
+  																		 'mensaje' => $this->msj,
+  																		 'error' => $this->err));
+    }
+  }
+
   public function verPublicacion(){
 		$this->revisarMensajes();
 		$func="";

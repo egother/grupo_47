@@ -55,6 +55,7 @@ $map = array(
    'responderComentario'=> array('controller'=>'ControllerBack', 'accion'=>'responderComentario'),
    'responder'=> array('controller'=>'ControllerBack', 'accion'=>'responder'),
    'misPreguntas'=> array('controller'=>'ControllerBack', 'accion'=>'misPreguntas'),
+   'preguntasAresponder'=> array('controller'=>'ControllerBack', 'accion'=>'preguntasAresponder'),
 
 
      'users' => array('controller' =>'ControllerBack', 'accion' =>'users'),
