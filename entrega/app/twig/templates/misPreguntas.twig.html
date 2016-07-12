@@ -1,0 +1,28 @@
+{% extends "layoutBackUser.twig.html" %}
+
+
+{% block contenido %}
+{% if comentarios | length>0 %}
+	{% for comentario in comentarios %}
+		{%if comentario.respuesta | length==0 %}
+		<h4>Pregunta sin respuesta:</h4>
+		<div id="comentario"align="left">
+			<a href="./backend.php?accion=verPublicacion&amp;id={{comentario.id_publicacion}}">
+			<div id="pregunta">-{{comentario.pregunta}}-</div><div id="f-pregunta">{{comentario.fec_preg|date("d-m-Y")}}</div>
+			</a>
+		</div>
+		{% else %}
+			<h4>Pregunta respondida:</h4>
+			<div id="comentario"align="left">
+				<a href="./backend.php?accion=verPublicacion&amp;id={{comentario.id_publicacion}}">
+				<div id="pregunta">-{{comentario.pregunta}}-</div><div id="f-pregunta">{{comentario.fec_preg|date("d-m-Y")}}</div>
+				<br>
+				<div id="respuesta">-{{comentario.respuesta}}-</div><div id="f-respuesta">{{comentario.fec_resp|date("d-m-Y")}}</div>
+			</a>
+			</div>
+		{% endif %}
+
+	{% endfor %}
+{% endif %}
+
+{% endblock %}

@@ -20,13 +20,14 @@
 				}
 				return false;
 	}
-  public function agregarComentario($comentario, $idPublicacion){
+  public function agregarComentario($comentario, $idPublicacion, $usuario){
 
-      $sql = $this->conexion->prepare("INSERT INTO `comentario` (`pregunta`, `fec_preg`, `id_publicacion`)
-									   VALUES (:c , NOW(), :idP )");
+      $sql = $this->conexion->prepare("INSERT INTO `comentario` (`pregunta`, `fec_preg`, `id_publicacion`, `id_usuario`)
+									   VALUES (:c , NOW(), :idP, :idU )");
 
       $sql->bindParam(':c', $comentario, PDO::PARAM_STR);
       $sql->bindParam(':idP', $idPublicacion, PDO::PARAM_INT);
+      $sql->bindParam(':idU', $usuario, PDO::PARAM_INT);
       $sql->execute();
   }
   public function responder($idComentario, $respuesta){
@@ -51,5 +52,13 @@
     $sql->execute();
     $comentario = $sql->fetchAll(PDO::FETCH_ASSOC);
     return $comentario[0];
+  }
+
+  public function comentariosDeUsuario($idUsuario){
+    $sql = $this->conexion->prepare("SELECT * FROM `comentario` WHERE `id_usuario`= :id");
+    $sql->bindParam(':id', $idUsuario, PDO::PARAM_INT);
+    $sql->execute();
+    $comentarios = $sql->fetchAll(PDO::FETCH_ASSOC);
+    return $comentarios;
   }
  }

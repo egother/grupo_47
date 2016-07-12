@@ -26,6 +26,7 @@
 								<div id="DIV_12">
 									<div id="DIV_13">
 										<input type="hidden" value="{{params.id_publicacion}}" name="idPublicacion"/>
+										<input type="hidden" value="{{usuarioActual}}" name="usuarioActual"/>
 										<input type="submit" value="Preguntar" name="preguntar" /> No ingreses datos de contacto o uses lenguaje vulgar.
 									</div>
 								</div>
@@ -37,10 +38,10 @@
 							{% if comentarios | length>0 %}
 							{% for comentario in comentarios %}
 							<div id="comentario">
-								<div id="pregunta">{{comentario.pregunta}}-</div><div id="f-pregunta">{{comentario.fec_preg|date("d-m-Y")}}</div>
+								<div id="pregunta">-{{comentario.pregunta}}-</div><div id="f-pregunta">{{comentario.fec_preg|date("d-m-Y")}}</div>
 								<br>
 								{%if comentario.respuesta | length>0 %}
-								<div id="respuesta">{{comentario.respuesta}}-</div><div id="f-respuesta">{{comentario.fec_resp|date("d-m-Y")}}</div>
+								<div id="respuesta">-{{comentario.respuesta}}-</div><div id="f-respuesta">{{comentario.fec_resp|date("d-m-Y")}}</div>
 								<br>
 								{% endif %}
 							</div>
@@ -59,14 +60,14 @@
 								{%if comentario.respuesta | length==0 %}
 								<div id="comentario"align="left">
 									<a href="./backend.php?accion=responderComentario&amp;id={{comentario.id_comentario}}">
-									<div id="pregunta">{{comentario.pregunta}}-</div><div id="f-pregunta">{{comentario.fec_preg|date("d-m-Y")}}</div>
+									<div id="pregunta">-{{comentario.pregunta}}-</div><div id="f-pregunta">{{comentario.fec_preg|date("d-m-Y")}}</div>
 									</a>
 								</div>
 								{% else %}
 									<div id="comentario"align="left">
-										<div id="pregunta">{{comentario.pregunta}}-</div><div id="f-pregunta">{{comentario.fec_preg|date("d-m-Y")}}</div>
+										<div id="pregunta">-{{comentario.pregunta}}-</div><div id="f-pregunta">{{comentario.fec_preg|date("d-m-Y")}}</div>
 										<br>
-										<div id="respuesta">{{comentario.respuesta}}-</div><div id="f-respuesta">{{comentario.fec_resp|date("d-m-Y")}}</div>
+										<div id="respuesta">-{{comentario.respuesta}}-</div><div id="f-respuesta">{{comentario.fec_resp|date("d-m-Y")}}</div>
 									</div>
 								{% endif %}
 

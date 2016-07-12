@@ -273,7 +273,8 @@ require_once __DIR__ . '/Controller.php';
   public function agregarComentario(){
     $id=$_POST['idPublicacion'];
     $pregunta=$_POST['pregunta'];
-    $this->mComent->agregarComentario($pregunta, $id);
+    $usuario=$_POST['usuarioActual'];
+    $this->mComent->agregarComentario($pregunta, $id, $usuario);
     $this->setMensaje("La Pregunta fue enviada", 0);
     header('Location: ./backend.php?accion=verPublicacion&id='.$id);
   }
@@ -299,6 +300,17 @@ require_once __DIR__ . '/Controller.php';
     }
   }
 
+  public function misPreguntas(){
+    $this->revisarMensajes();
+		if($this->haySesion()){
+			$comentarios = $this->mComent->comentariosDeUsuario($_SESSION['USUARIO']['id']);
+			echo $this->twig->render('misPreguntas.twig.html', array('log' => '1',
+																		 'comentarios' => $comentarios,
+																		 'mensaje' => $this->msj,
+																		 'error' => $this->err));
+		}
+  }
+
   public function verPublicacion(){
 		$this->revisarMensajes();
 		$func="";
@@ -306,6 +318,7 @@ require_once __DIR__ . '/Controller.php';
 		if (isset($_GET['id'])){
 			$id = $this->xss($_GET['id']);
 			$params = $this->mPubli->verPublicacion($id);
+      $usuarioActual = $_SESSION['USUARIO']['id'];
 			if (!($params)==null){
 				// $hoy se pasa por parametro para delimitar el campo de fecha "desde"
 				$hoy = new DateTime('tomorrow');
@@ -353,7 +366,8 @@ require_once __DIR__ . '/Controller.php';
 																   'hoy' => $hoy,
 																   'func' => $func,
 																   'source' => $source,
-                                   'comentarios' => $comentarios));
+                                   'comentarios' => $comentarios,
+                                    'usuarioActual' => $usuarioActual));
 	}
 
 	public function misPublicaciones(){
