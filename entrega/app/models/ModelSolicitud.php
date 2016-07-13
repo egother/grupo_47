@@ -25,7 +25,15 @@
     		return $sql;
 
      }
-
+	
+	public function verIdSolicitud($id){
+		 $sql = $this->conexion->prepare("SELECT id_solicitud FROM solicitud WHERE id_usuario = :id");
+		 $sql->bindParam(':id', $id, PDO::PARAM_INT);
+		 $sql->execute();
+		 $res = $sql->fetchAll(PDO::FETCH_ASSOC);
+		 return $res;
+	 }
+	
 	 public function verIdPublicacion($id){
 		$sql = $this->conexion->prepare("select p.id_publicacion
 										from publicacion as p inner join solicitud as s ON p.id_publicacion = s.id_publicacion

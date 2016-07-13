@@ -126,6 +126,16 @@
          }
          return $publicaciones;
    }
+   
+   public function verIdMisPublicaciones($id){
+	    
+		$sql = $this->conexion->prepare("SELECT id_publicacion FROM publicacion WHERE usuario = :id");
+		$sql->bindParam(':id', $id, PDO::PARAM_INT);
+    	$sql->execute();
+		$publi = $sql->fetchAll(PDO::FETCH_ASSOC);
+		return $publi;
+	   
+   }
 
    public function verificar($id_publi, $id_user){
    		return true;

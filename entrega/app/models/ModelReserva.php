@@ -38,6 +38,55 @@
 		$res = $sql->fetchAll(PDO::FETCH_ASSOC);
 		return $res;
 	}
+	
+	public function verReservasOtorgadas($param){
+		
+		$res = array();
+		$ind = 0;
+		foreach ($param as $key => $id) {
+			$pub = $id['id_publicacion'];
+			
+			$sql = $this->conexion->prepare("SELECT * FROM reserva WHERE id_publicacion = :pub ");
+			$sql->bindParam(':pub', $pub, PDO::PARAM_INT);
+			$sql->execute();
+			$aux = $sql->fetchAll(PDO::FETCH_ASSOC);
+			if($aux != NULL){
+				
+				$res[$ind] = $aux;
+				$ind = $ind+1;
+				
+				
+			}
+		}
+		
+		return $res;
+		
+     }
+	 
+	 public function verReservasAceptadas($param){
+		
+		$res = array();
+		$ind = 0;
+		foreach ($param as $key => $id) {
+			$pub = $id['id_solicitud'];
+			
+			$sql = $this->conexion->prepare("SELECT * FROM reserva WHERE id_solicitud = :pub ");
+			$sql->bindParam(':pub', $pub, PDO::PARAM_INT);
+			$sql->execute();
+			$aux = $sql->fetchAll(PDO::FETCH_ASSOC);
+			if($aux != NULL){
+				
+				$res[$ind] = $aux;
+				$ind = $ind+1;
+				
+				
+			}
+		}
+		
+		return $res;
+		
+     }
+
  }
 	
 
