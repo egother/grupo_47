@@ -151,7 +151,7 @@
 		 $sql = $cn->conexion->prepare("
 				UPDATE `solicitud`
 				SET `estado`='P'
-				WHERE DATE(NOW()) >= DATE(`fec_inicio`)
+				WHERE (DATE(NOW()) >= DATE(`fec_inicio`)) AND (`estado` = 'E')
 			");
 		 $sql->execute();
 	 }
