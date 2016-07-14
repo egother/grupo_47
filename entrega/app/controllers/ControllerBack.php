@@ -591,11 +591,31 @@ require_once __DIR__ . '/Controller.php';
 	}
 
 	public function reservasAceptadas(){
-		echo "muestra las reservas que me aceptaron, ya puedo viajar";
+ 		$this->revisarMensajes();
+		if($this->haySesion()){
+			$aux = $this->mSolic->verIdSolicitud($_SESSION['USUARIO']['id']);
+			$params = $this->mReser->verReservasAceptadas($aux);		
+			
+			echo $this->twig->render('listadoReservasAceptadas.twig.html', array('log' => '1',
+																			 'params' => $params));
+		
+		} 
 	}
 
 	public function reservasOtorgadas(){
-		echo "muestra las reservas que otorgué, voy a tener huéspedes";
+ 		$this->revisarMensajes();
+		if($this->haySesion()){
+			$aux = $this->mPubli->verIdMisPublicaciones($_SESSION['USUARIO']['id']);
+			$params = $this->mReser->verReservasOtorgadas($aux);
+			
+			echo $this->twig->render('listadoReservasOtorgadas.twig.html', array('log' => '1',
+																			 'params' => $params));
+			
+		}
+		 else {
+			$this->setMensaje("Usted no ha iniciado sesión.", 1);
+			header('Location: ./index.php');
+		} 
 	}
 
  }
