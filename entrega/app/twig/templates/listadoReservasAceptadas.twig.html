@@ -7,7 +7,9 @@
 
 <br>
 <h2>Mis Reservas Aceptadas</h2>
+<h3>A continuación se detellan las reservas donde hospedarme</h3>
 <br>
+
 {% if params | length>0 %}
 		<table class="table table-striped" >
 		<tbody>
@@ -16,16 +18,22 @@
 				<td>Fecha Inicio</td>
 				<td>Fecha Fin</td>
 				<td>Ocupantes</td>
+				<td>Publicación</td>
+				<td>Couch</td>
 				
 				
 				
 			</tr>
 	{% for res in params %}
 			<tr> 
-				<td>{{res.0.id_reserva}}</td>
-				<td>{{res.0.f_inicio|date("d-m-Y")}}</td>
-				<td>{{res.0.f_fin|date("d-m-Y") }}</td>
-				<td>{{res.0.ocupantes}}</td>
+				<td>{{res.id_reserva}}</td>
+				<td>{{res.f_inicio|date("d-m-Y")}}</td>
+				<td>{{res.f_fin|date("d-m-Y") }}</td>
+				<td>{{res.ocupantes}}</td>
+				<td>
+					<a href="./backend.php?accion=verPublicacion&amp;id={{res.id_publicacion}}">{{res.encabezado}}</a>
+				</td>
+				<td>{{res.nombre}}</td>
 				
 			</tr>
 	{% endfor %}

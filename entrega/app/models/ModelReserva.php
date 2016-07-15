@@ -39,49 +39,35 @@
 		return $res;
 	}
 	
-	public function verReservasOtorgadas($param){
+	public function verReservasAceptadas($pub){
 		
-		$res = array();
-		$ind = 0;
-		foreach ($param as $key => $id) {
-			$pub = $id['id_publicacion'];
-			
-			$sql = $this->conexion->prepare("SELECT * FROM reserva WHERE id_publicacion = :pub ");
+		$sql = $this->conexion->prepare("SELECT reserva.id_reserva, reserva.f_inicio, reserva.f_fin, reserva.ocupantes, publicacion.encabezado, publicacion.id_publicacion, shadow.nombre
+											FROM reserva INNER JOIN publicacion ON reserva.id_publicacion = publicacion.id_publicacion
+											INNER JOIN solicitud ON reserva.id_solicitud = solicitud.id_solicitud
+											INNER JOIN shadow ON publicacion.usuario = shadow.id
+											WHERE solicitud.id_usuario = :pub");
 			$sql->bindParam(':pub', $pub, PDO::PARAM_INT);
 			$sql->execute();
-			$aux = $sql->fetchAll(PDO::FETCH_ASSOC);
-			if($aux != NULL){
-				
-				$res[$ind] = $aux;
-				$ind = $ind+1;
-				
-				
-			}
-		}
+			$res = $sql->fetchAll(PDO::FETCH_ASSOC);
+			
 		
 		return $res;
 		
+		
      }
 	 
-	 public function verReservasAceptadas($param){
+	 public function verReservasOtorgadas($pub){
 		
-		$res = array();
-		$ind = 0;
-		foreach ($param as $key => $id) {
-			$pub = $id['id_solicitud'];
-			
-			$sql = $this->conexion->prepare("SELECT * FROM reserva WHERE id_solicitud = :pub ");
+				
+			$sql = $this->conexion->prepare("SELECT reserva.id_reserva, reserva.f_inicio, reserva.f_fin, reserva.ocupantes, publicacion.encabezado, publicacion.id_publicacion, shadow.nombre
+											FROM reserva INNER JOIN publicacion ON reserva.id_publicacion = publicacion.id_publicacion
+											INNER JOIN solicitud ON reserva.id_solicitud = solicitud.id_solicitud
+											INNER JOIN shadow ON solicitud.id_usuario = shadow.id
+											WHERE publicacion.usuario = :pub");
 			$sql->bindParam(':pub', $pub, PDO::PARAM_INT);
 			$sql->execute();
-			$aux = $sql->fetchAll(PDO::FETCH_ASSOC);
-			if($aux != NULL){
-				
-				$res[$ind] = $aux;
-				$ind = $ind+1;
-				
-				
-			}
-		}
+			$res = $sql->fetchAll(PDO::FETCH_ASSOC);
+			
 		
 		return $res;
 		
