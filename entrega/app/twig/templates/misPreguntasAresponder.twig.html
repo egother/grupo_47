@@ -6,6 +6,11 @@
 		{% for comentario in comentarios %}
 			{%if comentario.respuesta | length==0 %}
 			<h4>Pregunta sin respuesta:</h4>
+			<div align="left">
+				<a href="./backend.php?accion=verPublicacion&amp;id={{comentario.id_publicacion}}">
+					<h2>{{comentario.encabezado}}:</h2>
+				</a>
+			</div>
 			<div id="comentario"align="left">
 				<a href="./backend.php?accion=responderComentario&amp;id={{comentario.id_comentario}}">
 				<div id="pregunta">-{{comentario.pregunta}}-</div><div id="f-pregunta">{{comentario.fec_preg|date("d-m-Y")}}</div>

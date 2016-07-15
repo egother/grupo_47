@@ -594,12 +594,12 @@ require_once __DIR__ . '/Controller.php';
  		$this->revisarMensajes();
 		if($this->haySesion()){
 			//$aux = $this->mSolic->verIdSolicitud($_SESSION['USUARIO']['id']);
-			$params = $this->mReser->verReservasAceptadas($_SESSION['USUARIO']['id']);		
-			
+			$params = $this->mReser->verReservasAceptadas($_SESSION['USUARIO']['id']);
+
 			echo $this->twig->render('listadoReservasAceptadas.twig.html', array('log' => '1',
 																			 'params' => $params));
-		
-		} 
+
+		}
 	}
 
 	public function reservasOtorgadas(){
@@ -607,15 +607,15 @@ require_once __DIR__ . '/Controller.php';
 		if($this->haySesion()){
 			//$aux = $this->mPubli->verIdMisPublicaciones($_SESSION['USUARIO']['id']);
 			$params = $this->mReser->verReservasOtorgadas($_SESSION['USUARIO']['id']);
-			
+
 			echo $this->twig->render('listadoReservasOtorgadas.twig.html', array('log' => '1',
 																			'params' => $params));
-			
+
 		}
 		 else {
 			$this->setMensaje("Usted no ha iniciado sesión.", 1);
 			header('Location: ./index.php');
-		} 
+		}
 	}
 
  }
