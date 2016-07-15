@@ -165,11 +165,13 @@ require_once __DIR__ . '/ControllerLogin.php';
 		unset($lista[$key]);
 		$seCruzan = array();
 		foreach ($lista as $elem){
-			$d1 = new DateTime($elem['fec_inicio']);
-			$d2 = new DateTime($elem['fec_fin']);
-			$res = ($inicio > $d2) || ($fin < $d1); // si no se cruzan las fechas $res = true
-			if (! $res){ // si no se cruzan la elimino de la lista de acuse de solicitudes con fechas cruzadas
-				array_push($seCruzan, $elem);
+			if (!($elem['estado'] == 'P')){
+				$d1 = new DateTime($elem['fec_inicio']);
+				$d2 = new DateTime($elem['fec_fin']);
+				$res = ($inicio > $d2) || ($fin < $d1); // si no se cruzan las fechas $res = true
+				if (! $res){ // si no se cruzan la elimino de la lista de acuse de solicitudes con fechas cruzadas
+					array_push($seCruzan, $elem);
+				}
 			}
 		}
 		return $seCruzan;
