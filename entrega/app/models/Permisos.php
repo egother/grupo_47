@@ -24,7 +24,7 @@ class Permisos {
 								 'rechazarSolicitud' => '0', 'borrarSolicitud' => '0', 'eliminarPublicacion' => '0',
 								 'borrarTipo' => '0', 'departamentos' => '0',
 								 'agregarComentario' => '0', 'responderComentario' => '0', 'responder' => '0',
-               'misPreguntas' => '0', 'preguntasAresponder' => '0'
+               'misPreguntas' => '0', 'preguntasAresponder' => '0','reservasConcretadas' => '0'
 								 ),
 		'visitante' => array('inicio'=>'0', 'modificarUsuario'=>'0', 'modificarPass'=>'0', 'usuarioPremium'=>'0',
 							 'publicar'=>'0', 'pagar'=>'0', 'verPublicacion' => '0',

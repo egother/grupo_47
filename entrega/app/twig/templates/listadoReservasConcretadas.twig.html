@@ -1,0 +1,52 @@
+{% extends "layoutBackUser.twig.html" %}
+
+{% block contenido %}
+<style>
+	td {width:150px;}
+</style>
+
+<br>
+<h2>Reservas Concretadas hasta la fecha</h2>
+<br>
+{% if params | length>0 %}
+		<table class="table table-striped" >
+		<tbody>
+			<tr class="encabezado">
+				<td>Nro.Reserva</td>
+				<td>Fecha Inicio</td>
+				<td>Fecha Fin</td>
+				<td>Ocupantes</td>
+				<td>Couch</td>
+				<td>Huésped</td>
+				<td>Publicación</td>
+				
+				
+			</tr>
+	{% for res in params %}
+			<tr> 
+				<td>{{res.id_reserva}}</td>
+				<td>{{res.f_inicio|date("d-m-Y")}}</td>
+				<td>{{res.f_fin|date("d-m-Y") }}</td>
+				<td>{{res.ocupantes}}</td>
+				<td>{{res.nombre_publicador}}</td>
+				<td>{{res.nombre_solicitante}}</td>
+				<td>
+					<a href="./backend.php?accion=verPublicacion&amp;id={{res.id_publicacion}}">{{res.id_publicacion}}</a>
+				</td>
+				
+				
+			</tr>
+	{% endfor %}
+		</tbody>
+		</table>
+		
+	
+		
+{% else %}
+						<h3>
+							No hay solicitudes realizadas.
+						</h3>
+
+{% endif %}
+	<a name="abajo"></a>
+{% endblock %}

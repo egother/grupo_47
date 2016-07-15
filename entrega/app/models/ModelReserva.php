@@ -72,6 +72,21 @@
 		return $res;
 		
      }
+	 
+	 public function verReservasConcretadas(){
+		 
+		 $sql = $this->conexion->prepare("SELECT r.id_reserva, r.f_inicio, r.f_fin, r.ocupantes, s1.nombre AS nombre_solicitante, s2.nombre AS nombre_publicador, p.id_publicacion
+										FROM reserva AS r INNER JOIN solicitud AS s on r.id_solicitud = s.id_solicitud
+										INNER JOIN publicacion AS p on p.id_publicacion = r.id_publicacion
+										INNER JOIN shadow AS s1 on s.id_usuario = s1.id
+										INNER JOIN shadow AS s2 on p.usuario = s2.id
+										WHERE DATE(NOW())>DATE(r.f_inicio)"
+										);
+		$sql->execute();
+		$res = $sql->fetchAll(PDO::FETCH_ASSOC);
+		return $res;
+		 
+	 }
 
  }
 	

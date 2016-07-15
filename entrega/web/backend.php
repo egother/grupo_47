@@ -35,6 +35,7 @@ $map = array(
      'misPublicaciones' => array('controller' =>'ControllerBack', 'accion' =>'misPublicaciones'),
      'reservasAceptadas' => array('controller' =>'ControllerBack', 'accion' =>'reservasAceptadas'),
      'reservasOtorgadas' => array('controller' =>'ControllerBack', 'accion' =>'reservasOtorgadas'),
+	 'reservasConcretadas' => array('controller' =>'ControllerBack', 'accion' =>'reservasConcretadas'),
      'solicitudesPendientes' => array('controller' =>'ControllerBack', 'accion' =>'solicitudesPendientes'),
      'solicitudesRealizadas' => array('controller' =>'ControllerBack', 'accion' =>'solicitudesRealizadas'),
 	 'modificarPublicacion' => array('controller' => 'ControllerBack', 'accion' => 'modificarPublicacion'),

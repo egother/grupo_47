@@ -617,6 +617,21 @@ require_once __DIR__ . '/Controller.php';
 			header('Location: ./index.php');
 		} 
 	}
+	
+	public function reservasConcretadas(){
+		
+		$this->revisarMensajes();
+		if($this->haySesion()){
+		$params = $this->mReser->verReservasConcretadas();
+			
+			echo $this->twig->render('listadoReservasConcretadas.twig.html', array('log' => '1',
+																			'params' => $params));
+				
+			
+			
+		}
+		
+	}
 
  }
 
