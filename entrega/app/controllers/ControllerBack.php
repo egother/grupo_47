@@ -329,7 +329,7 @@ require_once __DIR__ . '/Controller.php';
 		if (isset($_GET['id'])){
 			$id = $this->xss($_GET['id']);
 			$params = $this->mPubli->verPublicacion($id);
-      $usuarioActual = $_SESSION['USUARIO']['id'];
+			$usuarioActual = $_SESSION['USUARIO']['id'];
 			if (!($params)==null){
 				// $hoy se pasa por parametro para delimitar el campo de fecha "desde"
 				$hoy = new DateTime('tomorrow');
@@ -352,14 +352,20 @@ require_once __DIR__ . '/Controller.php';
 					$desde = $_POST["desde"];
 					$hasta = $_POST["hasta"];
 					$texto = $_POST["texto"];
-					if (($cant>0) && ($cant<=$params['capacidad']) && ($this->check_dates($desde, $hasta))){
+					$ok = $this->mPubli->estaDisponible($desde, $hasta, $id);
+					if (($ok) && ($cant>0) && ($cant<=$params['capacidad']) && ($this->check_dates($desde, $hasta))){
 						$this->mSolic->agregarSolicitud($id, $_SESSION['USUARIO']['id'], $cant, $desde, $hasta, $texto);
 						$this->setMensaje("La solicitud fue ingresada correctamente.", 0);
 						// se agrego bien, ahora mostramos el listado de las solicitudes que hice yo
 						header('Location: ./backend.php?accion=solicitudesRealizadas');
 					} else {
-						$this->msj = "Los datos ingresados no son correctos.";
-						$this->err = 1;
+						if (!($ok)){
+							$this->msj = "Las fechas seleccionadas no están completamente disponibles.";
+							$this->err = 1;
+						} else {
+							$this->msj = "Los datos ingresados no son correctos.";
+							$this->err = 1;
+						}
 					}
 				}
 			} else {

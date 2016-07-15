@@ -214,4 +214,24 @@
 		$listado = $sql->fetchAll(PDO::FETCH_ASSOC);
 		return $listado;
 	 }
+	 
+	 public function estaDisponible($d, $h, $id){
+		$sql = $this->conexion->prepare("
+				SELECT *
+				FROM `reserva` as r
+				WHERE NOT ((DATE(r.f_inicio) > DATE(:hasta)) OR (DATE(r.f_fin) < DATE(:desde))) 
+					  AND (r.id_publicacion = :id)
+					  AND NOT (r.estado = 'E')
+			");
+		$sql->bindParam(':id', $id, PDO::PARAM_INT);
+		$sql->bindParam(':desde', $d, PDO::PARAM_STR);
+		$sql->bindParam(':hasta', $h, PDO::PARAM_STR);
+		$sql->execute();
+		$listado = $sql->fetchAll(PDO::FETCH_ASSOC);
+		if (count($listado)>0){
+			return false;
+		} else {
+			return true;
+		}
+	 }
  }
