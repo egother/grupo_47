@@ -6,10 +6,8 @@
 </style>
 
 <br>
-<h2>Mis Reservas Aceptadas</h2>
-<h3>A continuación se detellan las reservas donde hospedarme</h3>
+<h2>Reservas Concretadas hasta la fecha</h2>
 <br>
-
 {% if params | length>0 %}
 		<table class="table table-striped" >
 		<tbody>
@@ -18,9 +16,9 @@
 				<td>Fecha Inicio</td>
 				<td>Fecha Fin</td>
 				<td>Ocupantes</td>
-				<td>Publicación</td>
 				<td>Couch</td>
-				
+				<td>Huésped</td>
+				<td>Publicación</td>
 				
 				
 			</tr>
@@ -30,10 +28,12 @@
 				<td>{{res.f_inicio|date("d-m-Y")}}</td>
 				<td>{{res.f_fin|date("d-m-Y") }}</td>
 				<td>{{res.ocupantes}}</td>
+				<td>{{res.nombre_publicador}}</td>
+				<td>{{res.nombre_solicitante}}</td>
 				<td>
-					<a href="./backend.php?accion=verPublicacion&amp;id={{res.id_publicacion}}">{{res.encabezado}}</a>
+					<a href="./backend.php?accion=verPublicacion&amp;id={{res.id_publicacion}}">{{res.id_publicacion}}</a>
 				</td>
-				<td>{{res.nombre}}</td>
+				
 				
 			</tr>
 	{% endfor %}
@@ -44,7 +44,7 @@
 		
 {% else %}
 						<h3>
-							Todavía no hay reservas que te hayan aceptado.
+							No hay solicitudes realizadas.
 						</h3>
 
 {% endif %}
