@@ -1,0 +1,50 @@
+{% extends "layoutBackUser.twig.html" %}
+
+{% block contenido %}
+<style>
+	td {width:150px;}
+</style>
+
+<br>
+<h2>Ganancias</h2>
+<h3>A continuación se detellan los pagos hasta la fecha</h3>
+<br>
+	{% if params | length>0 %}
+		<table class="table table-striped" >
+		<tbody>
+			<tr class="encabezado">
+				<td>Nombre Usuario</td>
+				<td>Id Usuario</td>
+				<td>Fecha Pago</td>
+				<td>Monto</td>
+								
+			</tr>
+		{% for pag in params %}
+			<tr> 
+				<td>{{pag.nombre}}</td>
+				<td>{{pag.id}}</td>
+				<td>{{pag.fecha|date("d-m-Y") }}</td>
+				<td>{{pag.monto}}</td>
+								
+			</tr>
+		{% endfor %}
+			<tr class="encabezado">
+				<td>TOTAL</td>
+				<td></td>
+				<td></td>
+				<td>{{tot}}</td>
+								
+			</tr>
+			</tbody>
+			</table>
+		
+	
+		
+{% else %}
+						<h3>
+							No se registran GANANCIAS hasta la fecha.
+						</h3>
+
+{% endif %}
+	<a name="abajo"></a>
+{% endblock %}

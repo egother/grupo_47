@@ -47,7 +47,7 @@ $map = array(
 	 'borrarSolicitud' => array('controller' => 'ControllerBack', 'accion' => 'borrarSolicitud'),
 
 
-
+	'ganancia' => array('controller' =>'ControllerBack', 'accion' =>'ganancia'),
      'usuarioPremium' => array('controller' =>'ControllerBack', 'accion' =>'usuarioPremium'),
      'pagar' => array('controller' =>'ControllerBack', 'accion' =>'pagar'),
      'agregarPago' => array('controller' =>'ControllerBack', 'accion' =>'agregarPago'),

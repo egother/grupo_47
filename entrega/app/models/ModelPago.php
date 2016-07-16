@@ -17,5 +17,32 @@
        $sql->bindParam(':m', $monto, PDO::PARAM_INT);
        $sql->execute();
      }
+	 
+	 public function verGanancia(){
+		 
+		$sql = $this->conexion->prepare("SELECT pago.fecha, pago.monto, shadow.id, shadow.nombre  
+										FROM pago INNER JOIN shadow ON pago.id_usuario = shadow.id 
+										ORDER BY pago.fecha ASC ");
+		
+		$sql->execute();
+		
+		$res = $sql->fetchAll(PDO::FETCH_ASSOC);
+				
+		return $res;
+		 
+	 }
+	 
+	 
+	 public function totalGanancia(){
+		 
+		 $sql = $this->conexion->prepare("SELECT sum(pago.monto) AS valor FROM pago");
+		 $sql->execute();
+		
+		$res = $sql->fetchAll(PDO::FETCH_ASSOC);
+			
+		return $res;
+		 
+	 }
+
 
  }

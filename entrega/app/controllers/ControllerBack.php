@@ -638,6 +638,24 @@ require_once __DIR__ . '/Controller.php';
 		}
 		
 	}
+	
+	public function ganancia(){
+		$this->revisarMensajes();
+		if($this->haySesion()){
+			$params = $this->mPagos->verGanancia();
+			$tot = $this->mPagos->totalGanancia();
+			
+			
+			echo $this->twig->render('listadoGanancia.twig.html', array('log' => '1',
+																			'params' => $params,
+																			'tot' => $tot['0']['valor']));
+			
+			
+			
+		}
+		
+	}
+
 
  }
 
